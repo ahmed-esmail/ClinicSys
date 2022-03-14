@@ -6,7 +6,7 @@
 Clone the project
 
 ```bash
-  git clone REPO_URL
+  git clone https://github.com/ahmed-esmail/clinicSys.git
 ```
 
 Go to the project directory
