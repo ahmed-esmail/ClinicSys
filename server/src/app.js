@@ -27,6 +27,6 @@ app.use((request, response) => {
 //************* On Error MiddleWare ************/
 app.use((err, req, res, next) => {
   res
-    .status(err.status)
+    .status(err.status || 500)
     .end(`this is the error : ${JSON.stringify(err.message)}`);
 });
