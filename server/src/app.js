@@ -1,6 +1,7 @@
 const express = require("express");
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
+const authentication = require("./api/routes/authentication");
 require("./api/db/mongoose");
 const app = express();
 
@@ -15,7 +16,9 @@ app.use(morgan("dev"));
 // register body parser middleware
 app.use(bodyParser.json());
 // ************** -----------routing-------------------*****************
-app.get("/", (req, res) => {
+app.use(authentication);
+
+app.get("/", (req, res, next) => {
   res.send("welcome to API!!");
 });
 
