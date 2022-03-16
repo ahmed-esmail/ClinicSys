@@ -6,6 +6,8 @@ const app = express();
 
 const doctorRouter = require("./api/routes/doctorRouter");
 const receptionistRouter = require("./api/routes/ReceptionistRouter");
+const medicineRoute = require("./api/routes/medicineRoute");
+const prescriptionRoute = require("./api/routes/prescriptionRoute");
 
 
 const PORT = process.env.PORT || 3000;
@@ -26,6 +28,9 @@ app.get("/", (req, res) => {
 // routes
 app.use("/doctors", doctorRouter);
 app.use("/receptionists", receptionistRouter);
+app.use("/medicine", medicineRoute);
+app.use("/prescription", prescriptionRoute);
+
 
 //  for unhandled routes
 app.use((request, response) => {
