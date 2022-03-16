@@ -24,7 +24,7 @@ exports.delete = async (req, res) => {
       return;
     }
     const payment = await Payment.findOneAndDelete({
-      _id: req.body._id,
+      _id: req.body.id,
     });
 
     if (!payment) {

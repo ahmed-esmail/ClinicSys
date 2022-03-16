@@ -25,7 +25,7 @@ const auth = async (req, res, next) => {
 function authRole(permissions) {
   return (req, res, next) => {
     const userRole = req.user.type;
-    if (permissions.includes(userRole)) {
+    if (permissions.includes(userRole?.toLowerCase())) {
       next();
     } else {
       res.status(401);

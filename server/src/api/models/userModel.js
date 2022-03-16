@@ -6,7 +6,7 @@ const Schema = mongoose.Schema;
 const userSchema = new Schema({
   first_name: { type: String, trim: true, required: true },
   last_name: { type: String, trim: true, required: true },
-  phone_number: { type: String, required: true, unique: true },
+  phoneNumber: { type: String, required: true, unique: true },
   age: { type: Number },
   address: { type: String },
   email: { type: String, require: true, unique: true },
@@ -54,8 +54,8 @@ userSchema.pre("save", async function (next) {
   next();
 });
 
-userSchema.statics.findByCredentials = async (phone_number, password) => {
-  const user = await User.findOne({ phone_number });
+userSchema.statics.findByCredentials = async (phoneNumber, password) => {
+  const user = await User.findOne({ phoneNumber });
 
   if (!user) {
     throw new Error("Unable to login");
