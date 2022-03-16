@@ -3,9 +3,8 @@ const { validationResult } = require("express-validator");
 const Medicine = require("../models/medicineModel");
 
 
-//---------------------------------------  list
+//---------------------------- Git All Medicines
 exports.getMedicines = function (request, response, next) {
-
     Medicine.find({})
         .then(result => {
             response.status(200).json(result);
@@ -16,7 +15,19 @@ exports.getMedicines = function (request, response, next) {
         })
 }
 
-//----------------------------------------- add
+//---------------------------- Git Medicine
+exports.getMedicine = function (request, response, next) {
+    Medicine.findOne({ _id: request.params._id })
+        .then(result => {
+            response.status(200).json(result);
+        })
+        .catch(error => {
+            error.status = 500;
+            next(error);
+        })
+}
+
+//---------------------------- Add Medicine
 exports.createMedicine = (request, response, next) => {
     let errors = validationResult(request);
 
@@ -43,41 +54,28 @@ exports.createMedicine = (request, response, next) => {
     }
 };
 
-//------------------------------------------- update
-//************ no id for Update !! */
+//---------------------------- Update Medicine
 exports.updateMedicine = (request, response, next) => {
-    Medicine.updateOne({ name: request.body.name },
-        {
-            $set: {
-                // name: request.body.name,
-                description: request.body.description,
-            }
-        }).then(result => {
-            response.status(201).json({ message: "Medicine Updated" })
-        })
-        .catch(error => {
-            error.status = 500;
-            next(error);
-        })
+    if (request.body._id) {
+        Medicine.updateOne({ _id: request.body._id },
+            {
+                $set: {
+                    name: request.body.name,
+                    description: request.body.description,
+                }
+            }).then(result => {
+                response.status(201).json({ message: "Medicine Updated" })
+            })
+            .catch(error => {
+                error.status = 500;
+                next(error);
+            })
+    } else {
+        response.status(201).json({ message: "No ID For Update" })
+    }
 }
 
-exports.updateMedicine = (request, response, next) => {
-    Medicine.updateOne({ _id: request.body._id },
-        {
-            $set: {
-                name: request.body.name,
-                description: request.body.description,
-            }
-        }).then(result => {
-            response.status(201).json({ message: "Medicine Updated" })
-        })
-        .catch(error => {
-            error.status = 500;
-            next(error);
-        })
-}
-
-//------------------------------------------- delete
+//---------------------------- Delete Medicine
 exports.deleteMedicine = (request, response, next) => {
     let errors = validationResult(request);
 
@@ -88,15 +86,15 @@ exports.deleteMedicine = (request, response, next) => {
         next(error);
     }
     else {
-        Medicine.deleteOne({ name: request.params.name })
-            .then(result => {
-                response.status(201).json({ message: "Medicine Deleted" })
-            })
-            .catch(error => {
-                error.status = 500;
+            Medicine.deleteOne({ _id: request.params._id })
+                .then(result => {
+                    response.status(201).json({ message: "Medicine Deleted" })
+                })
+                .catch(error => {
+                    error.status = 500;
 
-                next(error);
-            })
+                    next(error);
+                })
     }
 }
 

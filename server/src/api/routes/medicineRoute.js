@@ -3,25 +3,24 @@ const { body, param, query } = require("express-validator")
 const controller = require("../controllers/medicineController")
 const router = express.Router()
 
-//-------------------------------- list
+//---------------------------- Git All Medicines
 router.get("", controller.getMedicines);
+//---------------------------- Git Medicine
+router.get("/:id", [param('id').isMongoId().withMessage("ID should be ObjectId")], controller.getMedicine);
 
-//-------------------------------- add
+//---------------------------- Add Medicine
 router.post("", [
     body("name").isAlpha().withMessage("Medicine name should be String"),
-    body("description").isAlpha().withMessage("Medicine description should be string")
+    body("description").isAlphanumeric().withMessage("Medicine description should be string")
 ], controller.createMedicine);
 
-//--------------------------------- update
+//---------------------------- Update Medicine
 router.put("", [
     body("name").isAlpha().withMessage("Medicine name should be String"),
-    body("description").isAlpha().withMessage("Medicine description should be string")
+    body("description").isAlphanumeric().withMessage("Medicine description should be string")
 ], controller.updateMedicine);
 
-//--------------------------------- delete
-//************ no id for delete !! */
-router.delete("/:name", [
-    param("name").isAlpha().withMessage("Medicine name should be String")
-], controller.deleteMedicine);
+//---------------------------- Delete Medicine
+router.delete("/:_id", [param("_id").isMongoId().withMessage("_id Should be ObjectID")], controller.deleteMedicine);
 
 module.exports = router;

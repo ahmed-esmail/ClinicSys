@@ -8,7 +8,7 @@ const doctorRouter = require("./api/routes/doctorRouter");
 const receptionistRouter = require("./api/routes/ReceptionistRouter");
 const medicineRoute = require("./api/routes/medicineRoute");
 const prescriptionRoute = require("./api/routes/prescriptionRoute");
-
+const patientRoute = require("./api/routes/patientRoute");
 const appointmentModel = require("./api/models/appointmentModel");
 const appointmentRouter = require("./api/routes/appointmentRoute");
 

@@ -3,11 +3,12 @@ const { validationResult } = require("express-validator");
 const Prescription = require("../models/prescriptionModel");
 
 
-//---------------------------------------  list
+//----------------------------  Get All Prescriptions
 exports.getPrescriptions = function (request, response, next) {
 
     Prescription.find({})
         .populate({ path: "medicines" })
+        // .populate({ path: "Doctor" })
         .then(result => {
             response.status(200).json(result);
         })
@@ -17,7 +18,23 @@ exports.getPrescriptions = function (request, response, next) {
         })
 }
 
-//----------------------------------------- add
+
+//----------------------------  Get All Prescriptions
+exports.getPrescription = function (request, response, next) {
+
+    Prescription.findOne({ _id: request.params._id })
+        .populate({ path: "medicines" })
+        // .populate({ path: "Doctor" })
+        .then(result => {
+            response.status(200).json(result);
+        })
+        .catch(error => {
+            error.status = 500;
+            next(error);
+        })
+}
+
+//----------------------------  Add Prescription
 exports.createPrescription = (request, response, next) => {
     let errors = validationResult(request);
 
@@ -28,11 +45,11 @@ exports.createPrescription = (request, response, next) => {
         next(error);
     }
     else {
-        
+
         let PrescriptionObject = new Prescription({
-            doctor:request.body.doctor,
+            doctor: request.body.doctor,
             medicines: request.body.medicines,
-        }) ;
+        });
 
         PrescriptionObject.save()
             .then(object => {
@@ -45,29 +62,28 @@ exports.createPrescription = (request, response, next) => {
     }
 };
 
-//------------------------------------------- update
-//************ no id for Update !! */
+//----------------------------  Update Prescription
 exports.updatePrescription = (request, response, next) => {
-    if (request.body._id) {
-        Prescription.updateOne({ _id: request.body._id },
-            {
-                $set: {
-                    doctor:request.body.doctor,
-                    medicines: request.body.medicines,
-                }
-            }).then(result => {
-                response.status(201).json({ message: "Prescription Updated" })
-            })
-            .catch(error => {
-                error.status = 500;
-                next(error);
-            })
-    } else {
-        response.status(201).json({ message: "Prescription Not Updated" })
-    }
+        if (request.body._id) {
+            Prescription.updateOne({ _id: request.body._id },
+                {
+                    $set: {
+                        doctor: request.body.doctor,
+                        medicines: request.body.medicines,
+                    }
+                }).then(result => {
+                    response.status(201).json({ message: "Prescription Updated" })
+                })
+                .catch(error => {
+                    error.status = 500;
+                    next(error);
+                })
+        } else {
+            response.status(201).json({ message: "No ID For Update" })
+        }
 }
 
-//------------------------------------------- delete
+//----------------------------  Delete Prescription
 exports.deletePrescription = (request, response, next) => {
     let errors = validationResult(request);
 
@@ -78,15 +94,15 @@ exports.deletePrescription = (request, response, next) => {
         next(error);
     }
     else {
-        Prescription.deleteOne({ _id: request.body._id })
-            .then(result => {
-                response.status(201).json({ message: "Prescription Deleted" })
-            })
-            .catch(error => {
-                error.status = 500;
+            Prescription.deleteOne({ _id: request.prams._id })
+                .then(result => {
+                    response.status(201).json({ message: "Prescription Deleted" })
+                })
+                .catch(error => {
+                    error.status = 500;
 
-                next(error);
-            })
+                    next(error);
+                })
     }
 }
 
