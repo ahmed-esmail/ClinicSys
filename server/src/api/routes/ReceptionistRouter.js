@@ -28,7 +28,7 @@ router.get("/:id", [
 router.post("", upload, [
     body('firstName').isAlpha().withMessage("First name should be string"),
     body('lastName').isAlpha().withMessage("Last name should be string"),
-    body('phoneNumber').isInt().isLength(11).withMessage("Invalid phone number").custom((value, {req}) => {
+    body('phoneNumber').isInt().isLength({min: 11, max: 11}).withMessage("Invalid phone number").custom((value, {req}) => {
         return User.findOne({phoneNumber:value}).then(user => {
           if (user) {
             throw new Error('Phone number already exist');
@@ -48,7 +48,7 @@ router.post("", upload, [
           }
         });
     }),
-    body('password').isInt().isLength({min:8}).withMessage("Invalid Password"),
+    body('password').isAlphanumeric().isLength({min:8}).withMessage("Invalid Password"),
     body('address').isAlphanumeric().withMessage("Address should be string"),
     //body('profileImg').isAlpha().withMessage("profileImg path should be string"),
     body('gender').custom((value, { req }) => {
@@ -64,8 +64,8 @@ router.put("", upload, [
     body('id').isMongoId().withMessage("ID should be ObjectId"),
     body('firstName').isAlpha().withMessage("First name should be string"),
     body('lastName').isAlpha().withMessage("Last name should be string"),
-    body('phoneNumber').isInt().isLength(11).withMessage("Invalid phone number").custom((value, {req}) => {
-        return User.findOne({phoneNumber:value}).then(user => {
+    body('phoneNumber').isInt().isLength({min: 11, max: 11}).withMessage("Invalid phone number").custom((value, {req}) => {
+        return User.findOne({phoneNumber:value, _id: { $nin: [req.body.id] } }).then(user => {
           if (user) {
             throw new Error('Phone number already exist');
           }
@@ -78,13 +78,13 @@ router.put("", upload, [
         throw new Error("Invalid age");
     }),
     body('email').isEmail().withMessage("Invalid Email").custom((value, {req}) => {
-        return User.findOne({email:value}).then(user => {
+        return User.findOne({email:value, _id: { $nin: [req.body.id] } }).then(user => {
           if (user) {
             throw new Error('Email already exist');
           }
         });
     }),
-    body('password').isInt().isLength({min:8}).withMessage("Invalid Password"),
+    body('password').isAlphanumeric().isLength({min:8}).withMessage("Invalid Password"),
     body('address').isAlphanumeric().withMessage("Address should be string"),
     //body('profileImg').isAlpha().withMessage("profileImg path should be string"),
     body('gender').custom((value, { req }) => {
