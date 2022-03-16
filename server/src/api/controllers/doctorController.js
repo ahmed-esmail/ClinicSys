@@ -31,9 +31,9 @@ exports.getDoctorById = function(request, response, next){
     }
     else
     {
-        Doctor.findOne({ _id: request.params.id, type:"Doctor" })
+        User.findOne({ _id: request.params.id, type:"Doctor" })
             .populate({ 
-                path : '_id', model:'User',
+                path : '_id', model:'Doctor',
             })
             .then(data => {
                 if (!data) {
@@ -155,7 +155,7 @@ exports.removeAppointmentFromDoctor = function(request, response, next){
                 }
             })
             .then(result=>{
-                response.status(201).json({message:"Appointment added successfully to the doctor"});
+                response.status(201).json({message:"Appointment removed successfully from the doctor"});
             })
             .catch(error=>{
                 error.status=500;
@@ -213,7 +213,7 @@ exports.removePatientFromDoctor = function(request, response, next){
                 }
             })
             .then(result=>{
-                response.status(201).json({message:"Patient added successfully to the doctor"});
+                response.status(201).json({message:"Patient removed successfully from the doctor"});
             })
             .catch(error=>{
                 error.status=500;
