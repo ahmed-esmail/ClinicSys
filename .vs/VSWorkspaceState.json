@@ -1,6 +1,11 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\server",
+    "\\server\\src",
+    "\\server\\src\\api",
+    "\\server\\src\\api\\controllers"
   ],
+  "SelectedNode": "\\server\\src\\api\\controllers\\.gitkeep",
   "PreviewInSolutionExplorer": false
 }
