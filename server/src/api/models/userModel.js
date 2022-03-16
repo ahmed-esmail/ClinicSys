@@ -2,14 +2,16 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
-  first_name: { type: String },
-  last_name: { type: String },
-  phone_number: { type: String },
+  firstName: { type: String },
+  lastName: { type: String },
+  phoneNumber: { type: String, unique: true },
   age: { type: Number },
+  password: { type: Number },
   address: { type: String },
-  profile_img: { type: Buffer },
-  type: { type: String, required: true },
-  gender: { type: String },
+  email: { type: String, require: true, unique: true },
+  profileImg: { data: Buffer, contentType: String },
+  type: { type: String, required: true, enum: ["Doctor", "Receptionist", "Admin"] },
+  gender: { type: String, enum: ["male", "female"]},
 });
 
 module.exports = mongoose.model("User", userSchema);

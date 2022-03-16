@@ -4,6 +4,10 @@ const bodyParser = require("body-parser");
 require("./api/db/mongoose");
 const app = express();
 
+const doctorRouter = require("./api/routes/doctorRouter");
+const receptionistRouter = require("./api/routes/ReceptionistRouter");
+
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`server Running on port http://localhost:${PORT}`);
@@ -18,6 +22,10 @@ app.use(bodyParser.json());
 app.get("/", (req, res) => {
   res.send("welcome to API!!");
 });
+
+// routes
+app.use("/doctors", doctorRouter);
+app.use("/receptionists", receptionistRouter);
 
 //  for unhandled routes
 app.use((request, response) => {
