@@ -22,14 +22,18 @@ const auth = async (req, res, next) => {
   }
 };
 
-function authRole(role) {
+function authRole(permissions) {
   return (req, res, next) => {
-    if (req.user.role !== role) {
+    const userRole = req.user.type;
+    if (permissions.includes(userRole)) {
+      next();
+    } else {
       res.status(401);
-      return res.send("Not allowed");
+      return res.json({
+        message:
+          "Not allowed, you don't have permissions to access this routes",
+      });
     }
-
-    next();
   };
 }
 
