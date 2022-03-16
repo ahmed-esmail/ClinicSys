@@ -2,20 +2,21 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const patientSchema = new Schema({
+
   first_name: { type: String },
   last_name: { type: String },
-  phone_number: { type: String },
-  age: { type: Number },
-  gender: { type: String, required: true },
+   phone_number: { type: String ,unique:true},
+   age: { type: Number },
+  gender: { type: String, required: true ,enum: ['male', 'female']},
   address: { type: String },
-  profile_img: { type: Buffer },
-  history: [],
-  Doctor: [{ type: Schema.Types.ObjectId, required: true, ref: "Doctor" }],
+  profile_img:{ data: Buffer, contentType: String },
+  history :[{type: String}],
+  Doctor: [{ type: Schema.Types.ObjectId, required: false, ref: "Doctor" }],
   Appointment: [
-    { type: Schema.Types.ObjectId, required: true, ref: "Appointment" },
+    { type: Schema.Types.ObjectId, required: false, ref: "Appointment" },
   ],
-  prescriptions: [
-    { type: Schema.Types.ObjectId, required: true, ref: "Prescription" },
+  Prescriptions: [
+    { type: Schema.Types.ObjectId, required: false, ref: "Prescription" },
   ],
 });
 

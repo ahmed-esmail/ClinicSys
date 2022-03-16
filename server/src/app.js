@@ -32,7 +32,7 @@ app.use("/doctors", doctorRouter);
 app.use("/receptionists", receptionistRouter);
 app.use("/medicine", medicineRoute);
 app.use("/prescription", prescriptionRoute);
-
+app.use("/patient",patientRoute);
 
 app.use("/appointments", appointmentRouter);
 //  for unhandled routes
