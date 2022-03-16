@@ -6,7 +6,8 @@ const app = express();
 
 const doctorRouter = require("./api/routes/doctorRouter");
 const receptionistRouter = require("./api/routes/ReceptionistRouter");
-
+const appointmentModel = require("./api/models/appointmentModel");
+const appointmentRouter = require("./api/routes/appointmentRoute");
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
@@ -26,7 +27,7 @@ app.get("/", (req, res) => {
 // routes
 app.use("/doctors", doctorRouter);
 app.use("/receptionists", receptionistRouter);
-
+app.use("/appointments", appointmentRouter);
 //  for unhandled routes
 app.use((request, response) => {
   response.send("Their is no page for this route");
