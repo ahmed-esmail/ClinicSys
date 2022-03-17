@@ -29,4 +29,11 @@ router.patch(
   paymentController.update
 );
 
+router.get(
+  "/payments",
+  auth,
+  authRole(["admin", "doctor"]),
+  paymentController.getAll
+);
+
 module.exports = router;
