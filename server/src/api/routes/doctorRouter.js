@@ -38,50 +38,121 @@ router.post(
   "",
   upload,
   [
-    body("firstName").isAlpha().withMessage("First name should be string"),
-    body("lastName").isAlpha().withMessage("Last name should be string"),
-    body("phoneNumber")
+    body("_id.firstName").isAlpha().withMessage("First name should be string"),
+    body("_id.lastName").isAlpha().withMessage("Last name should be string"),
+    body("_id.phoneNumber")
       .isInt()
       .isLength({ min: 11, max: 11 })
       .withMessage("Invalid phone number")
       .custom((value, { req }) => {
-        return User.findOne({ phoneNumber: value }).then((user) => {
+        return User.findOne({
+          phoneNumber: value
+        }).then((user) => {
           if (user) {
             throw new Error("Phone number already exist");
           }
         });
       }),
-    body("age").custom((value, { req }) => {
+    body("_id.age").custom((value, { req }) => {
       if (value >= 20 && value <= 100) {
         return true;
       }
       throw new Error("Invalid age");
     }),
-    body("email")
+    body("_id.email")
       .isEmail()
       .withMessage("Invalid Email")
       .custom((value, { req }) => {
-        return User.findOne({ email: value }).then((user) => {
+        return User.findOne({
+          email: value
+        }).then((user) => {
           if (user) {
             throw new Error("Email already exist");
           }
         });
       }),
-    body("password")
-      .isAlphanumeric()
-      .isLength({ min: 8 })
+    body("_id.password")
+      .isLength({ min: 7 })
       .withMessage("Invalid Password"),
-    body("address").isAlphanumeric().withMessage("Address should be string"),
+    body("_id.address")
+      .isLength({ min: 3 })
+      .withMessage("invalid address"),
     //body('profileImg').isAlpha().withMessage("profileImg path should be string"),
-    body("gender").custom((value, { req }) => {
+    body("_id.gender").custom((value, { req }) => {
       if (value == "male" || value == "female") {
         return true;
       }
       throw new Error("invalid gender");
     }),
-    body("speciality").isAlpha().withMessage("speciality should be string"),
+    body("speciality").not().isEmpty().withMessage("speciality should be string"),
   ],
   doctorController.addDoctor
+);
+
+//update
+router.put(
+  "",
+  upload,
+  [
+    body("_id._id").isMongoId().withMessage("ID should be ObjectId"),
+    body("_id.firstName").isAlpha().withMessage("First name should be string"),
+    body("_id.lastName").isAlpha().withMessage("Last name should be string"),
+    body("_id.phoneNumber")
+      .isInt()
+      .isLength({ min: 11, max: 11 })
+      .withMessage("Invalid phone number")
+      .custom((value, { req }) => {
+        return User.findOne({
+          phoneNumber: value,
+          _id: { $nin: [req.body._id._id] },
+        }).then((user) => {
+          if (user) {
+            throw new Error("Phone number already exist");
+          }
+        });
+      }),
+    body("_id.age").custom((value, { req }) => {
+      if (value >= 20 && value <= 100) {
+        return true;
+      }
+      throw new Error("Invalid age");
+    }),
+    body("_id.email")
+      .isEmail()
+      .withMessage("Invalid Email")
+      .custom((value, { req }) => {
+        return User.findOne({
+          email: value,
+          _id: { $nin: [req.body._id._id] },
+        }).then((user) => {
+          if (user) {
+            throw new Error("Email already exist");
+          }
+        });
+      }),
+    body("_id.password")
+      .isLength({ min: 7 })
+      .withMessage("Invalid Password"),
+      body("_id.address")
+      .isLength({ min: 3 })
+      .withMessage("invalid address"),
+    //body('profileImg').isAlpha().withMessage("profileImg path should be string"),
+    body("_id.gender").custom((value, { req }) => {
+      if (value == "male" || value == "female") {
+        return true;
+      }
+      throw new Error("invalid gender");
+    }),
+    body("speciality").not().isEmpty().withMessage("speciality should be string"),
+  ],
+  doctorController.updateDoctor
+);
+
+//delete
+router.delete(
+  "/:id",
+  [param("id").isMongoId().withMessage("ID should be ObjectId")],
+  doctorController.deleteDoctor
 );
 
 //add an appointment to a doctor
@@ -132,69 +203,5 @@ router.put(
   doctorController.removePatientFromDoctor
 );
 
-//update
-router.put(
-  "",
-  upload,
-  [
-    body("id").isMongoId().withMessage("ID should be ObjectId"),
-    body("firstName").isAlpha().withMessage("First name should be string"),
-    body("lastName").isAlpha().withMessage("Last name should be string"),
-    body("phoneNumber")
-      .isInt()
-      .isLength({ min: 11, max: 11 })
-      .withMessage("Invalid phone number")
-      .custom((value, { req }) => {
-        return User.findOne({
-          phoneNumber: value,
-          _id: { $nin: [req.body.id] },
-        }).then((user) => {
-          if (user) {
-            throw new Error("Phone number already exist");
-          }
-        });
-      }),
-    body("age").custom((value, { req }) => {
-      if (value >= 20 && value <= 100) {
-        return true;
-      }
-      throw new Error("Invalid age");
-    }),
-    body("email")
-      .isEmail()
-      .withMessage("Invalid Email")
-      .custom((value, { req }) => {
-        return User.findOne({
-          email: value,
-          _id: { $nin: [req.body.id] },
-        }).then((user) => {
-          if (user) {
-            throw new Error("Email already exist");
-          }
-        });
-      }),
-    body("password")
-      .isAlphanumeric()
-      .isLength({ min: 8 })
-      .withMessage("Invalid Password"),
-    body("address").isAlphanumeric().withMessage("Address should be string"),
-    //body('profileImg').isAlpha().withMessage("profileImg path should be string"),
-    body("gender").custom((value, { req }) => {
-      if (value == "male" || value == "female") {
-        return true;
-      }
-      throw new Error("invalid gender");
-    }),
-    body("speciality").isAlpha().withMessage("speciality should be string"),
-  ],
-  doctorController.updateDoctor
-);
-
-//delete
-router.delete(
-  "/:id",
-  [param("id").isMongoId().withMessage("ID should be ObjectId")],
-  doctorController.deleteDoctor
-);
 
 module.exports = router;

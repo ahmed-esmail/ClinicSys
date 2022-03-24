@@ -94,7 +94,7 @@ exports.deletePrescription = (request, response, next) => {
         next(error);
     }
     else {
-            Prescription.deleteOne({ _id: request.prams._id })
+        Prescription.deleteOne({ _id: request.params._id })
                 .then(result => {
                     response.status(201).json({ message: "Prescription Deleted" })
                 })

@@ -1,0 +1,63 @@
+<p>add-prescription works!</p>
+
+<p-dialog [(visible)]="presDialog" [style]="{width: '450px'}" header="Add Prescription" [modal]="true" presDialog="true"
+    styleClass="p-fluid">
+    <!-- <p-dialog [style]="{width: '450px'}" header="Add Prescription 7" [modal]="true" styleClass="p-fluid"> -->
+    <ng-template pTemplate="content">
+        <div class="field">
+            <label for="doctor">doctor</label>
+            <input type="text" pInputText id="doctor" [(ngModel)]="newPrescription.doctor" required autofocus />
+            <small class="p-error" *ngIf="submitted && !newPrescription.doctor">Name is required.</small>
+        </div>
+        <div class="field">
+            <label for="med">medicine</label>
+            <p-dropdown [options]="medicines" [(ngModel)]="med" optionLabel="name"></p-dropdown>
+            <!-- <p-dropdown [(ngModel)]="med" inputId="med" [options]="medicines" placeholder="Select">
+                    <ng-template let-medicine pTemplate="item">
+                        <span [class]="'product-badge status-' + medicine.value">{{medicine.name}}</span>
+                    </ng-template>
+                </p-dropdown> -->
+        </div>
+        <div class="field">
+            <label for="dose">dose</label>
+            <input type="text" pInputText id="dose" [(ngModel)]="dose" required autofocus />
+            <small class="p-error" *ngIf="submitted && !dose">Name is required.</small>
+        </div>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="add" icon="pi pi-check" class="p-button-text" (click)="add()"></button>
+        <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="save()"></button>
+    </ng-template>
+</p-dialog>
+
+<p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+
+<!-- <span [class]="'product-badge status-' + option.value">{{medicine.name}}</span> -->
+<!-- <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button> -->
+<!-- <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button> -->
+
+<div>
+    <h2>add Medicine</h2>
+
+    <div>
+        <label for="doctor">doctor</label>
+        <input type="text" id="doctor" [(ngModel)]="newPrescription.doctor">
+        <input type="text" pInputText id="doctor" [(ngModel)]="newPrescription.doctor" required autofocus />
+        <!-- <small class="p-error" *ngIf="submitted && !newPrescription.doctor">Name is required.</small> -->
+    </div>
+    <div>
+        <label for="med">medicine</label>
+        <select id="med" [(ngModel)]="med">
+            <option [ngValue]="null" disabled>Select Medicine</option>
+            <option *ngFor="let medicine of medicines" [value]="medicine._id">{{medicine.name}}</option>
+        </select>
+    </div>
+    <div>
+        <label for="dose">dose</label>
+        <input type="text" id="dose" [(ngModel)]="dose">
+    </div>
+    <button class="btn btn-success" (click)="add()">add</button>
+    <button class="btn btn-success" type="submit" (click)="save()">Save</button>
+
+</div>

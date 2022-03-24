@@ -7,12 +7,13 @@ const fs = require("fs");
 const path = require("path");
 
 exports.getDoctors = function (request, response, next) {
-  User.find({ type: "Doctor" })
+  Doctor.find({ type: "Doctor" })
     .populate({
       path: "_id",
-      model: "Doctor",
+      model: "User",
     })
     .then((result) => {
+      //fs.writeFileSync("profileImg", result._id.profileImg)
       response.status(200).json(result);
     })
     .catch((error) => {
@@ -32,10 +33,10 @@ exports.getDoctorById = function (request, response, next) {
       .reduce((current, object) => current + object.msg + " , ", "");
     next(error);
   } else {
-    User.findOne({ _id: request.params.id, type: "Doctor" })
+    Doctor.findOne({ _id: request.params.id, type: "Doctor" })
       .populate({
         path: "_id",
-        model: "Doctor",
+        model: "User",
       })
       .then((data) => {
         if (!data) {
@@ -53,7 +54,6 @@ exports.getDoctorById = function (request, response, next) {
 
 exports.addDoctor = function (request, response, next) {
   let errors = validationResult(request);
-
   if (!errors.isEmpty()) {
     let error = new Error();
     error.status = 422;
@@ -62,21 +62,21 @@ exports.addDoctor = function (request, response, next) {
       .reduce((current, object) => current + object.msg + " , ", "");
     next(error);
   } else {
+    console.log(request.file)
     let userObject = new User({
-      firstName: request.body.firstName,
-      lastName: request.body.lastName,
-      phoneNumber: request.body.phoneNumber,
-      age: request.body.age,
-      email: request.body.email,
-      password: request.body.password,
-      address: request.body.address,
-      profileImg: {
-        data: fs.readFileSync(
-          path.join(__dirname + "./../../../../images/" + request.file.path)
-        ),
-        contentType: "image/png",
-      },
-      gender: request.body.gender,
+      firstName: request.body._id.firstName,
+      lastName: request.body._id.lastName,
+      phoneNumber: request.body._id.phoneNumber,
+      age: request.body._id.age,
+      email: request.body._id.email,
+      password: request.body._id.password,
+      address: request.body._id.address,
+      /* profileImg: fs.readFileSync(
+        path.join(
+          /* __dirname + "./../../../../images/" +  request.body._id.profileImg
+        )
+      ), */
+      gender: request.body._id.gender,
       type: "Doctor",
     });
 
@@ -87,9 +87,11 @@ exports.addDoctor = function (request, response, next) {
       patients: [],
     });
 
+    console.log("dd")
     userObject
       .save()
       .then((object1) => {
+        console.log("dd")
         doctorObject
           .save()
           .then((object2) => {
@@ -244,6 +246,7 @@ exports.updateDoctor = function (request, response, next) {
   let errors = validationResult(request);
 
   if (!errors.isEmpty()) {
+    console.log("vali")
     let error = new Error();
     error.status = 422;
     error.message = errors
@@ -252,7 +255,7 @@ exports.updateDoctor = function (request, response, next) {
     next(error);
   } else {
     Doctor.updateOne(
-      { _id: request.body.id },
+      { _id: request.body._id._id },
       {
         $set: {
           speciality: request.body.speciality,
@@ -260,27 +263,28 @@ exports.updateDoctor = function (request, response, next) {
       }
     )
       .then((result) => {
+        //console.log(request.file.path)
         if (result.matchedCount)
           User.updateOne(
-            { _id: request.body.id },
+            { _id: request.body._id._id },
             {
               $set: {
-                firstName: request.body.firstName,
-                lastName: request.body.lastName,
-                phoneNumber: request.body.phoneNumber,
-                age: request.body.age,
-                email: request.body.email,
-                password: request.body.password,
-                address: request.body.address,
-                profileImg: {
+                firstName: request.body._id.firstName,
+                lastName: request.body._id.lastName,
+                phoneNumber: request.body._id.phoneNumber,
+                age: request.body._id.age,
+                email: request.body._id.email,
+                password: request.body._id.password,
+                address: request.body._id.address,
+                /* profileImg: {
                   data: fs.readFileSync(
                     path.join(
                       __dirname + "./../../../../images/" + request.file.path
                     )
                   ),
                   contentType: "image/png",
-                },
-                gender: request.body.gender,
+                }, */
+                gender: request.body._id.gender,
                 /* type: "Doctor", */
               },
             }
@@ -295,6 +299,7 @@ exports.updateDoctor = function (request, response, next) {
               next(error);
             });
         else {
+          console.log("matc")
           let error = new Error();
           error.status = 422;
           error.message = "Doctor id not found";
