@@ -6,7 +6,9 @@ import { MedicineService } from 'src/app/Services/medicine.service';
 // import { FormGroup } from '@angular/forms';
 import { ConfirmationService } from 'primeng/api';
 import { MessageService } from 'primeng/api';
-
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
+import { PatientService } from 'src/app/Services/patient.service';
+import { Patient } from 'src/app/Class/patient';
 
 
 @Component({
@@ -24,12 +26,16 @@ import { MessageService } from 'primeng/api';
 export class AddPrescriptionComponent implements OnInit {
 
   //service of doctors
-  constructor(private prescriptionService: PrescriptionService, public medicineService: MedicineService) {
-
+  constructor(private prescriptionService: PrescriptionService,
+    public medicineService: MedicineService,
+    public patientService: PatientService,
+    public ref: DynamicDialogRef,
+    public messageService:MessageService
+  ) {
   }
 
   medicines: Medicine[] = [];
-   //array of doctors
+  patients: Patient[] = [];
 
   med: string = "";
   dose: string = "";
@@ -37,13 +43,16 @@ export class AddPrescriptionComponent implements OnInit {
   presDialog: boolean = false;
   
   arr: [{ medicine: string, dose: string }] = [{ medicine:'',dose:''}];
-  newPrescription: Prescription = new
-    Prescription('', '', [{ medicine:"", dose: "" },]);
+  prescription: Prescription = new
+    Prescription('', new Date,'','', [{ medicine:"", dose: "" },]);
   
   ngOnInit(): void {
     this.presDialog = true;
     this.medicineService.getAllMedicines().subscribe((res) => {
       this.medicines = res;
+    });
+    this.patientService.getpatients().subscribe((res) => {
+      this.patients = res;
     });
 
   }
@@ -53,15 +62,35 @@ export class AddPrescriptionComponent implements OnInit {
     } else {
       this.arr[0] = { medicine: this.med, dose: this.dose };
     }
-    
+    this.reloadData();
     console.log(this.arr);
   }
 
   save() {
     this.presDialog = false;
-    this.newPrescription.medicines = this.arr;
-    console.log(this.newPrescription);
-    this.prescriptionService.addprescription(this.newPrescription).subscribe(() => {
+    this.submitted = true;
+    this.prescription.medicines = this.arr;
+    console.log(this.prescription);
+    this.prescriptionService.addprescription(this.prescription).subscribe(() => {
+    });
+    this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Prescription Added', life: 3000 });
+
+    this.hideDialog();
+  }
+
+  hideDialog() {
+    this.presDialog = false;
+    this.submitted = false;
+    this.ref.close();
+  }
+
+  reloadData() {
+    // this.prescriptionService.getAllprescriptions().subscribe((res) => {
+    //   this.prescriptions = res;
+    // });
+    this.medicineService.getAllMedicines().subscribe((res) => {
+      this.medicines = res;
     });
   }
+
 }

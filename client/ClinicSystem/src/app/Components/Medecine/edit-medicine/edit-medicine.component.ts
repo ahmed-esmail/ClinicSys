@@ -20,7 +20,7 @@ export class EditMedicineComponent implements OnInit {
     console.log(this.newMedicine._id);
     this.medicineService.editMedicine(this.newMedicine).subscribe((res) => {
       // this.medicines = res;
-    });;
+    });
   }
 
 }

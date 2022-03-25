@@ -9,6 +9,7 @@ exports.getPrescriptions = function (request, response, next) {
     Prescription.find({})
         .populate({ path: "medicines" })
         // .populate({ path: "Doctor" })
+        //.populate({ path: "patient" })
         .then(result => {
             response.status(200).json(result);
         })
@@ -25,6 +26,7 @@ exports.getPrescription = function (request, response, next) {
     Prescription.findOne({ _id: request.params._id })
         .populate({ path: "medicines" })
         // .populate({ path: "Doctor" })
+        //.populate({ path: "patient" })
         .then(result => {
             response.status(200).json(result);
         })
@@ -48,7 +50,9 @@ exports.createPrescription = (request, response, next) => {
 
         let PrescriptionObject = new Prescription({
             doctor: request.body.doctor,
+            patient: request.body.patient,
             medicines: request.body.medicines,
+            date: request.body.date,
         });
 
         PrescriptionObject.save()
@@ -70,6 +74,8 @@ exports.updatePrescription = (request, response, next) => {
                     $set: {
                         doctor: request.body.doctor,
                         medicines: request.body.medicines,
+                        patient: request.body, patient,
+                        date: request.body.date,
                     }
                 }).then(result => {
                     response.status(201).json({ message: "Prescription Updated" })

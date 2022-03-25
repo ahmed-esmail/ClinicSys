@@ -25,7 +25,9 @@ import { TabViewModule } from 'primeng/tabview';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 // import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
-import { MessageService , ConfirmationService } from 'primeng/api';
+import { MessageService, ConfirmationService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
+import { DynamicDialogModule } from 'primeng/dynamicdialog';
 
 
 
@@ -60,6 +62,8 @@ import { MessageService , ConfirmationService } from 'primeng/api';
     DialogModule,
     ConfirmDialogModule, 
     InputTextModule,
+    ToastModule,
+    DynamicDialogModule
   ],
   providers: [MessageService,ConfirmationService],
   bootstrap: [AppComponent]

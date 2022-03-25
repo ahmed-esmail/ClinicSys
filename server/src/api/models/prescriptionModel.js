@@ -2,6 +2,8 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const PrescriptionSchema = new Schema({
+  patient: {type: Schema.Types.ObjectId,required: true,ref: "Medicine"},
+  date: { type: Date, required: true },
   doctor: { type: Schema.Types.ObjectId, ref: "Doctor" },
   medicines: [{
     medicine: {

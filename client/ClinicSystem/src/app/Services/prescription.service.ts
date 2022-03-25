@@ -24,12 +24,14 @@ export class PrescriptionService {
 
 
 
-  getprescriptions() {
-    return this.http.get<Prescription[]>(this.prescriptionUrl)
+  getprescription(id: string) {
+    return this.http.get<Prescription>(this.prescriptionUrl + '/' + id)
+      .pipe(catchError(this.handleError));
   }
 
   getAllprescriptions() {
-    return this.http.get<Prescription[]>(this.prescriptionUrl).pipe(catchError(this.handleError));
+    return this.http.get<Prescription[]>(this.prescriptionUrl)
+      .pipe(catchError(this.handleError));
   }
   addprescription(med: Prescription) {
     return this.http.post<Prescription>(this.prescriptionUrl, med)

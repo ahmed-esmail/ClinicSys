@@ -1,7 +1,9 @@
 <p>list-prescriptions works!</p>
 
-<!-- 
-<p-toast></p-toast> -->
+
+<p-toast></p-toast>
+
+<!-- <button type="button" (click)="show()" pButton icon="pi pi-info-circle" label="Show"></button> -->
 
 <!-- <div class="card-header d-flex justify-content-between">
     <h1 class="col-lg-3 mx-auto p-3">prescription Manage</h1>
@@ -14,39 +16,35 @@
         <ng-template pTemplate="left">
             <!-- <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2"
                 (click)="openNew()"></button> -->
-                <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2" (click)="clickAdd()"></button>
+                <button pButton pRipple label="New Prescription" icon="pi pi-plus" class="p-button-success mr-2" (click)="showAdd()"></button>
             <!-- <button pButton pRipple [label]="Delete" icon="pi pi-trash" class="p-button-danger"
                 (click)="deleteSelectedProducts()" [disabled]="!selectedProducts || !selectedProducts.length"></button> -->
         </ng-template>
 
     </p-toolbar>
 
-    <p-table #dt [value]="prescriptions">
-     <!-- [rows]="10" [paginator]="true"
-        [globalFilterFields]="['name','country.name','representative.name','status']" responsiveLayout="scroll"
-        [(selection)]="selectedPrescriptions" [rowHover]="true" dataKey="id"
-        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true"
-         -->
-        
-        <ng-template pTemplate="caption">
+    <p-table #dt [value]="prescriptions" [rowHover]="true" dataKey="id" responsiveLayout="scroll">
+
+        <!-- <ng-template pTemplate="caption">
             <div class="flex align-items-center justify-content-between">
                 <h5 class="m-0">Manage Prescription</h5>
                 <span class="p-input-icon-left">
                     <i class="pi pi-search"></i>
-                    <!-- <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
-                        placeholder="Search..." /> -->
+                    <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                        placeholder="Search..." />
                 </span>
             </div>
-        </ng-template>
+        </ng-template> -->
         <ng-template pTemplate="header">
             <tr>
-                <th style="width: 3rem">
-                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-                </th>
                 <th pSortableColumn="id">ID <p-sortIcon field="id"></p-sortIcon>
+                </th>
+                <th pSortableColumn="date">date <p-sortIcon field="date"></p-sortIcon>
                 </th>
                 <th pSortableColumn="doctor">doctor
                     <p-sortIcon field="doctor"></p-sortIcon>
+                </th>
+                <th pSortableColumn="patient">patient <p-sortIcon field="patient"></p-sortIcon>
                 </th>
                 <th pSortableColumn="medicines">medicines
                      <p-sortIcon field="medicines"></p-sortIcon>
@@ -56,13 +54,15 @@
         </ng-template>
         <ng-template pTemplate="body" let-prescription>
             <tr>
-                <td>
+                <!-- <td>
                     <p-tableCheckbox [value]="prescription"></p-tableCheckbox>
-                </td>
+                </td> -->
                 <td>{{prescription._id}}</td>
+                <td>{{prescription.date}}</td>
                 <td>{{prescription.doctor}}</td>
+                <td>{{prescription.patient}}</td>
                 <!-- <td>{{prescription.medicines}}</td> -->
-                <td><p-table #dt [value]="prescription.medicines">
+                <td><p-table #dt2 [value]="prescription.medicines">
                     <ng-template pTemplate="header">
                         <tr>
                             <th pSortableColumn="medicine">mdicine <p-sortIcon field="medicine"></p-sortIcon>
@@ -71,25 +71,18 @@
                             <th pSortableColumn="dose">dose
                                 <p-sortIcon field="dose"></p-sortIcon>
                             </th>
-                            <th>Action</th>
                         </tr>
                     </ng-template>
                     <ng-template pTemplate="body" let-med>
                         <tr>
                             <td>{{med.medicine}}</td>
                             <td>{{med.dose}}</td>
-                            <td>
-                                <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"
-                                    (click)="editProduct(prescription)"></button>
-                                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
-                                    (click)="deleteProduct(prescription)"></button>
-                            </td>
                         </tr>
                     </ng-template>
                 </p-table></td>
                 <td>
                     <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"
-                        (click)="editProduct(prescription)"></button>
+                        (click)="showEdit(prescription)"></button>
                     <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
                         (click)="clickDelete(prescription._id)"></button>
                 </td>
@@ -98,76 +91,34 @@
     </p-table>
 </div>
 
-
-<!-- <p-dialog [(visible)]="presDialog" [style]="{width: '450px'}" header="Product Details" [modal]="true"
+<!-- 
+<p-dialog [(visible)]="presDialog" [style]="{width: '450px'}" header="Add Prescription" [modal]="true" presDialog="true"
     styleClass="p-fluid">
     <ng-template pTemplate="content">
         <div class="field">
-            <label for="name">Name</label>
-            <input type="text" pInputText id="name" [(ngModel)]="prescription.doctor" required autofocus />
+            <label for="doctor">doctor</label>
+            <input type="text" pInputText id="doctor" [(ngModel)]="prescription.doctor" required autofocus />
             <small class="p-error" *ngIf="submitted && !prescription.doctor">Name is required.</small>
         </div>
         <div class="field">
-            <label for="description">Description</label>
-            <textarea id="description" pInputTextarea [(ngModel)]="prescription._id" required rows="3"
-                cols="20"></textarea>
+            <label for="med">medicine</label>
+            <p-dropdown [options]="medicines" [(ngModel)]="med" optionLabel="name"></p-dropdown>
         </div>
         <div class="field">
-            <label for="inventoryStatus">Inventory Status</label>
-            <p-dropdown [(ngModel)]="prescription.medicines" inputId="inventoryStatus" [options]="statuses"
-                placeholder="Select">
-                <ng-template let-option pTemplate="item">
-                    <span [class]="'product-badge status-' + option.value">{{option.label}}</span>
-                </ng-template>
-            </p-dropdown>
-        </div>
-
-        <div class="field">
-            <label class="mb-3">Category</label>
-            <div class="formgrid grid">
-                <div class="field-radiobutton col-6">
-                    <p-radioButton id="category1" name="category" value="Accessories" [(ngModel)]="prescription.doctor">
-                    </p-radioButton>
-                    <label for="category1">Accessories</label>
-                </div>
-                <div class="field-radiobutton col-6">
-                    <p-radioButton id="category2" name="category" value="Clothing" [(ngModel)]="prescription.doctor">
-                    </p-radioButton>
-                    <label for="category2">Clothing</label>
-                </div>
-                <div class="field-radiobutton col-6">
-                    <p-radioButton id="category3" name="category" value="Electronics" [(ngModel)]="prescription.doctor">
-                    </p-radioButton>
-                    <label for="category3">Electronics</label>
-                </div>
-                <div class="field-radiobutton col-6">
-                    <p-radioButton id="category4" name="category" value="Fitness" [(ngModel)]="prescription.doctor">
-                    </p-radioButton>
-                    <label for="category4">Fitness</label>
-                </div>
-            </div>
-        </div>
-
-        <div class="formgrid grid">
-            <div class="field col">
-                <label for="price">Price</label>
-                <p-inputNumber id="price" [(ngModel)]="prescription.medicines" mode="currency" currency="USD" locale="en-US">
-                </p-inputNumber>
-            </div>
-            <div class="field col">
-                <label for="quantity">Quantity</label>
-                <p-inputNumber id="quantity" [(ngModel)]="prescription.medicines"></p-inputNumber>
-            </div>
+            <label for="dose">dose</label>
+            <input type="text" pInputText id="dose" [(ngModel)]="dose" required autofocus />
+            <small class="p-error" *ngIf="submitted && !dose">Name is required.</small>
         </div>
     </ng-template>
 
     <ng-template pTemplate="footer">
-        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
-        <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveProduct()"></button>
+        <button pButton pRipple label="add" icon="pi pi-check" class="p-button-text" (click)="add()"></button>
+        <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="save()"></button>
     </ng-template>
 </p-dialog> -->
 
 <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+
 <!-- <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>     -->
 
 <!-- Start Table -->
@@ -179,7 +130,7 @@
                 prescription</button>
         </div>
         <div class="card-body"> -->
-            <p-table [value]="prescriptions">
+            <!-- <p-table [value]="prescriptions">
                 <ng-template pTemplate="header">
                     <tr>
                         <th>doctor</th>
@@ -201,21 +152,21 @@
                             </li>
                         </td>
                         <td>
-                            <button class="btn btn-success mx-1 my-auto" (click)="clickEdit(prescription._id)">Edit</button>
+                            <button class="btn btn-success mx-1 my-auto" (click)="clickEdit(prescription)">Edit</button>
                             <button class="btn btn-danger mx-1 my-auto"
                                 (click)="clickDelete(prescription._id)">Delete</button>
                         </td>
                     </tr>
                 </ng-template>
-            </p-table>
+            </p-table> -->
         <!-- </div> -->
 
-        <div *ngIf="showAdd">
+        <!-- <div *ngIf="showAdd">
             <app-add-prescription></app-add-prescription>
         </div>
         <div *ngIf="showEdit">
             <app-edit-prescription></app-edit-prescription>
-        </div>
+        </div> -->
         <!-- <div *ngIf="showDelete">
             <app-remove-prescription></app-remove-prescription>
         </div> -->

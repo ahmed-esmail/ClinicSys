@@ -3,6 +3,15 @@ import { Prescription } from 'src/app/Class/prescription';
 import { PrescriptionService } from 'src/app/Services/prescription.service';
 import { ConfirmationService } from 'primeng/api';
 import { MessageService } from 'primeng/api';
+import { MedicineService } from 'src/app/Services/medicine.service';
+import { Medicine } from 'src/app/Class/medicine';
+import { DialogService } from 'primeng/dynamicdialog';
+import { AddMedicineComponent } from '../../Medecine/add-medicine/add-medicine.component';
+import { AddPrescriptionComponent } from '../add-prescription/add-prescription.component';
+import { EditPrescriptionComponent } from '../edit-prescription/edit-prescription.component';
+import { DynamicDialogConfig } from 'primeng/dynamicdialog';
+
+
 
 
 
@@ -16,102 +25,141 @@ import { MessageService } from 'primeng/api';
              display: block;
          }
      `],
-  providers: [MessageService, ConfirmationService]
+  providers: [MessageService, ConfirmationService,DialogService]
 })
 
 export class ListPrescriptionsComponent implements OnInit {
   
   prescriptions: Prescription[] = [];
- 
-  presDialog: boolean = false;
-  prescription: Prescription = new Prescription('', '', [{ medicine: "", dose: "" },]);
-  selectedPrescriptions: Prescription[] = [];
-  submitted: boolean = false;
-  statuses: any[] = [];
+  medicines: Medicine[] = [];
+
+  prescription: Prescription = new Prescription('', new Date,'','', [{ medicine: "", dose: "" },]);
   
+  med: string = "";
+  dose: string = "";
 
-  showAdd: boolean = false;
-  showEdit: boolean = false;
-  showDelete: boolean = false;
+  presDialog: boolean = false;
+  submitted: boolean = false;
+  isEdit: boolean = false;
+ 
+  arr: [{ medicine: string, dose: string }] = [{ medicine: '', dose: '' }];
 
-  constructor(public prescriptionService: PrescriptionService, private messageService: MessageService, private confirmationService: ConfirmationService) { }
+  constructor(public prescriptionService: PrescriptionService,
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService,
+    private medicineService: MedicineService,
+    private dialogService: DialogService,
+  ) {
+    
+  }
 
   ngOnInit(): void {
     this.prescriptionService.getAllprescriptions().subscribe((res) => {
       this.prescriptions = res;
     });
-
-    this.statuses = [
-      { label: 'INSTOCK', value: 'instock' },
-      { label: 'LOWSTOCK', value: 'lowstock' },
-      { label: 'OUTOFSTOCK', value: 'outofstock' }
-    ];
-
+    this.medicineService.getAllMedicines().subscribe((res) => {
+      this.medicines = res;
+    });
   }
 
-  openNew() {
-    // this.prescription = {};
+  showAdd() {
+    const ref = this.dialogService.open(AddPrescriptionComponent, {
+      header: 'Add Prescription',
+      width: '70%'
+    });
+
+    ref.onClose.subscribe(() => {
+      this.reloadData();
+    });
+  }
+
+  showEdit(pres: Prescription) {
+    const ref = this.dialogService.open(EditPrescriptionComponent, {
+      data: {
+        pre: pres,
+      },
+      header: 'Edit prescription',
+      width: '70%'
+    });
+
+    ref.onClose.subscribe(() => {
+      this.reloadData();
+    });
+  }
+
+  clickEdit(pres: Prescription) {
+    // this.prescriptionService.id = i;
+    this.isEdit = true;
+    this.prescription = { ...pres };
     this.submitted = false;
     this.presDialog = true;
   }
 
-  deleteSelectedProducts() {
-    // this.confirmationService.confirm({
-    //   message: 'Are you sure you want to delete the selected products?',
-    //   header: 'Confirm',
-    //   icon: 'pi pi-exclamation-triangle',
-    //   accept: () => {
-    //     this.products = this.products.filter(val => !this.selectedProducts.includes(val));
-    //     this.selectedProducts = null;
-    //     this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Products Deleted', life: 3000 });
-    //   }
-    // });
+  clickAdd() {
+    this.isEdit = false;
+    this.prescription = new Prescription('', new Date,'','', [{ medicine: "", dose: "" },]);
+    this.submitted = false;
+    this.presDialog = true;
   }
 
-  editProduct(pres: Prescription) {
-    this.prescription = { ...pres };
-    this.presDialog= true;
-  }
+  clickDelete(i: string) {
 
-  deleteProduct(pres: Prescription) {
+    this.prescriptionService.id = i;
+
+    console.log("in delete");
+
     this.confirmationService.confirm({
       message: 'Are you sure you want to delete ' + this.prescription._id + '?',
       header: 'Confirm',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
+        console.log("in accept");
         this.prescriptionService.deleteprescription(this.prescriptionService.id).subscribe(() => {
         });;
         // this.products = this.products.filter(val => val.id !== product.id);
         // this.product = {};
-        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000 });
+        this.reloadData();
+        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Prescription Deleted', life: 3000 });
       }
     });
+
+  }
+
+  add() {
+    if (this.arr[0].medicine != "") {
+      this.arr.push({ medicine: this.med, dose: this.dose });
+    } else {
+      this.arr[0] = { medicine: this.med, dose: this.dose };
+    }
+    this.reloadData();
+    console.log(this.arr);
+  }
+
+  save() {
+    console.log(this.prescription);
+    if (this.isEdit) {
+      // this.medicines[this.findIndexById(this.medicine._id)] = this.medicine;
+      this.prescriptionService.editprescription(this.prescription).subscribe(() => {
+      });;
+    } else {
+      // this.medicines.push(this.medicine); 
+      this.prescription.medicines = this.arr;
+      this.prescriptionService.addprescription(this.prescription).subscribe(() => {
+      });
+      
+    }
+    this.reloadData();
+    this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Prescription Updated', life: 3000 });
+    this.presDialog = false;
+    // this.prescription.medicines = this.arr;
+    // console.log(this.prescription);
+    // this.prescriptionService.addprescription(this.prescription).subscribe(() => {
+    // });
   }
 
   hideDialog() {
     this.presDialog = false;
     this.submitted = false;
-  }
-
-  saveProduct() {
-    this.submitted = true;
-
-    // if (this.prescription._id.trim()) {
-    //   if (this.product.id) {
-    //     this.products[this.findIndexById(this.product.id)] = this.product;
-    //     this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000 });
-    //   }
-    //   else {
-    //     this.product.id = this.createId();
-    //     this.product.image = 'product-placeholder.svg';
-    //     this.products.push(this.product);
-    //     this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Created', life: 3000 });
-    //   }
-
-    //   this.products = [...this.products];
-    //   this.productDialog = false;
-    //   this.product = {};
-    // }
   }
 
   findIndexById(id: string): number {
@@ -122,187 +170,14 @@ export class ListPrescriptionsComponent implements OnInit {
         break;
       }
     }
-
     return index;
   }
-
-  createId(): string {
-    let id = '';
-    var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    for (var i = 0; i < 5; i++) {
-      id += chars.charAt(Math.floor(Math.random() * chars.length));
-    }
-    return id;
-  }
-
-
-  // ngAfterViewInit(): void {
-  //   // this.dataTable = $(this.table.nativeElement);
-  //   // this.dataTable.DataTable();
-  // }
-
-  clickEdit(i: string) {
-    this.showAdd = false;
-    this.showEdit = true;
-    this.showDelete = false;
-    this.prescriptionService.id = i;
-  }
-  clickAdd() {
-    this.showAdd = true;
-    this.showEdit = false;
-    this.showDelete = false;
-
-    this.presDialog = true;
-  }
-  clickDelete(i: string) {
-    this.showAdd = false;
-    this.showEdit = false;
-    // this.showDelete = true;
-    this.prescriptionService.id = i;
-
-    console.log("in delete");
-
-    this.confirmationService.confirm({
-      
-      message: 'Are you sure you want to delete ' + this.prescription._id + '?',
-      header: 'Confirm',
-      icon: 'pi pi-exclamation-triangle',
-      accept: () => {
-        console.log("in accept");
-        this.prescriptionService.deleteprescription(this.prescriptionService.id).subscribe(() => {
-        });;
-        // this.products = this.products.filter(val => val.id !== product.id);
-        // this.product = {};
-        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000 });
-      }
+  reloadData() {
+    this.prescriptionService.getAllprescriptions().subscribe((res) => {
+      this.prescriptions = res;
+    });
+    this.medicineService.getAllMedicines().subscribe((res) => {
+      this.medicines = res;
     });
   }
 }
-
-// import { Component, OnInit } from '@angular/core';
-// import { Product } from '../../domain/product';
-// import { ProductService } from '../../service/productservice';
-
-
-// @Component({
-//   templateUrl: './tablecruddemo.html',
-//   styleUrls: ['./tabledemo.scss'],
-//   styles: [`
-//         :host ::ng-deep .p-dialog .product-image {
-//             width: 150px;
-//             margin: 0 auto 2rem auto;
-//             display: block;
-//         }
-//     `],
-//   providers: [MessageService, ConfirmationService]
-// })
-// export class TableCrudDemo implements OnInit {
-
-//   productDialog: boolean;
-
-//   products: Product[];
-
-//   product: Product;
-
-//   selectedProducts: Product[];
-
-//   submitted: boolean;
-
-//   statuses: any[];
-
-//   constructor(private productService: ProductService, private messageService: MessageService, private confirmationService: ConfirmationService) { }
-
-//   ngOnInit() {
-//     this.productService.getProducts().then(data => this.products = data);
-
-//     this.statuses = [
-//       { label: 'INSTOCK', value: 'instock' },
-//       { label: 'LOWSTOCK', value: 'lowstock' },
-//       { label: 'OUTOFSTOCK', value: 'outofstock' }
-//     ];
-//   }
-
-//   openNew() {
-//     this.product = {};
-//     this.submitted = false;
-//     this.productDialog = true;
-//   }
-
-//   deleteSelectedProducts() {
-//     this.confirmationService.confirm({
-//       message: 'Are you sure you want to delete the selected products?',
-//       header: 'Confirm',
-//       icon: 'pi pi-exclamation-triangle',
-//       accept: () => {
-//         this.products = this.products.filter(val => !this.selectedProducts.includes(val));
-//         this.selectedProducts = null;
-//         this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Products Deleted', life: 3000 });
-//       }
-//     });
-//   }
-
-//   editProduct(product: Product) {
-//     this.product = { ...product };
-//     this.productDialog = true;
-//   }
-
-//   deleteProduct(product: Product) {
-//     this.confirmationService.confirm({
-//       message: 'Are you sure you want to delete ' + product.name + '?',
-//       header: 'Confirm',
-//       icon: 'pi pi-exclamation-triangle',
-//       accept: () => {
-//         this.products = this.products.filter(val => val.id !== product.id);
-//         this.product = {};
-//         this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000 });
-//       }
-//     });
-//   }
-
-//   hideDialog() {
-//     this.productDialog = false;
-//     this.submitted = false;
-//   }
-
-//   saveProduct() {
-//     this.submitted = true;
-
-//     if (this.product.name.trim()) {
-//       if (this.product.id) {
-//         this.products[this.findIndexById(this.product.id)] = this.product;
-//         this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000 });
-//       }
-//       else {
-//         this.product.id = this.createId();
-//         this.product.image = 'product-placeholder.svg';
-//         this.products.push(this.product);
-//         this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Created', life: 3000 });
-//       }
-
-//       this.products = [...this.products];
-//       this.productDialog = false;
-//       this.product = {};
-//     }
-//   }
-
-//   findIndexById(id: string): number {
-//     let index = -1;
-//     for (let i = 0; i < this.products.length; i++) {
-//       if (this.products[i].id === id) {
-//         index = i;
-//         break;
-//       }
-//     }
-
-//     return index;
-//   }
-
-//   createId(): string {
-//     let id = '';
-//     var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-//     for (var i = 0; i < 5; i++) {
-//       id += chars.charAt(Math.floor(Math.random() * chars.length));
-//     }
-//     return id;
-//   }
-// }

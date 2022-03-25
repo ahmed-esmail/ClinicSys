@@ -1,5 +1,7 @@
 <p>list-medicines works!</p>
 
+<p-toast></p-toast>
+
 <div class="card">
     <p-toolbar styleClass="mb-4">
         <ng-template pTemplate="left">
@@ -9,11 +11,13 @@
                 (click)="clickAdd()"></button>
             <!-- <button pButton pRipple [label]="Delete" icon="pi pi-trash" class="p-button-danger"
                 (click)="deleteSelectedProducts()" [disabled]="!selectedProducts || !selectedProducts.length"></button> -->
-        </ng-template>
+            </ng-template>
 
     </p-toolbar>
 
-    <p-table #dt [value]="medicines">
+    <p-table #dt [value]="medicines" [rowHover]="true" dataKey="id" responsiveLayout="scroll"
+
+    >
         <!-- [rows]="10" [paginator]="true"
         [globalFilterFields]="['name','country.name','representative.name','status']" responsiveLayout="scroll"
         [(selection)]="selectedPrescriptions" [rowHover]="true" dataKey="id"
@@ -28,6 +32,11 @@
                     <!-- <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
                         placeholder="Search..." /> -->
                 </span>
+                <!-- <span class="p-input-icon-left ml-auto">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="dt1.filterGlobal($event.target.value, 'contains')"
+                        placeholder="Search keyword" />
+                </span> -->
             </div>
         </ng-template>
         <ng-template pTemplate="header">
