@@ -2,14 +2,14 @@
 const express = require("express");
 const router = express.Router();
 
-const { auth, authRole } = require("../middlewares/auth");
+const { auth, authRole, ROLE } = require("../middlewares/auth");
 const paymentController = require("../controllers/payment.controllers");
 const { validate } = require("../helpers/payment.validator");
 
 router.post(
   "/payments",
   auth,
-  authRole(["admin"]),
+  authRole([ROLE.ADMIN, ROLE.RECEPTIONIST]),
   validate("createPayment"),
   paymentController.create
 );
@@ -17,14 +17,14 @@ router.post(
 router.delete(
   "/payments",
   auth,
-  authRole(["admin"]),
+  authRole([ROLE.ADMIN, ROLE.RECEPTIONIST]),
   validate("deletePayment"),
   paymentController.delete
 );
 router.patch(
   "/payments",
   auth,
-  authRole(["admin"]),
+  authRole([ROLE.ADMIN, ROLE.RECEPTIONIST]),
   validate("updatePayment"),
   paymentController.update
 );
@@ -32,7 +32,7 @@ router.patch(
 router.get(
   "/payments",
   auth,
-  authRole(["admin", "doctor"]),
+  authRole([ROLE.ADMIN, ROLE.RECEPTIONIST]),
   paymentController.getAll
 );
 

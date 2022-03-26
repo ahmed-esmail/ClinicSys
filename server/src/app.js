@@ -1,10 +1,13 @@
 const express = require("express");
+const cors = require('cors');
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const authentication = require("./api/routes/auth.routes");
 const payment = require("./api/routes/payment.routes");
 require("./api/db/mongoose");
 const app = express();
+app.use(cors())
+
 
 const doctorRouter = require("./api/routes/doctorRouter");
 const receptionistRouter = require("./api/routes/ReceptionistRouter");
@@ -57,7 +60,8 @@ app.use((request, response) => {
 
 //************* On Error MiddleWare ************/
 app.use((err, req, res, next) => {
+  console.log(err)
   res
     .status(err.status || 500)
-    .end(`this is the error : ${JSON.stringify(err.message)}`);
+      .json({message : `${JSON.stringify(err.message)}`});
 });
