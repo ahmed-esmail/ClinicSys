@@ -7,21 +7,6 @@ const router = express.Router();
 const mongoose = require("mongoose");
 const User = mongoose.model("User");
 
-const multer = require("multer");
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "./../images/");
-  },
-  filename: (req, file, cb) => {
-    cb(
-      null,
-      new Date().toLocaleDateString().replace(/\//g, "-") +
-        "-" +
-        file.originalname
-    );
-  },
-});
-const upload = multer({ storage: storage }).single("profileImg");
 
 //get all doctors
 router.get("", doctorController.getDoctors);
@@ -36,7 +21,6 @@ router.get(
 //add a doctor
 router.post(
   "",
-  upload,
   [
     body("_id.firstName").isAlpha().withMessage("First name should be string"),
     body("_id.lastName").isAlpha().withMessage("Last name should be string"),
@@ -77,7 +61,7 @@ router.post(
     body("_id.address")
       .isLength({ min: 3 })
       .withMessage("invalid address"),
-    //body('profileImg').isAlpha().withMessage("profileImg path should be string"),
+    body('_id.profileImg').not().isEmpty().withMessage("profileImg path should be string"),
     body("_id.gender").custom((value, { req }) => {
       if (value == "male" || value == "female") {
         return true;
@@ -92,7 +76,6 @@ router.post(
 //update
 router.put(
   "",
-  upload,
   [
     body("_id._id").isMongoId().withMessage("ID should be ObjectId"),
     body("_id.firstName").isAlpha().withMessage("First name should be string"),
@@ -130,13 +113,10 @@ router.put(
           }
         });
       }),
-    body("_id.password")
-      .isLength({ min: 7 })
-      .withMessage("Invalid Password"),
-      body("_id.address")
+    body("_id.address")
       .isLength({ min: 3 })
       .withMessage("invalid address"),
-    //body('profileImg').isAlpha().withMessage("profileImg path should be string"),
+    body('_id.profileImg').not().isEmpty().withMessage("profileImg path should be string"),
     body("_id.gender").custom((value, { req }) => {
       if (value == "male" || value == "female") {
         return true;

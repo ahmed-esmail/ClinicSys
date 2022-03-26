@@ -1,40 +1,17 @@
-<p>list-prescriptions works!</p>
-
 
 <p-toast></p-toast>
-
-<!-- <button type="button" (click)="show()" pButton icon="pi pi-info-circle" label="Show"></button> -->
-
-<!-- <div class="card-header d-flex justify-content-between">
-    <h1 class="col-lg-3 mx-auto p-3">prescription Manage</h1>
-    <button class="btn btn-success my-auto h-50 col-lg-1" (click)="clickAdd()">Add
-        prescription</button>
-</div> -->
 
 <div class="card">
     <p-toolbar styleClass="mb-4">
         <ng-template pTemplate="left">
-            <!-- <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2"
-                (click)="openNew()"></button> -->
+
                 <button pButton pRipple label="New Prescription" icon="pi pi-plus" class="p-button-success mr-2" (click)="showAdd()"></button>
-            <!-- <button pButton pRipple [label]="Delete" icon="pi pi-trash" class="p-button-danger"
-                (click)="deleteSelectedProducts()" [disabled]="!selectedProducts || !selectedProducts.length"></button> -->
         </ng-template>
 
     </p-toolbar>
 
-    <p-table #dt [value]="prescriptions" [rowHover]="true" dataKey="id" responsiveLayout="scroll">
+    <p-table #dt [value]="prescriptionsList" [rowHover]="true" dataKey="id" responsiveLayout="scroll">
 
-        <!-- <ng-template pTemplate="caption">
-            <div class="flex align-items-center justify-content-between">
-                <h5 class="m-0">Manage Prescription</h5>
-                <span class="p-input-icon-left">
-                    <i class="pi pi-search"></i>
-                    <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
-                        placeholder="Search..." />
-                </span>
-            </div>
-        </ng-template> -->
         <ng-template pTemplate="header">
             <tr>
                 <th pSortableColumn="id">ID <p-sortIcon field="id"></p-sortIcon>
@@ -60,7 +37,7 @@
                 <td>{{prescription._id}}</td>
                 <td>{{prescription.date}}</td>
                 <td>{{prescription.doctor}}</td>
-                <td>{{prescription.patient}}</td>
+                <td>{{prescription.patient.first_name}} {{prescription.patient.last_name}}</td>
                 <!-- <td>{{prescription.medicines}}</td> -->
                 <td><p-table #dt2 [value]="prescription.medicines">
                     <ng-template pTemplate="header">
@@ -75,7 +52,7 @@
                     </ng-template>
                     <ng-template pTemplate="body" let-med>
                         <tr>
-                            <td>{{med.medicine}}</td>
+                            <td>{{med.medicine.name}}</td>
                             <td>{{med.dose}}</td>
                         </tr>
                     </ng-template>
@@ -91,83 +68,4 @@
     </p-table>
 </div>
 
-<!-- 
-<p-dialog [(visible)]="presDialog" [style]="{width: '450px'}" header="Add Prescription" [modal]="true" presDialog="true"
-    styleClass="p-fluid">
-    <ng-template pTemplate="content">
-        <div class="field">
-            <label for="doctor">doctor</label>
-            <input type="text" pInputText id="doctor" [(ngModel)]="prescription.doctor" required autofocus />
-            <small class="p-error" *ngIf="submitted && !prescription.doctor">Name is required.</small>
-        </div>
-        <div class="field">
-            <label for="med">medicine</label>
-            <p-dropdown [options]="medicines" [(ngModel)]="med" optionLabel="name"></p-dropdown>
-        </div>
-        <div class="field">
-            <label for="dose">dose</label>
-            <input type="text" pInputText id="dose" [(ngModel)]="dose" required autofocus />
-            <small class="p-error" *ngIf="submitted && !dose">Name is required.</small>
-        </div>
-    </ng-template>
-
-    <ng-template pTemplate="footer">
-        <button pButton pRipple label="add" icon="pi pi-check" class="p-button-text" (click)="add()"></button>
-        <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="save()"></button>
-    </ng-template>
-</p-dialog> -->
-
 <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
-
-<!-- <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>     -->
-
-<!-- Start Table -->
-<!-- <div class="row mx-1">
-    <div class="card col-11 p-0 my-5 mx-auto">
-        <div class="card-header d-flex justify-content-between">
-            <h1 class="col-lg-3 mx-auto p-3">prescription Manage</h1>
-            <button class="btn btn-success my-auto h-50 col-lg-1" (click)="clickAdd()">Add
-                prescription</button>
-        </div>
-        <div class="card-body"> -->
-            <!-- <p-table [value]="prescriptions">
-                <ng-template pTemplate="header">
-                    <tr>
-                        <th>doctor</th>
-                        <th colspan="2">medicine</th>
-                        <th>Action</th>
-                    </tr>
-                </ng-template>
-                <ng-template pTemplate="body" let-prescription>
-                    <tr *ngFor="let prescription of prescriptions">
-                        <td>{{prescription.doctor}}</td>
-                        <td>
-                            <li *ngFor="let med of prescription.medicines">
-                                <ul>{{med.medicine}}</ul>
-                            </li>
-                        </td>
-                        <td>
-                            <li *ngFor="let med of prescription.medicines">
-                                <ul>{{med.dose}}</ul>
-                            </li>
-                        </td>
-                        <td>
-                            <button class="btn btn-success mx-1 my-auto" (click)="clickEdit(prescription)">Edit</button>
-                            <button class="btn btn-danger mx-1 my-auto"
-                                (click)="clickDelete(prescription._id)">Delete</button>
-                        </td>
-                    </tr>
-                </ng-template>
-            </p-table> -->
-        <!-- </div> -->
-
-        <!-- <div *ngIf="showAdd">
-            <app-add-prescription></app-add-prescription>
-        </div>
-        <div *ngIf="showEdit">
-            <app-edit-prescription></app-edit-prescription>
-        </div> -->
-        <!-- <div *ngIf="showDelete">
-            <app-remove-prescription></app-remove-prescription>
-        </div> -->
-        <!-- End Table -->

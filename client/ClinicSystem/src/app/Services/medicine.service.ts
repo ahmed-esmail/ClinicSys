@@ -15,8 +15,9 @@ export class MedicineService {
 
   id: string = "";
   
-  getMedicines() {
-    return this.http.get<Medicine[]>(this.medicineUrl)
+  getMedicine(id: string) {
+    return this.http.get<Medicine>(this.medicineUrl + '/' + id)
+      .pipe(catchError(this.handleError));
   }
 
   getAllMedicines() {

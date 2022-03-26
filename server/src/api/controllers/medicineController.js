@@ -19,6 +19,7 @@ exports.getMedicines = function (request, response, next) {
 exports.getMedicine = function (request, response, next) {
     Medicine.findOne({ _id: request.params._id })
         .then(result => {
+            if (result == null) next(new Error("Medicine id not Found"))
             response.status(200).json(result);
         })
         .catch(error => {

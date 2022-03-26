@@ -28,6 +28,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
+import { CalendarModule } from 'primeng/calendar';
 
 
 
@@ -63,7 +64,15 @@ import { DynamicDialogModule } from 'primeng/dynamicdialog';
     ConfirmDialogModule, 
     InputTextModule,
     ToastModule,
-    DynamicDialogModule
+    DynamicDialogModule,
+    FormsModule,
+    TableModule,
+    DropdownModule,
+    ButtonModule,
+    InputTextModule,
+    ToastModule,
+    ReactiveFormsModule,
+    CalendarModule,
   ],
   providers: [MessageService,ConfirmationService],
   bootstrap: [AppComponent]

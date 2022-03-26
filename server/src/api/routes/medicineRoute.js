@@ -3,10 +3,11 @@ const { body, param, query } = require("express-validator")
 const controller = require("../controllers/medicineController")
 const router = express.Router()
 
+
 //---------------------------- Git All Medicines
 router.get("", controller.getMedicines);
 //---------------------------- Git Medicine
-router.get("/:id", [param('id').isMongoId().withMessage("ID should be ObjectId")], controller.getMedicine);
+router.get("/:_id", [param('_id').isMongoId().withMessage("ID should be ObjectId")], controller.getMedicine);
 
 //---------------------------- Add Medicine
 router.post("", [

@@ -3,8 +3,7 @@ const { validationResult } = require("express-validator");
 const mongoose = require("mongoose");
 const User = mongoose.model("User");
 const Doctor = require("./../Models/doctorModel");
-const fs = require("fs");
-const path = require("path");
+
 
 exports.getDoctors = function (request, response, next) {
   Doctor.find({ type: "Doctor" })
@@ -13,7 +12,6 @@ exports.getDoctors = function (request, response, next) {
       model: "User",
     })
     .then((result) => {
-      //fs.writeFileSync("profileImg", result._id.profileImg)
       response.status(200).json(result);
     })
     .catch((error) => {
@@ -62,7 +60,6 @@ exports.addDoctor = function (request, response, next) {
       .reduce((current, object) => current + object.msg + " , ", "");
     next(error);
   } else {
-    console.log(request.file)
     let userObject = new User({
       firstName: request.body._id.firstName,
       lastName: request.body._id.lastName,
@@ -71,11 +68,7 @@ exports.addDoctor = function (request, response, next) {
       email: request.body._id.email,
       password: request.body._id.password,
       address: request.body._id.address,
-      /* profileImg: fs.readFileSync(
-        path.join(
-          /* __dirname + "./../../../../images/" +  request.body._id.profileImg
-        )
-      ), */
+      profileImg: request.body._id.profileImg,
       gender: request.body._id.gender,
       type: "Doctor",
     });
@@ -87,11 +80,9 @@ exports.addDoctor = function (request, response, next) {
       patients: [],
     });
 
-    console.log("dd")
     userObject
       .save()
       .then((object1) => {
-        console.log("dd")
         doctorObject
           .save()
           .then((object2) => {
@@ -246,7 +237,6 @@ exports.updateDoctor = function (request, response, next) {
   let errors = validationResult(request);
 
   if (!errors.isEmpty()) {
-    console.log("vali")
     let error = new Error();
     error.status = 422;
     error.message = errors
@@ -263,7 +253,6 @@ exports.updateDoctor = function (request, response, next) {
       }
     )
       .then((result) => {
-        //console.log(request.file.path)
         if (result.matchedCount)
           User.updateOne(
             { _id: request.body._id._id },
@@ -274,16 +263,9 @@ exports.updateDoctor = function (request, response, next) {
                 phoneNumber: request.body._id.phoneNumber,
                 age: request.body._id.age,
                 email: request.body._id.email,
-                password: request.body._id.password,
+                /* password: request.body._id.password, */
                 address: request.body._id.address,
-                /* profileImg: {
-                  data: fs.readFileSync(
-                    path.join(
-                      __dirname + "./../../../../images/" + request.file.path
-                    )
-                  ),
-                  contentType: "image/png",
-                }, */
+                profileImg: request.body._id.profileImg,
                 gender: request.body._id.gender,
                 /* type: "Doctor", */
               },
@@ -299,7 +281,6 @@ exports.updateDoctor = function (request, response, next) {
               next(error);
             });
         else {
-          console.log("matc")
           let error = new Error();
           error.status = 422;
           error.message = "Doctor id not found";

@@ -10,6 +10,8 @@ import { AddMedicineComponent } from '../../Medecine/add-medicine/add-medicine.c
 import { AddPrescriptionComponent } from '../add-prescription/add-prescription.component';
 import { EditPrescriptionComponent } from '../edit-prescription/edit-prescription.component';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog';
+import { PatientService } from 'src/app/Services/patient.service';
+import { Patient } from 'src/app/Class/patient';
 
 
 
@@ -31,8 +33,10 @@ import { DynamicDialogConfig } from 'primeng/dynamicdialog';
 export class ListPrescriptionsComponent implements OnInit {
   
   prescriptions: Prescription[] = [];
+  prescriptionsList: Prescription[] = [... this.prescriptions];
   medicines: Medicine[] = [];
-
+  // patient: Patient = new Patient('', '', '', '', 0, '', '', '');
+  
   prescription: Prescription = new Prescription('', new Date,'','', [{ medicine: "", dose: "" },]);
   
   med: string = "";
@@ -48,6 +52,7 @@ export class ListPrescriptionsComponent implements OnInit {
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
     private medicineService: MedicineService,
+    // public patientService: PatientService,
     private dialogService: DialogService,
   ) {
     
@@ -56,11 +61,15 @@ export class ListPrescriptionsComponent implements OnInit {
   ngOnInit(): void {
     this.prescriptionService.getAllprescriptions().subscribe((res) => {
       this.prescriptions = res;
+      this.findData();
     });
     this.medicineService.getAllMedicines().subscribe((res) => {
       this.medicines = res;
     });
+
   }
+
+
 
   showAdd() {
     const ref = this.dialogService.open(AddPrescriptionComponent, {
@@ -87,21 +96,6 @@ export class ListPrescriptionsComponent implements OnInit {
     });
   }
 
-  clickEdit(pres: Prescription) {
-    // this.prescriptionService.id = i;
-    this.isEdit = true;
-    this.prescription = { ...pres };
-    this.submitted = false;
-    this.presDialog = true;
-  }
-
-  clickAdd() {
-    this.isEdit = false;
-    this.prescription = new Prescription('', new Date,'','', [{ medicine: "", dose: "" },]);
-    this.submitted = false;
-    this.presDialog = true;
-  }
-
   clickDelete(i: string) {
 
     this.prescriptionService.id = i;
@@ -125,43 +119,6 @@ export class ListPrescriptionsComponent implements OnInit {
 
   }
 
-  add() {
-    if (this.arr[0].medicine != "") {
-      this.arr.push({ medicine: this.med, dose: this.dose });
-    } else {
-      this.arr[0] = { medicine: this.med, dose: this.dose };
-    }
-    this.reloadData();
-    console.log(this.arr);
-  }
-
-  save() {
-    console.log(this.prescription);
-    if (this.isEdit) {
-      // this.medicines[this.findIndexById(this.medicine._id)] = this.medicine;
-      this.prescriptionService.editprescription(this.prescription).subscribe(() => {
-      });;
-    } else {
-      // this.medicines.push(this.medicine); 
-      this.prescription.medicines = this.arr;
-      this.prescriptionService.addprescription(this.prescription).subscribe(() => {
-      });
-      
-    }
-    this.reloadData();
-    this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Prescription Updated', life: 3000 });
-    this.presDialog = false;
-    // this.prescription.medicines = this.arr;
-    // console.log(this.prescription);
-    // this.prescriptionService.addprescription(this.prescription).subscribe(() => {
-    // });
-  }
-
-  hideDialog() {
-    this.presDialog = false;
-    this.submitted = false;
-  }
-
   findIndexById(id: string): number {
     let index = -1;
     for (let i = 0; i < this.prescriptions.length; i++) {
@@ -172,12 +129,18 @@ export class ListPrescriptionsComponent implements OnInit {
     }
     return index;
   }
+
   reloadData() {
     this.prescriptionService.getAllprescriptions().subscribe((res) => {
       this.prescriptions = res;
+      this.findData();
     });
     this.medicineService.getAllMedicines().subscribe((res) => {
       this.medicines = res;
     });
+  }
+
+  findData() {
+    this.prescriptionsList = [... this.prescriptions];
   }
 }
