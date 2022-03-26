@@ -54,7 +54,6 @@ exports.addappointment = async function (request, response, next) {
     } else {
       let appointmentObject = new Appointment({
         //_id: request.body.id,
-        date: request.body.date,
         time: request.body.time,
         bill: request.body.bill,
         patient: request.body.patient,
@@ -65,7 +64,7 @@ exports.addappointment = async function (request, response, next) {
       appointmentObject
         .save()
         .then((object) => {
-          response.status(201).json({ message: "Appointment Added" });
+          response.status(201).json(object);
         })
         .catch((error) => {
           error.status = 500;

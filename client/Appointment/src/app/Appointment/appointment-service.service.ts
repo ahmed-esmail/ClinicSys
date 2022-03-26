@@ -21,6 +21,20 @@ export class appointmentService {
   addAppointment(app: Appointment) {
     return this.http.post(this.url, app);
   }
+
+  addAppointmenttoDoctor(app: any) {
+    return this.http.put(
+      'http://localhost:3000/doctors/addAppointmentToDoctor',
+      { id: app.doctor, appointment: app._id }
+    );
+  }
+  addAppointmenttoPatient(app: any) {
+    return this.http.put(
+      'http://localhost:3000/patient/addAppointmenttoPatient',
+      { _id: app.patient, appointment: app._id }
+    );
+  }
+
   deleteAppointment(id: number) {
     return this.http.delete(this.url);
   }

@@ -15,15 +15,7 @@ import { Patient } from 'src/app/_models/patient';
 export class AppointmentaddComponent implements OnInit {
   constructor(private appser: appointmentService) {}
 
-  nappointment: Appointment = new Appointment(
-    0,
-    new Date(),
-    { hours: 1, minutes: 1 },
-    '',
-    '',
-    '',
-    ''
-  );
+  nappointment: Appointment = new Appointment('', new Date(), '', '', '');
   ngOnInit(): void {
     this.getDoctorsList();
     this.getPatientsList();
@@ -55,6 +47,23 @@ export class AppointmentaddComponent implements OnInit {
     this.appser.addAppointment(this.nappointment).subscribe({
       next: (response) => {
         alert(response + 'is saved');
+        console.log(response);
+        this.appser.addAppointmenttoDoctor(response).subscribe({
+          next: (response) => {
+            alert(response + 'is saved');
+          },
+          error: (er) => {
+            console.log(er);
+          },
+        });
+        this.appser.addAppointmenttoPatient(response).subscribe({
+          next: (response) => {
+            alert(response + 'is saved');
+          },
+          error: (er) => {
+            console.log(er);
+          },
+        });
       },
       error: (er) => {
         console.log(er);

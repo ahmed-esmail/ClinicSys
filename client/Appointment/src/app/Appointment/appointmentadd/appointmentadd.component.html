@@ -1,16 +1,11 @@
 <h1 mat-dialog-title>Add appointment</h1>
 
-<h2>Date</h2>
+<h2>Time</h2>
 <div class="input-group mb-3">
-    <input type="date" [(ngModel)]="nappointment.date" class="form-control" aria-label="Date"
+    <input type="datetime-local" [(ngModel)]="nappointment.time" class="form-control" aria-label="Date"
         aria-describedby="basic-addon1">
 </div>
 
-<h2>Time</h2>
-<div class="input-group mb-3">
-    <input type="time" class="form-control" [(ngModel)]="nappointment.time" aria-label="Time"
-        aria-describedby="basic-addon2">
-</div>
 
 <h2> Doctor </h2>
 <div class="input-group mb-3">

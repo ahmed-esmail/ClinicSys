@@ -15,8 +15,7 @@ router.post(
   "",
   [
     // body("id").isInt().withMessage("Appointment Id should be Intger"),
-    body("date").isDate().withMessage(" ,Please enter valid date "),
-    body("time").isDate().withMessage(" ,Please enter valid time  "),
+    body("time"),//.isDate().withMessage(" ,Please enter valid time  "),
     body("bill")
       .isMongoId()
       .withMessage(",Please enter valid bill number  ")
@@ -35,7 +34,6 @@ router.put(
   "",
   [
     // body("id").isInt().withMessage("Appointment Id should be Intger"),
-    body("date").isDate().withMessage(" ,Please enter valid date "),
     body("time").isInt().withMessage(" ,Please enter valid time  "),
     body("bill")
       .isMongoId()
