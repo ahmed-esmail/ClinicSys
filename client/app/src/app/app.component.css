@@ -1,0 +1,15 @@
+app-navbar {
+    height: 100vh;
+    overflow: auto;
+}
+app-header, app-footer {
+    height: 10vh;
+}
+.pos {
+    position: relative;
+}
+app-footer {
+    position: absolute;
+    bottom: 0vh;
+}
+
