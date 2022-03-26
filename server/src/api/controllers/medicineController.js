@@ -88,7 +88,7 @@ exports.deleteMedicine = (request, response, next) => {
     else {
             Medicine.deleteOne({ _id: request.params._id })
                 .then(result => {
-                    response.status(201).json({ message: "Medicine Deleted" })
+                    response.status(200).json({ message: "Medicine Deleted" })
                 })
                 .catch(error => {
                     error.status = 500;
@@ -97,5 +97,3 @@ exports.deleteMedicine = (request, response, next) => {
                 })
     }
 }
-
-

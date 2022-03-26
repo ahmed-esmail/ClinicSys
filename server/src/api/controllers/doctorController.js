@@ -3,14 +3,13 @@ const { validationResult } = require("express-validator");
 const mongoose = require("mongoose");
 const User = mongoose.model("User");
 const Doctor = require("./../Models/doctorModel");
-const fs = require("fs");
-const path = require("path");
+
 
 exports.getDoctors = function (request, response, next) {
-  User.find({ type: "Doctor" })
+  Doctor.find({ type: "Doctor" })
     .populate({
       path: "_id",
-      model: "Doctor",
+      model: "User",
     })
     .then((result) => {
       response.status(200).json(result);
@@ -32,10 +31,10 @@ exports.getDoctorById = function (request, response, next) {
       .reduce((current, object) => current + object.msg + " , ", "");
     next(error);
   } else {
-    User.findOne({ _id: request.params.id, type: "Doctor" })
+    Doctor.findOne({ _id: request.params.id, type: "Doctor" })
       .populate({
         path: "_id",
-        model: "Doctor",
+        model: "User",
       })
       .then((data) => {
         if (!data) {
@@ -53,7 +52,6 @@ exports.getDoctorById = function (request, response, next) {
 
 exports.addDoctor = function (request, response, next) {
   let errors = validationResult(request);
-
   if (!errors.isEmpty()) {
     let error = new Error();
     error.status = 422;
@@ -63,20 +61,15 @@ exports.addDoctor = function (request, response, next) {
     next(error);
   } else {
     let userObject = new User({
-      firstName: request.body.firstName,
-      lastName: request.body.lastName,
-      phoneNumber: request.body.phoneNumber,
-      age: request.body.age,
-      email: request.body.email,
-      password: request.body.password,
-      address: request.body.address,
-      profileImg: {
-        data: fs.readFileSync(
-          path.join(__dirname + "./../../../../images/" + request.file.path)
-        ),
-        contentType: "image/png",
-      },
-      gender: request.body.gender,
+      firstName: request.body._id.firstName,
+      lastName: request.body._id.lastName,
+      phoneNumber: request.body._id.phoneNumber,
+      age: request.body._id.age,
+      email: request.body._id.email,
+      password: request.body._id.password,
+      address: request.body._id.address,
+      profileImg: request.body._id.profileImg,
+      gender: request.body._id.gender,
       type: "Doctor",
     });
 
@@ -252,7 +245,7 @@ exports.updateDoctor = function (request, response, next) {
     next(error);
   } else {
     Doctor.updateOne(
-      { _id: request.body.id },
+      { _id: request.body._id._id },
       {
         $set: {
           speciality: request.body.speciality,
@@ -262,25 +255,18 @@ exports.updateDoctor = function (request, response, next) {
       .then((result) => {
         if (result.matchedCount)
           User.updateOne(
-            { _id: request.body.id },
+            { _id: request.body._id._id },
             {
               $set: {
-                firstName: request.body.firstName,
-                lastName: request.body.lastName,
-                phoneNumber: request.body.phoneNumber,
-                age: request.body.age,
-                email: request.body.email,
-                password: request.body.password,
-                address: request.body.address,
-                profileImg: {
-                  data: fs.readFileSync(
-                    path.join(
-                      __dirname + "./../../../../images/" + request.file.path
-                    )
-                  ),
-                  contentType: "image/png",
-                },
-                gender: request.body.gender,
+                firstName: request.body._id.firstName,
+                lastName: request.body._id.lastName,
+                phoneNumber: request.body._id.phoneNumber,
+                age: request.body._id.age,
+                email: request.body._id.email,
+                /* password: request.body._id.password, */
+                address: request.body._id.address,
+                profileImg: request.body._id.profileImg,
+                gender: request.body._id.gender,
                 /* type: "Doctor", */
               },
             }

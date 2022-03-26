@@ -11,12 +11,21 @@ router.get("/:id", [
 ], controller.getPrescription);
 
 //----------------------------  Add Prescription
-router.post("", controller.createPrescription);
+router.post("", [
+    body("date").isDate().withMessage("Please Enter valid Date "),
+    body('medicines').isArray({ min: 0 }).withMessage("Mediciens should be Array of medicine"),
+], controller.createPrescription);
 
 //----------------------------  Update Prescription
-router.put("", controller.updatePrescription);
+router.put("", [
+    body("date").isDate().withMessage("Please Enter valid Date "),
+    body('medicines').isArray({ min: 0 }).withMessage("Mediciens should be Array of medicine"),
+], controller.updatePrescription);
 
 //----------------------------  Delete Prescription
 router.delete("/:_id", [param("_id").isMongoId().withMessage("_id Should be ObjectID")], controller.deletePrescription);
+router.get("/patient/:Pid", [
+    param('Pid').isMongoId().withMessage("ID should be ObjectId"),
+], controller.getPatientPrescription);
 
 module.exports = router;

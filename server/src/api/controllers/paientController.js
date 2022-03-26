@@ -44,9 +44,13 @@ exports.createPatient=(request,response,next)=>{
            error.message=errors.array().reduce((current,object)=>current+object.msg+" ","")
            throw error;
     }
+    console.log(request.body);
+    
+
+   // let image = request.body != undefined || null ? request.body.profile_img : request.body.gender+".png"
  
-    
-    
+       // console.log(image);
+       
       let object = new  Patient({
        
         first_name: request.body.first_name,
@@ -55,10 +59,10 @@ exports.createPatient=(request,response,next)=>{
         age:request.body.age,
         gender:request.body.gender,
         address:request.body.address,
-       profile_img: {data: fs.readFileSync(path.join(__dirname + './../../../../images/' + request.file.path)),
-       //data:fs.readFileSync(request.body.profile_img),
-       contentType: 'image/png'},
-        history:request.body.history,
+        profile_img:request.body.profile_img 
+        
+    
+     
      
       })
  
@@ -82,10 +86,10 @@ exports.updatePatient=(request,response,next)=>{
         age:request.body.age,
         gender:request.body.gender,
         address:request.body.address,
-        profile_img: { data: fs.readFileSync(path.join(__dirname + './../../../../images/' + request.file.path)),
-            //data:fs.readFileSync(request.body.profile_img),
-           contentType: 'image/png'},
-        history:request.body.history,
+        // profile_img: { data: fs.readFileSync(path.join(__dirname + './../../../../images/' + request.file.path)),
+        //     //data:fs.readFileSync(request.body.profile_img),
+        //    contentType: 'image/png'},
+     
         
             }
         })

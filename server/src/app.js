@@ -26,12 +26,19 @@ app.use(morgan("dev"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }))
 // ************** -----------routing-------------------*****************
-app.use(authentication);
-app.use(payment)
-app.get("/", (req, res, next) => {
-  res.send("welcome to API!!");
-});
+// app.use(authentication);
+// app.use(payment)
+// app.get("/", (req, res, next) => {
+//   res.send("welcome to API!!");
+// });
+app.use((request,response,next)=>{
 
+  response.header("Access-Control-Allow-Origin","*");
+  response.header("Access-Control-Allow-Methods","GET,POST,PUT,DELETE,OPTIONS");
+  response.header("Access-Control-Allow-Headers","Content-Type,Authorization")
+  next();
+
+})
 // routes
 app.use("/doctors", doctorRouter);
 app.use("/receptionists", receptionistRouter);
