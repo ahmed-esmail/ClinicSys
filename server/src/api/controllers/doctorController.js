@@ -10,7 +10,7 @@ exports.getDoctors = function (request, response, next) {
   User.find({ type: "Doctor" })
     .populate({
       path: "_id",
-      model: "Doctor",
+      //model: "Doctor",
     })
     .then((result) => {
       response.status(200).json(result);
@@ -63,19 +63,19 @@ exports.addDoctor = function (request, response, next) {
     next(error);
   } else {
     let userObject = new User({
-      firstName: request.body.firstName,
-      lastName: request.body.lastName,
+      first_name: request.body.firstName,
+      last_name: request.body.lastName,
       phoneNumber: request.body.phoneNumber,
       age: request.body.age,
       email: request.body.email,
       password: request.body.password,
       address: request.body.address,
-      profileImg: {
-        data: fs.readFileSync(
-          path.join(__dirname + "./../../../../images/" + request.file.path)
-        ),
-        contentType: "image/png",
-      },
+      // profileImg: {
+      //   data: fs.readFileSync(
+      //     path.join(__dirname + "./../../../../images/" + request.file.path)
+      //   ),
+      //   contentType: "image/png",
+      // },
       gender: request.body.gender,
       type: "Doctor",
     });
@@ -165,11 +165,9 @@ exports.removeAppointmentFromDoctor = function (request, response, next) {
       }
     )
       .then((result) => {
-        response
-          .status(201)
-          .json({
-            message: "Appointment removed successfully from the doctor",
-          });
+        response.status(201).json({
+          message: "Appointment removed successfully from the doctor",
+        });
       })
       .catch((error) => {
         error.status = 500;

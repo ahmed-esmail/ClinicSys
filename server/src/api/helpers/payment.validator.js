@@ -8,7 +8,7 @@ exports.validate = (method) => {
         body("charges", "please provide charges for appointment").exists(),
         body("method", "please provide correct method for payment")
           .exists()
-          .isIn(["cash_card", "credit_card", "insurance_card"]),
+          .isIn(["cash", "credit card", "insurance card", "partial"]),
       ];
     }
     case "deletePayment": {
@@ -20,7 +20,7 @@ exports.validate = (method) => {
         body("charges", "please provide charges for appointment").optional(),
         body("method", "please provide correct method for payment")
           .optional()
-          .isIn(["cash_card", "credit_card", "insurance_card"]),
+          .isIn(["cash", "credit card", "insurance card", "partial"]),
       ];
     }
   }

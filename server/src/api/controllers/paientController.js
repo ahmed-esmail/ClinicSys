@@ -55,9 +55,9 @@ exports.createPatient=(request,response,next)=>{
         age:request.body.age,
         gender:request.body.gender,
         address:request.body.address,
-       profile_img: {data: fs.readFileSync(path.join(__dirname + './../../../../images/' + request.file.path)),
+       //profile_img: {data: fs.readFileSync(path.join(__dirname + './../../../../images/' + request.file.path)),
        //data:fs.readFileSync(request.body.profile_img),
-       contentType: 'image/png'},
+       //contentType: 'image/png'},
         history:request.body.history,
      
       })

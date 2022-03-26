@@ -2,8 +2,9 @@ const express = require("express");
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const authentication = require("./api/routes/auth.routes");
-const payment = require("./api/routes/payment.routes")
+const payment = require("./api/routes/payment.routes");
 require("./api/db/mongoose");
+var cors = require("cors");
 const app = express();
 
 const doctorRouter = require("./api/routes/doctorRouter");
@@ -19,25 +20,27 @@ app.listen(PORT, () => {
   console.log(`server Running on port http://localhost:${PORT}`);
 });
 
+app.use(cors());
 // **** -----------Middleware------------------- ***********
 // register morgan middleware
 app.use(morgan("dev"));
 // register body parser middleware
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.urlencoded({ extended: true }));
 // ************** -----------routing-------------------*****************
 app.use(authentication);
-app.use(payment)
+app.use(payment);
 app.get("/", (req, res, next) => {
   res.send("welcome to API!!");
 });
 
 // routes
+
 app.use("/doctors", doctorRouter);
 app.use("/receptionists", receptionistRouter);
 app.use("/medicine", medicineRoute);
 app.use("/prescription", prescriptionRoute);
-app.use("/patient",patientRoute);
+app.use("/patient", patientRoute);
 
 app.use("/appointments", appointmentRouter);
 //  for unhandled routes
