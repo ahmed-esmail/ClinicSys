@@ -123,7 +123,7 @@ exports.addDoctortoPatient=(request,response,next)=>{
     else{
         Patient.updateOne({_id:request.body._id},
         {
-            $push:{Doctor: request.body.doctor}
+            $addToSet:{Doctor: request.body.doctor}
         }).then(data=>{
             if(data==null) throw new Error("Patient Is not Found!")
             response.status(200).json({message:"Doctor add to Patient"})
@@ -145,7 +145,7 @@ exports.addAppointmenttoPatient=(request,response,next)=>{
     else{
         Patient.updateOne({_id:request.body._id},
         {
-            $push:{Appointment: request.body.appointment}
+            $addToSet:{Appointment: request.body.appointment}
         }).then(data=>{
             if(data==null) throw new Error("Patient Is not Found!")
             response.status(200).json({message:"Appointment add to Patient"})
@@ -167,7 +167,7 @@ exports.addPrescriptiontoPatient=(request,response,next)=>{
     else{
         Patient.updateOne({_id:request.body._id},
         {
-            $push:{Prescriptions: request.body.prescription}
+            $addToSet:{Prescriptions: request.body.prescription}
         }).then(data=>{
             if(data==null) throw new Error("Patient Is not Found!")
             response.status(200).json({message:"Prescription add to Patient"})
