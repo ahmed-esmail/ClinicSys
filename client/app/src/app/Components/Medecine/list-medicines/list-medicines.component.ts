@@ -1,8 +1,8 @@
-import { Component, OnInit, OnChanges, SimpleChanges} from '@angular/core';
-import { Medicine } from 'src/app/_models/medicine';
-import { MedicineService } from 'src/app/Services/medicine.service';
-import { ConfirmationService } from 'primeng/api';
-import { MessageService } from 'primeng/api';
+import {Component, OnInit, OnChanges, SimpleChanges} from '@angular/core';
+import {Medicine} from 'src/app/_models/medicine';
+import {MedicineService} from 'src/app/Services/medicine.service';
+import {ConfirmationService} from 'primeng/api';
+import {MessageService} from 'primeng/api';
 
 @Component({
   selector: 'app-list-medicines',
@@ -16,7 +16,7 @@ import { MessageService } from 'primeng/api';
      `],
   providers: [MessageService, ConfirmationService]
 })
-export class ListMedicinesComponent implements OnInit,OnChanges {
+export class ListMedicinesComponent implements OnInit, OnChanges {
 
   medicines: Medicine[] = [];
   // medicinesCopy: Medicine[] = this.medicines;
@@ -25,9 +25,12 @@ export class ListMedicinesComponent implements OnInit,OnChanges {
   medicine: Medicine = new Medicine('', '', '');
   submitted: boolean = false;
   isEdit: boolean = false;
+
   // dt: any;
 
-  constructor(public medicineService: MedicineService, private messageService: MessageService, private confirmationService: ConfirmationService){}
+  constructor(public medicineService: MedicineService, private messageService: MessageService, private confirmationService: ConfirmationService) {
+  }
+
   ngOnChanges(): void {
     this.medicineService.getAllMedicines().subscribe((res) => {
       this.medicines = res;
@@ -40,19 +43,21 @@ export class ListMedicinesComponent implements OnInit,OnChanges {
     });
   }
 
-  
+
   clickEdit(med: Medicine) {
     this.isEdit = true;
-    this.medicine = { ...med };
+    this.medicine = {...med};
     this.submitted = false;
     this.medicineDialog = true;
   }
+
   clickAdd() {
     this.isEdit = false;
     this.medicine = new Medicine('', '', '');
     this.submitted = false;
     this.medicineDialog = true;
   }
+
   clickDelete(i: string) {
     this.medicineService.id = i;
     this.confirmationService.confirm({
@@ -62,10 +67,11 @@ export class ListMedicinesComponent implements OnInit,OnChanges {
       accept: () => {
         // console.log(this.medicines.length);
         this.medicineService.deleteMedicine(this.medicineService.id).subscribe(() => {
-        });;
+        });
+
         this.reloadData();
         // console.log(this.medicines.length);
-        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Medicine Deleted', life: 3000 });
+        this.messageService.add({severity: 'success', summary: 'Successful', detail: 'Medicine Deleted', life: 3000});
       }
     });
   }
@@ -75,15 +81,16 @@ export class ListMedicinesComponent implements OnInit,OnChanges {
     if (this.isEdit) {
       // this.medicines[this.findIndexById(this.medicine._id)] = this.medicine;
       this.medicineService.editMedicine(this.medicine).subscribe(() => {
-      });;
+      });
+
       this.reloadData();
     } else {
-      // this.medicines.push(this.medicine); 
+      // this.medicines.push(this.medicine);
       this.medicineService.addMedicine(this.medicine).subscribe(() => {
       });
       this.reloadData();
     }
-    this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Medicine Updated', life: 3000 });
+    this.messageService.add({severity: 'success', summary: 'Successful', detail: 'Medicine Updated', life: 3000});
     this.medicineDialog = false;
   }
 

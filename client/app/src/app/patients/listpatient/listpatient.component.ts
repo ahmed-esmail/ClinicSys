@@ -1,12 +1,12 @@
-import { Component, OnInit, SecurityContext } from '@angular/core';
-import { Patient } from '../models/patient';
-import { PatientService } from '../services/patient.service';
-import { Router } from '@angular/router';
+import {Component, OnInit, SecurityContext} from '@angular/core';
+import {Patient} from '../models/patient';
+import {PatientService} from '../services/patient.service';
+import {Router} from '@angular/router';
 
-import { Table } from 'primeng/table';
-import { DomSanitizer } from '@angular/platform-browser';
-import { join } from 'path';
-import { PhoneNumberPipe } from 'src/app/phone-number.pipe';
+import {Table} from 'primeng/table';
+import {DomSanitizer} from '@angular/platform-browser';
+import {join} from 'path';
+import {PhoneNumberPipe} from 'src/app/phone-number.pipe';
 
 @Component({
   selector: 'app-listpatient',
@@ -18,8 +18,9 @@ export class ListpatientComponent implements OnInit {
   loading: boolean = true;
   patlist: Patient[] = [];
   imagePath: any;
-  
-  constructor(private patser: PatientService, private router: Router, private sanitizer: DomSanitizer) { }
+
+  constructor(private patser: PatientService, private router: Router, private sanitizer: DomSanitizer) {
+  }
 
   ngOnInit(): void {
 
@@ -27,14 +28,13 @@ export class ListpatientComponent implements OnInit {
     this.patser.getpatients().subscribe(
       {
         next: a => {
-          this.patser.patientlist = a; console.log(this.patser.patientlist);
+          this.patser.patientlist = a;
+          console.log(this.patser.patientlist);
           this.patlist = this.patser.patientlist;
           this.loading = false;
-          ////////////////////   //  
+          ////////////////////   //
           console.log(this.patlist[6].profile_img)
           this.imagePath = this.displayImage(this.patlist[6].profile_img);
-
-
 
 
         }
@@ -51,14 +51,17 @@ export class ListpatientComponent implements OnInit {
   getEventValue($event: any): string {
     return $event.target.value;
   }
+
   add(): void {
 
     this.router.navigate(['/patient/add']);
   }
+
   edit(editpt: any): void {
     this.patser.editePatientID = editpt;
     this.router.navigate(['/patient/edit']);
   }
+
   deleteID(delpt: any): void {
 
     (<any>$('#myModal')).modal('show');
@@ -66,13 +69,15 @@ export class ListpatientComponent implements OnInit {
     console.log(this.patser.deletePatientID);
 
   }
+
   delete(): void {
     this.router.navigate(['/patient/delete']);
     (<any>$('#myModal')).modal('hide');
   }
+
   detailsID(detpt: any): void {
-this.patser.detailsPatientID=detpt;
-   this.router.navigate(['/patient/details']);
+    this.patser.detailsPatientID = detpt;
+    this.router.navigate(['/patient/details']);
   }
 
 
@@ -89,6 +94,7 @@ this.patser.detailsPatientID=detpt;
     }
     return null;
   }
+
   //convert buffer to arrayBuffer
   toArrayBuffer(buf: Buffer) {
     const ab = new ArrayBuffer(buf.length);

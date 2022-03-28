@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ReceptionistService } from 'src/app/receptionist.service';
-import { User } from 'src/app/_models/user';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {ReceptionistService} from 'src/app/receptionist.service';
+import {User} from 'src/app/_models/user';
 
 
 @Component({
@@ -11,25 +11,26 @@ import { User } from 'src/app/_models/user';
 })
 export class ReceptionistDeleteComponent implements OnInit {
 
-  dReceptionist!:User;
+  dReceptionist!: User;
 
-  constructor(private resSer:ReceptionistService, private router:Router, public ar:ActivatedRoute) { }
+  constructor(private resSer: ReceptionistService, private router: Router, public ar: ActivatedRoute) {
+  }
 
   ngOnInit(): void {
     (<any>$('#myModal')).modal('show');
-    this.ar.params.subscribe(a=>{
+    this.ar.params.subscribe(a => {
       this.resSer.getReceptionistById(a['id']).subscribe({
-        next: a=> {
+        next: a => {
           this.dReceptionist = a;
         }
       })
     })
   }
 
-  delete(){
-    this.ar.params.subscribe(a=>{
+  delete() {
+    this.ar.params.subscribe(a => {
       this.resSer.deleteReceptionist(a['id']).subscribe({
-        next: a=> {
+        next: a => {
           (<any>$('#myModal')).modal('hide');
           this.router.navigate(['/receptionists']);
         }
@@ -37,7 +38,7 @@ export class ReceptionistDeleteComponent implements OnInit {
     })
   }
 
-  goBack(){
+  goBack() {
     this.router.navigate(['/receptionists']);
   }
 

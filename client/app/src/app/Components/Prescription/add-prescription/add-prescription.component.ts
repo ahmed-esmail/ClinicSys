@@ -1,17 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-import { Medicine } from 'src/app/_models/medicine';
-import { Prescription } from 'src/app/_models/prescription';
-import { PrescriptionService } from 'src/app/Services/prescription.service';
-import { MedicineService } from 'src/app/Services/medicine.service';
+import {Component, OnInit} from '@angular/core';
+import {Medicine} from 'src/app/_models/medicine';
+import {Prescription} from 'src/app/_models/prescription';
+import {PrescriptionService} from 'src/app/Services/prescription.service';
+import {MedicineService} from 'src/app/Services/medicine.service';
 // import { FormGroup } from '@angular/forms';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ConfirmationService } from 'primeng/api';
-import { MessageService } from 'primeng/api';
-import { DynamicDialogRef } from 'primeng/dynamicdialog';
-import { PatientService } from 'src/app/Services/patient.service';
-import { Patient } from 'src/app/_models/patient';
-import { Doctor } from 'src/app/_models/doctor';
-import { DoctorService } from 'src/app/Services/doctor.service';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {ConfirmationService} from 'primeng/api';
+import {MessageService} from 'primeng/api';
+import {DynamicDialogRef} from 'primeng/dynamicdialog';
+import {PatientService} from 'src/app/Services/patient.service';
+import {Patient} from 'src/app/_models/patient';
+import {Doctor} from 'src/app/_models/doctor';
+import {DoctorService} from 'src/app/Services/doctor.service';
 
 
 @Component({
@@ -25,18 +25,18 @@ import { DoctorService } from 'src/app/Services/doctor.service';
              display: block;
          }
      `],
-     
+
 })
 export class AddPrescriptionComponent implements OnInit {
 
   //service of doctors
   constructor(private prescriptionService: PrescriptionService,
-    public medicineService: MedicineService,
-    public patientService: PatientService,
-    public doctorService: DoctorService,
-    public ref: DynamicDialogRef,
-    public messageService: MessageService,
-    private formBuilder: FormBuilder
+              public medicineService: MedicineService,
+              public patientService: PatientService,
+              public doctorService: DoctorService,
+              public ref: DynamicDialogRef,
+              public messageService: MessageService,
+              private formBuilder: FormBuilder
   ) {
   }
 
@@ -55,11 +55,11 @@ export class AddPrescriptionComponent implements OnInit {
   presDialog: boolean = false;
   isAdd: boolean = false;
 
-  
-  arr: [{ medicine: string, dose: string }] = [{ medicine:'',dose:''}];
+
+  arr: [{ medicine: string, dose: string }] = [{medicine: '', dose: ''}];
   prescription: Prescription = new
-    Prescription('', new Date,'','', [{ medicine:"", dose: "" },]);
-  
+  Prescription('', new Date, '', '', [{medicine: "", dose: ""},]);
+
   ngOnInit(): void {
     this.presDialog = true;
     this.medicineService.getAllMedicines().subscribe((res) => {
@@ -74,13 +74,14 @@ export class AddPrescriptionComponent implements OnInit {
 
     this.formValidation();
   }
+
   add() {
     if (this.isAdd) {
       console.log(this.med);
       if (this.arr[0].medicine != "" && this.arr[0].dose != "") {
-        this.arr.push({ medicine: this.med, dose: this.dose });
+        this.arr.push({medicine: this.med, dose: this.dose});
       } else if (this.med != "" && this.dose != "") {
-        this.arr[0] = { medicine: this.med, dose: this.dose };
+        this.arr[0] = {medicine: this.med, dose: this.dose};
       }
     } else {
       this.isAdd = true;
@@ -97,8 +98,9 @@ export class AddPrescriptionComponent implements OnInit {
     this.prescription.medicines = this.arr;
     console.log("ppre");
     console.log(this.prescription);
-    this.prescriptionService.addprescription(this.prescription).subscribe(() => {});
-    this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Prescription Added', life: 3000 });
+    this.prescriptionService.addprescription(this.prescription).subscribe(() => {
+    });
+    this.messageService.add({severity: 'success', summary: 'Successful', detail: 'Prescription Added', life: 3000});
 
     this.hideDialog();
   }
@@ -129,7 +131,7 @@ export class AddPrescriptionComponent implements OnInit {
         // Validators.minLength(8),
       ],
     });
-    this.addForm= this.formBuilder.group({
+    this.addForm = this.formBuilder.group({
       medDose: ['', [
         Validators.required,
         Validators.pattern('^[a-zA-Z]+$'),

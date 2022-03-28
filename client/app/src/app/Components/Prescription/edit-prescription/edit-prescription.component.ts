@@ -1,17 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-import { Medicine } from 'src/app/_models/medicine';
-import { Prescription } from 'src/app/_models/prescription';
-import { PrescriptionService } from 'src/app/Services/prescription.service';
-import { MedicineService } from 'src/app/Services/medicine.service';
-import { ConfirmationService } from 'primeng/api';
-import { MessageService } from 'primeng/api';
-import { DialogService, DynamicDialogConfig } from 'primeng/dynamicdialog';
-import { DynamicDialogRef } from 'primeng/dynamicdialog';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { PatientService } from 'src/app/Services/patient.service';
-import { Patient } from 'src/app/_models/patient';
-import { Doctor } from 'src/app/_models/doctor';
-import { DoctorService } from 'src/app/Services/doctor.service';
+import {Component, OnInit} from '@angular/core';
+import {Medicine} from 'src/app/_models/medicine';
+import {Prescription} from 'src/app/_models/prescription';
+import {PrescriptionService} from 'src/app/Services/prescription.service';
+import {MedicineService} from 'src/app/Services/medicine.service';
+import {ConfirmationService} from 'primeng/api';
+import {MessageService} from 'primeng/api';
+import {DialogService, DynamicDialogConfig} from 'primeng/dynamicdialog';
+import {DynamicDialogRef} from 'primeng/dynamicdialog';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {PatientService} from 'src/app/Services/patient.service';
+import {Patient} from 'src/app/_models/patient';
+import {Doctor} from 'src/app/_models/doctor';
+import {DoctorService} from 'src/app/Services/doctor.service';
 
 
 @Component({
@@ -23,16 +23,16 @@ import { DoctorService } from 'src/app/Services/doctor.service';
 export class EditPrescriptionComponent implements OnInit {
 
   constructor(private prescriptionService: PrescriptionService,
-    public medicineService: MedicineService,
-    public dynamicDialogRef: DynamicDialogRef,
-    public dialogService: DialogService,
-    public messageService: MessageService,
-    private dynamicDialogConfig: DynamicDialogConfig,
-    private confirmationService: ConfirmationService,
-    public patientService: PatientService,
-    public doctorService: DoctorService,
-    public ref: DynamicDialogRef,
-    private formBuilder: FormBuilder
+              public medicineService: MedicineService,
+              public dynamicDialogRef: DynamicDialogRef,
+              public dialogService: DialogService,
+              public messageService: MessageService,
+              private dynamicDialogConfig: DynamicDialogConfig,
+              private confirmationService: ConfirmationService,
+              public patientService: PatientService,
+              public doctorService: DoctorService,
+              public ref: DynamicDialogRef,
+              private formBuilder: FormBuilder
   ) {
   }
 
@@ -40,19 +40,19 @@ export class EditPrescriptionComponent implements OnInit {
   patients: Patient[] = [];
   doctors: Doctor[] = [];
   // id: string = "";
-  
+
   med: string = "";
   dose: string = "";
 
   form: FormGroup | any;
   addForm: FormGroup | any;
-  
+
   submitted: boolean = false;
   presDialog: boolean = false;
   isAdd: boolean = false;
 
-  arr: [{ medicine: string, dose: string }] = [{ medicine: '', dose: '' }];
-  prescription: Prescription = new Prescription('', new Date, '', '', [{ medicine: "", dose: "" },]);
+  arr: [{ medicine: string, dose: string }] = [{medicine: '', dose: ''}];
+  prescription: Prescription = new Prescription('', new Date, '', '', [{medicine: "", dose: ""},]);
 
   ngOnInit(): void {
     console.log("pres");
@@ -74,12 +74,13 @@ export class EditPrescriptionComponent implements OnInit {
     //   this.arr = res.medicines;
     // });
   }
+
   add() {
     if (this.isAdd) {
       if (this.arr[0].medicine != "") {
-        this.arr.push({ medicine: this.med, dose: this.dose });
+        this.arr.push({medicine: this.med, dose: this.dose});
       } else {
-        this.arr[0] = { medicine: this.med, dose: this.dose };
+        this.arr[0] = {medicine: this.med, dose: this.dose};
       }
       this.reloadData();
       console.log(this.arr);
@@ -87,7 +88,8 @@ export class EditPrescriptionComponent implements OnInit {
       this.isAdd = true;
     }
   }
-  delete(i : number) {
+
+  delete(i: number) {
     this.confirmationService.confirm({
 
       message: 'Are you sure you want to delete ' + this.prescription._id + '?',
@@ -98,7 +100,7 @@ export class EditPrescriptionComponent implements OnInit {
         console.log(i);
         this.arr.splice(i, 1);
         this.reloadData();
-        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Medicine Deleted', life: 3000 });
+        this.messageService.add({severity: 'success', summary: 'Successful', detail: 'Medicine Deleted', life: 3000});
       }
     });
   }
@@ -114,7 +116,7 @@ export class EditPrescriptionComponent implements OnInit {
 
     this.prescriptionService.editprescription(this.prescription).subscribe((res) => {
       // this.medicines = res;
-      this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Prescription Updated', life: 3000 });
+      this.messageService.add({severity: 'success', summary: 'Successful', detail: 'Prescription Updated', life: 3000});
 
       this.hideDialog();
     });

@@ -1,0 +1,30 @@
+<h1 mat-dialog-title> Add Payment </h1>
+<div mat-dialog-content>
+  <form [formGroup]="paymentForm">
+    <mat-form-field appearance="outline">
+      <mat-label>Amount</mat-label>
+      <input formControlName="amount" type="number" matInput placeholder="Enter amount ">
+      <mat-icon matSuffix>attach_money</mat-icon>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Method</mat-label>
+      <mat-select formControlName="method" placeholder="Method of Payment">
+        <mat-option value="cash_card">
+          Cash Card
+        </mat-option>
+        <mat-option value="credit_card">
+          Credit Card
+        </mat-option>
+        <mat-option value="insurance_card">
+          Insurance Card
+        </mat-option>
+      </mat-select>
+      <mat-icon matSuffix>payment</mat-icon>
+    </mat-form-field>
+  </form>
+</div>
+<div mat-dialog-actions [align]="'end'">
+  <button mat-raised-button color="warn" mat-dialog-close> Close</button>
+  <button mat-raised-button color="primary" (click)="addPayment()"> {{actionBtn}}</button>
+</div>
+

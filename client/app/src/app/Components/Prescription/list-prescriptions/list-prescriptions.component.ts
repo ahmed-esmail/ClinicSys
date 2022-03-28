@@ -1,17 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-import { Prescription } from 'src/app/_models/prescription';
-import { PrescriptionService } from 'src/app/Services/prescription.service';
-import { ConfirmationService } from 'primeng/api';
-import { MessageService } from 'primeng/api';
-import { MedicineService } from 'src/app/Services/medicine.service';
-import { Medicine } from 'src/app/_models/medicine';
-import { DialogService } from 'primeng/dynamicdialog';
-import { AddMedicineComponent } from '../../Medecine/add-medicine/add-medicine.component';
-import { AddPrescriptionComponent } from '../add-prescription/add-prescription.component';
-import { EditPrescriptionComponent } from '../edit-prescription/edit-prescription.component';
-import { DynamicDialogConfig } from 'primeng/dynamicdialog';
-import { PatientService } from 'src/app/Services/patient.service';
-import { Patient } from 'src/app/_models/patient';
+import {Component, OnInit} from '@angular/core';
+import {Prescription} from 'src/app/_models/prescription';
+import {PrescriptionService} from 'src/app/Services/prescription.service';
+import {ConfirmationService} from 'primeng/api';
+import {MessageService} from 'primeng/api';
+import {MedicineService} from 'src/app/Services/medicine.service';
+import {Medicine} from 'src/app/_models/medicine';
+import {DialogService} from 'primeng/dynamicdialog';
+import {AddMedicineComponent} from '../../Medecine/add-medicine/add-medicine.component';
+import {AddPrescriptionComponent} from '../add-prescription/add-prescription.component';
+import {EditPrescriptionComponent} from '../edit-prescription/edit-prescription.component';
+import {DynamicDialogConfig} from 'primeng/dynamicdialog';
+import {PatientService} from 'src/app/Services/patient.service';
+import {Patient} from 'src/app/_models/patient';
 
 @Component({
   selector: 'app-list-prescriptions',
@@ -23,35 +23,35 @@ import { Patient } from 'src/app/_models/patient';
              display: block;
          }
      `],
-  providers: [MessageService, ConfirmationService,DialogService]
+  providers: [MessageService, ConfirmationService, DialogService]
 })
 
 export class ListPrescriptionsComponent implements OnInit {
-  
+
   prescriptions: Prescription[] = [];
-  prescriptionsList: Prescription[] = [... this.prescriptions];
+  prescriptionsList: Prescription[] = [...this.prescriptions];
   medicines: Medicine[] = [];
   // patient: Patient = new Patient('', '', '', '', 0, '', '', '');
-  
-  prescription: Prescription = new Prescription('', new Date,'','', [{ medicine: "", dose: "" },]);
-  
+
+  prescription: Prescription = new Prescription('', new Date, '', '', [{medicine: "", dose: ""},]);
+
   med: string = "";
   dose: string = "";
 
   presDialog: boolean = false;
   submitted: boolean = false;
   isEdit: boolean = false;
- 
-  arr: [{ medicine: string, dose: string }] = [{ medicine: '', dose: '' }];
+
+  arr: [{ medicine: string, dose: string }] = [{medicine: '', dose: ''}];
 
   constructor(public prescriptionService: PrescriptionService,
-    private messageService: MessageService,
-    private confirmationService: ConfirmationService,
-    private medicineService: MedicineService,
-    // public patientService: PatientService,
-    private dialogService: DialogService,
+              private messageService: MessageService,
+              private confirmationService: ConfirmationService,
+              private medicineService: MedicineService,
+              // public patientService: PatientService,
+              private dialogService: DialogService,
   ) {
-    
+
   }
 
   ngOnInit(): void {
@@ -64,7 +64,6 @@ export class ListPrescriptionsComponent implements OnInit {
     });
 
   }
-
 
 
   showAdd() {
@@ -105,11 +104,17 @@ export class ListPrescriptionsComponent implements OnInit {
       accept: () => {
         console.log("in accept");
         this.prescriptionService.deleteprescription(this.prescriptionService.id).subscribe(() => {
-        });;
+        });
+
         // this.products = this.products.filter(val => val.id !== product.id);
         // this.product = {};
         this.reloadData();
-        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Prescription Deleted', life: 3000 });
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Successful',
+          detail: 'Prescription Deleted',
+          life: 3000
+        });
       }
     });
 
@@ -137,6 +142,6 @@ export class ListPrescriptionsComponent implements OnInit {
   }
 
   findData() {
-    this.prescriptionsList = [... this.prescriptions];
+    this.prescriptionsList = [...this.prescriptions];
   }
 }

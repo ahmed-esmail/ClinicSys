@@ -1,161 +1,173 @@
 <app-listpatient></app-listpatient>
 <div class="modal" tabindex="1" role="dialog" id="addModal" data-bs-backdrop="static">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle"> <b>Add Patient</b> </h5>
-                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close" (click)="close()">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div style="text-align:center">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle"><b>Add Patient</b></h5>
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close" (click)="close()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div style="text-align:center">
 
-                    <form [formGroup]="angForm" novalidate enctype="multipart/form-data">
-                        <div class="row flex-nowrap align-items-center mb-4 mx-2 g-0">
-                            <img class="img" src="{{ '../../../assets/'+newPatient.profile_img}}" alt="" />
-                            <div class="fileinputs">
-                                
-                                 <div class="fakefile row flex-nowrap align-items-center text-center">
-                                    <input type="file" id="profile_img" class="file"
-                                    (change)="onFileSelected($event)"  name="profileImg"  /> 
-                                    <span>Select image <i class="fa fa-user fs-5 mx-1" aria-hidden="true"></i></span>
-                                </div> 
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col"><input type="text" class="form-control" name="first_name"
-                                        placeholder="First Name" formControlName="fname" [(ngModel)]="newPatient.first_name" ></div>
-                                <div class="col"><input type="text" class="form-control" name="last_name"
-                                        placeholder="Last Name" formControlName="lname" [(ngModel)]="newPatient.last_name"></div>
-                            </div>
-                        </div>
-                        <div class="row">
-                        <div *ngIf="angForm.controls['fname'].invalid && (angForm.controls['fname'].dirty || angForm.controls['fname'].touched)"
-                            class="col alert alert-danger m-3">
-                            <div *ngIf="angForm.controls['fname'].errors">
-                                First Name is required.
-                            </div>
-                        </div>
-                        <div *ngIf="angForm.controls['lname'].invalid && (angForm.controls['lname'].dirty || angForm.controls['lname'].touched)"
-                            class="col alert alert-danger m-3">
-                            <div *ngIf="angForm.controls['lname'].errors">
-                                Last Name is required.
-                            </div>
-                        </div>
-                        </div>
-                        <div class="form-group">
+          <form [formGroup]="angForm" novalidate enctype="multipart/form-data">
+            <div class="row flex-nowrap align-items-center mb-4 mx-2 g-0">
+              <img class="img" src="{{ '../../../assets/'+newPatient.profile_img}}" alt=""/>
+              <div class="fileinputs">
 
-                            <input type="text" class="form-control" name="address" placeholder="Address"
-                                formControlName="address"[(ngModel)]="newPatient.address">
-
-                        </div>
-                        <div *ngIf="angForm.controls['address'].invalid && (angForm.controls['address'].dirty || angForm.controls['address'].touched)"
-                            class="alert alert-danger">
-                            <div *ngIf="angForm.controls['address'].errors">
-                                Address is required.
-                            </div>
-                        </div>
-                        <div class="form-group">
-
-                            <input type="text" class="form-control" name="phone_number" placeholder="Phone Number"
-                                formControlName="phone_number"  minlength="11" maxlength="11" [(ngModel)]="newPatient.phone_number " 
-                                >
-
-                        </div>
-                        <div *ngIf="angForm.controls['phone_number'].invalid && (angForm.controls['phone_number'].dirty || angForm.controls['phone_number'].touched)"
-                            class="alert alert-danger">
-                            <div *ngIf="angForm.controls['phone_number'].errors">
-                                Phone Number is required and at least 12 number.
-                            </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="row">
-                                    <div class="col"><input type="number" min="1" max="100" class="form-control" placeholder="Age" formControlName="age" [(ngModel)]="newPatient.age"></div>
-                                    <div class="col">    <select class="form-control" (change)="selectChangeHandler($event)" formControlName="gender">
-                                        <option hidden value="" disabled selected> Gender</option>
-                                        <option value='male' class="px-3">male</option>
-                                        <option value='female' class="px-3">female</option>
-                                    </select></div>
-                                </div>
-                            </div>
-                            <div class="row">
-                            <div *ngIf="angForm.controls['age'].invalid && (angForm.controls['age'].dirty || angForm.controls['age'].touched)"
-                                class=" col m-3 alert alert-danger">
-                                <div *ngIf="angForm.controls['age'].errors">
-                                    Age is required.
-                                </div>
-                            </div>
-                            <div *ngIf="angForm.controls['gender'].invalid && (angForm.controls['gender'].dirty || angForm.controls['gender'].touched)"
-                            class="col m-3 alert alert-danger">
-                            <div *ngIf="angForm.controls['gender'].errors">
-                                Gender is required.
-                            </div>
-                        </div>
-                    </div>
-                       <div class="row">
-                        <button type="button" class="btn btn-secondary col mx-5" data-bs-dismiss="modal"
-                        (click)="close()">Close</button>
-                        <button type="submit" [disabled]="angForm.pristine || angForm.invalid" class="btn btn-success col mx-5" (click)="add()">
-                            Add
-                        </button>
-                       
-                    </div>
-                    </form>
-
+                <div class="fakefile row flex-nowrap align-items-center text-center">
+                  <input type="file" id="profile_img" class="file"
+                         (change)="onFileSelected($event)" name="profileImg"/>
+                  <span>Select image <i class="fa fa-user fs-5 mx-1" aria-hidden="true"></i></span>
                 </div>
-                  
+              </div>
             </div>
-            <div class="modal-footer flex-row justify-content-between col-12 ">
-                <!-- <button type="button" class="btn btn-secondary clo-2" data-bs-dismiss="modal"
-                    (click)="close()">Close</button>
-                    
-                <button type="button" class="btn btn-primary col-4" (click)="save()">Add Patient</button> -->
+            <div class="form-group">
+              <div class="row">
+                <div class="col"><input type="text" class="form-control" name="first_name"
+                                        placeholder="First Name" formControlName="fname"
+                                        [(ngModel)]="newPatient.first_name"></div>
+                <div class="col"><input type="text" class="form-control" name="last_name"
+                                        placeholder="Last Name" formControlName="lname"
+                                        [(ngModel)]="newPatient.last_name"></div>
+              </div>
             </div>
-        </div>
-    </div>
-</div>
+            <div class="row">
+              <div
+                *ngIf="angForm.controls['fname'].invalid && (angForm.controls['fname'].dirty || angForm.controls['fname'].touched)"
+                class="col alert alert-danger m-3">
+                <div *ngIf="angForm.controls['fname'].errors">
+                  First Name is required.
+                </div>
+              </div>
+              <div
+                *ngIf="angForm.controls['lname'].invalid && (angForm.controls['lname'].dirty || angForm.controls['lname'].touched)"
+                class="col alert alert-danger m-3">
+                <div *ngIf="angForm.controls['lname'].errors">
+                  Last Name is required.
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
 
+              <input type="text" class="form-control" name="address" placeholder="Address"
+                     formControlName="address" [(ngModel)]="newPatient.address">
+
+            </div>
+            <div
+              *ngIf="angForm.controls['address'].invalid && (angForm.controls['address'].dirty || angForm.controls['address'].touched)"
+              class="alert alert-danger">
+              <div *ngIf="angForm.controls['address'].errors">
+                Address is required.
+              </div>
+            </div>
+            <div class="form-group">
+
+              <input type="text" class="form-control" name="phone_number" placeholder="Phone Number"
+                     formControlName="phone_number" minlength="11" maxlength="11" [(ngModel)]="newPatient.phone_number "
+              >
+
+            </div>
+            <div
+              *ngIf="angForm.controls['phone_number'].invalid && (angForm.controls['phone_number'].dirty || angForm.controls['phone_number'].touched)"
+              class="alert alert-danger">
+              <div *ngIf="angForm.controls['phone_number'].errors">
+                Phone Number is required and at least 12 number.
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="row">
+                <div class="col"><input type="number" min="1" max="100" class="form-control" placeholder="Age"
+                                        formControlName="age" [(ngModel)]="newPatient.age"></div>
+                <div class="col"><select class="form-control" (change)="selectChangeHandler($event)"
+                                         formControlName="gender">
+                  <option hidden value="" disabled selected> Gender</option>
+                  <option value='male' class="px-3">male</option>
+                  <option value='female' class="px-3">female</option>
+                </select></div>
+              </div>
+            </div>
+            <div class="row">
+              <div
+                *ngIf="angForm.controls['age'].invalid && (angForm.controls['age'].dirty || angForm.controls['age'].touched)"
+                class=" col m-3 alert alert-danger">
+                <div *ngIf="angForm.controls['age'].errors">
+                  Age is required.
+                </div>
+              </div>
+              <div
+                *ngIf="angForm.controls['gender'].invalid && (angForm.controls['gender'].dirty || angForm.controls['gender'].touched)"
+                class="col m-3 alert alert-danger">
+                <div *ngIf="angForm.controls['gender'].errors">
+                  Gender is required.
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <button type="button" class="btn btn-secondary col mx-5" data-bs-dismiss="modal"
+                      (click)="close()">Close
+              </button>
+              <button type="submit" [disabled]="angForm.pristine || angForm.invalid" class="btn btn-success col mx-5"
+                      (click)="add()">
+                Add
+              </button>
+
+            </div>
+          </form>
+
+        </div>
+
+      </div>
+      <div class="modal-footer flex-row justify-content-between col-12 ">
+        <!-- <button type="button" class="btn btn-secondary clo-2" data-bs-dismiss="modal"
+            (click)="close()">Close</button>
+
+        <button type="button" class="btn btn-primary col-4" (click)="save()">Add Patient</button> -->
+      </div>
+    </div>
+  </div>
+</div>
 
 
 <!-- ////// error model//// -->
 <div id="errorModal" class="modal fade" aria-hidden="true" style="display: none;">
-	<div class="modal-dialog modal-confirm">
-		<div class="modal-content">
-			<div class="modal-header justify-content-center">
-				<!-- <div class="icon-box">
-					<i class="material-icons"></i>
-				</div> -->
-				<button type="button" class="close" data-bs-dismiss="modal" aria-hidden="true" (click)="close()">×</button>
-			</div>
-			<div class="modal-body text-center">
-				<h4>Ooops!</h4>	
-				<p>Something went wrong. patient was not uploaded.</p>
-                <p>{{errormessage}}</p>
-				<button class="btn btn-danger" data-bs-dismiss="modal" (click)="agin()">Try Again</button>
-			</div>
-		</div>
-	</div>
+  <div class="modal-dialog modal-confirm">
+    <div class="modal-content">
+      <div class="modal-header justify-content-center">
+        <!-- <div class="icon-box">
+          <i class="material-icons"></i>
+        </div> -->
+        <button type="button" class="close" data-bs-dismiss="modal" aria-hidden="true" (click)="close()">×</button>
+      </div>
+      <div class="modal-body text-center">
+        <h4>Ooops!</h4>
+        <p>Something went wrong. patient was not uploaded.</p>
+        <p>{{errormessage}}</p>
+        <button class="btn btn-danger" data-bs-dismiss="modal" (click)="agin()">Try Again</button>
+      </div>
+    </div>
+  </div>
 </div>
 <!-- end of error model -->
 <!-- succes model -->
 <div id="okModal" class="modal fade" aria-hidden="true" style="display: none;">
-	<div class="modal-dialog modal-confirm">
-		<div class="modal-content">
-			<div class="modal-header justify-content-center">
-				<!-- <div class="icon-box">
-					<i class="material-icons"></i> 
-                    <i class="fa-solid fa-circle-check"></i> 
-				</div> -->
-				<button type="button" class="close" data-bs-dismiss="modal" aria-hidden="true" (click)="close()">×</button>
-			</div>
-			<div class="modal-body text-center">
-				<h4 class > <b>Great! </b></h4>	
-				<p class=" mt-3">Your Patient has been created successfully.</p>
-				<button class="btn btn-success" data-dismiss="modal" (click)="return()"><span>Return</span> <i class="material-icons"></i></button>
-			</div>
-		</div>
-	</div>
+  <div class="modal-dialog modal-confirm">
+    <div class="modal-content">
+      <div class="modal-header justify-content-center">
+        <!-- <div class="icon-box">
+          <i class="material-icons"></i>
+                    <i class="fa-solid fa-circle-check"></i>
+        </div> -->
+        <button type="button" class="close" data-bs-dismiss="modal" aria-hidden="true" (click)="close()">×</button>
+      </div>
+      <div class="modal-body text-center">
+        <h4 class><b>Great! </b></h4>
+        <p class=" mt-3">Your Patient has been created successfully.</p>
+        <button class="btn btn-success" data-dismiss="modal" (click)="return()"><span>Return</span> <i
+          class="material-icons"></i></button>
+      </div>
+    </div>
+  </div>
 </div>
 <!-- end of succes model -->

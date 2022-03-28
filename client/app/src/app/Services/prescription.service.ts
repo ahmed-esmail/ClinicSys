@@ -1,7 +1,7 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { catchError, throwError } from 'rxjs';
-import { Prescription } from 'src/app/_models/prescription';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {catchError, throwError} from 'rxjs';
+import {Prescription} from 'src/app/_models/prescription';
 
 //   import { HttpClient } from '@angular/common/http';
 // import { Injectable } from '@angular/core';
@@ -18,10 +18,10 @@ export class PrescriptionService {
 
   private prescriptionUrl: string = "http://localhost:3000/prescription";
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
   id: string = "";
-
 
 
   getprescription(id: string) {
@@ -33,6 +33,7 @@ export class PrescriptionService {
     return this.http.get<Prescription[]>(this.prescriptionUrl)
       .pipe(catchError(this.handleError));
   }
+
   addprescription(med: Prescription) {
     return this.http.post<Prescription>(this.prescriptionUrl, med)
       .pipe(catchError(this.handleError));
