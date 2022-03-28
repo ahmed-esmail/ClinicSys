@@ -1,0 +1,161 @@
+<p>list-medicines works!</p>
+
+<p-toast></p-toast>
+
+<div class="card">
+    <p-toolbar styleClass="mb-4">
+        <ng-template pTemplate="left">
+            <!-- <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2"
+                (click)="openNew()"></button> -->
+            <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2"
+                (click)="clickAdd()"></button>
+            <!-- <button pButton pRipple [label]="Delete" icon="pi pi-trash" class="p-button-danger"
+                (click)="deleteSelectedProducts()" [disabled]="!selectedProducts || !selectedProducts.length"></button> -->
+            </ng-template>
+
+    </p-toolbar>
+
+    <p-table #dt [value]="medicines" [rowHover]="true" dataKey="id" responsiveLayout="scroll"
+
+    >
+        <!-- [rows]="10" [paginator]="true"
+        [globalFilterFields]="['name','country.name','representative.name','status']" responsiveLayout="scroll"
+        [(selection)]="selectedPrescriptions" [rowHover]="true" dataKey="id"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true"
+         -->
+
+        <ng-template pTemplate="caption">
+            <div class="flex align-items-center justify-content-between">
+                <h5 class="m-0">Manage Medicine</h5>
+                <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <!-- <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                        placeholder="Search..." /> -->
+                </span>
+                <!-- <span class="p-input-icon-left ml-auto">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="dt1.filterGlobal($event.target.value, 'contains')"
+                        placeholder="Search keyword" />
+                </span> -->
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <!-- <th style="width: 3rem">
+                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                </th> -->
+                <th pSortableColumn="id">ID <p-sortIcon field="id"></p-sortIcon>
+                </th>
+                <th pSortableColumn="name">Name
+                    <p-sortIcon field="name"></p-sortIcon>
+                </th>
+                <th pSortableColumn="description">Description
+                    <p-sortIcon field="description"></p-sortIcon>
+                </th>
+                <th>Action</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-med>
+            <tr>
+                <!-- <td>
+                    <p-tableCheckbox [value]="med"></p-tableCheckbox>
+                </td> -->
+                <td>{{med._id}}</td>
+                <td>{{med.name}}</td>
+                <!-- <td>{{prescription.medicines}}</td> -->
+                <td>
+                    {{med.description}}                
+                </td>
+    <td>
+        <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"
+            (click)="clickEdit(med)"></button>
+        <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
+            (click)="clickDelete(med._id)"></button>
+    </td>
+    </tr>
+    </ng-template>
+    </p-table>
+</div>
+
+<p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+
+
+<p-dialog [(visible)]="medicineDialog" [style]="{width: '450px'}" header="Add Medicine" [modal]="true" presDialog="true"
+    styleClass="p-fluid">
+    <!-- <p-dialog [style]="{width: '450px'}" header="Add Prescription 7" [modal]="true" styleClass="p-fluid"> -->
+    <ng-template pTemplate="content">
+        <div class="field">
+            <label for="name">Name</label>
+            <input type="text" pInputText id="name" [(ngModel)]="medicine.name" required autofocus />
+            <small class="p-error" *ngIf="submitted && !medicine.name">Name is required.</small>
+        </div>
+        <div class="field">
+            <label for="description">description</label>
+            <input type="text" pInputText id="description" [(ngModel)]="medicine.description" required autofocus />
+            <small class="p-error" *ngIf="submitted && !medicine.description">Description is required.</small>
+        </div>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+        <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="save()"></button>
+    </ng-template>
+</p-dialog>
+
+
+
+
+
+
+<!-- Start Table
+<div class="row mx-1">
+<div class="card col-11 p-0 my-5 mx-auto">
+<div class="card-header d-flex justify-content-between">
+    <h1 class="col-lg-3 mx-auto p-3">medicine Manage</h1>
+    <button
+     class="btn btn-success my-auto h-50 col-lg-1"
+      data-bs-toggle="modal"
+      data-bs-target="#addForm"
+      class="btn btn-success"
+      >Addmedicine</button>
+
+    (click)="clickAdd()"
+</div>
+<div class="card-body">
+    <table dataTable class="table table-bordered">
+        <thead class="bg-dark text-white ">
+            <tr>
+                <th>Name</th>
+                <th>Discription</th>
+                <th>ِAction</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let medicine of medicines">
+                <td>{{medicine.name}}</td>
+                <td>{{medicine.description}}</td>
+                <td>
+                    <button
+                        class="btn btn-success mx-1 my-auto" (click)="clickEdit(medicine)">Edit</button>
+                    <button
+                        class="btn btn-danger mx-1 my-auto" (click)="clickDelete(medicine._id)">Delete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div *ngIf="showAdd">
+    <app-add-medicine ></app-add-medicine>
+</div>
+<div *ngIf="showEdit">
+    <app-edit-medicine></app-edit-medicine>
+</div>
+<div *ngIf="showDelete">
+    <app-remove-medicine></app-remove-medicine>
+</div> -->
+<!-- End Table -->
+
+
+
+

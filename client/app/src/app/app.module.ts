@@ -12,6 +12,16 @@ import { HomeComponent } from './home/home.component';
 import { ErrorComponent } from './error/error.component';
 import { DoctorProfileComponent } from './doctor-profile/doctor-profile.component';
 
+import { ListMedicinesComponent } from './Components/Medecine/list-medicines/list-medicines.component';
+import { AddMedicineComponent } from './Components/Medecine/add-medicine/add-medicine.component';
+import { EditMedicineComponent } from './Components/Medecine/edit-medicine/edit-medicine.component';
+import { RemoveMedicineComponent } from './Components/Medecine/remove-medicine/remove-medicine.component';
+import { RemovePrescriptionComponent } from './Components/Prescription/remove-prescription/remove-prescription.component';
+import { AddPrescriptionComponent } from './Components/Prescription/add-prescription/add-prescription.component';
+import { EditPrescriptionComponent } from './Components/Prescription/edit-prescription/edit-prescription.component';
+import { ListPrescriptionsComponent } from './Components/Prescription/list-prescriptions/list-prescriptions.component';
+
+
 import { TableModule } from 'primeng/table';
 import { DropdownModule } from 'primeng/dropdown';
 import { ButtonModule } from 'primeng/button';
@@ -22,6 +32,20 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ReceptionistProfileComponent } from './receptionist-profile/receptionist-profile.component';
 
+import { BrowserModule } from '@angular/platform-browser';
+// import { DataTablesModule } from 'angular-datatables';
+import { ToolbarModule } from 'primeng/toolbar';
+import { DialogModule } from 'primeng/dialog';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { CheckboxModule } from 'primeng/checkbox';
+import { ListboxModule } from 'primeng/listbox';
+import { TabViewModule } from 'primeng/tabview';
+import { MessageService, ConfirmationService } from 'primeng/api';
+import { DynamicDialogModule } from 'primeng/dynamicdialog';
+import { CalendarModule } from 'primeng/calendar';
+
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,23 +53,54 @@ import { ReceptionistProfileComponent } from './receptionist-profile/receptionis
     ErrorComponent,
     DoctorProfileComponent,
     ReceptionistProfileComponent,
+
+    ListMedicinesComponent,
+    AddMedicineComponent,
+    EditMedicineComponent,
+    RemoveMedicineComponent,
+
+    RemovePrescriptionComponent,
+    AddPrescriptionComponent,
+    EditPrescriptionComponent,
+    ListPrescriptionsComponent,
   ],
   imports: [
-    BrowserAnimationsModule,
     AppRoutingModule,
-    FormsModule,
-    HttpClientModule,
-    CoreModule,
-    TableModule,
-    DropdownModule,
+
+    BrowserAnimationsModule,
+    BrowserModule,
     ButtonModule,
-    InputTextModule,
-    ToastModule,
+
+    CoreModule,
+    CalendarModule,
+    ConfirmDialogModule,
+
+    DialogModule,
+    DynamicDialogModule,
+    DropdownModule,
+
+    FormsModule,
     FileUploadModule,
+    FormsModule,
+
+    HttpClientModule,
+ 
+    InputTextModule,
     InputNumberModule,
+
     ReactiveFormsModule,
+
+    TableModule,
+    TabViewModule,
+    ToastModule,
+    ToolbarModule,
+   
+    // ListboxModule,
+    // CheckboxModule,
+    // ListboxModule,
+    
   ],
-  providers: [DoctorService, ReceptionistService],
+  providers: [DoctorService, ReceptionistService, MessageService, ConfirmationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

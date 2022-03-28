@@ -1,7 +1,5 @@
 const { validationResult } = require("express-validator");
-
 const Medicine = require("../models/medicineModel");
-
 
 //---------------------------- Git All Medicines
 exports.getMedicines = function (request, response, next) {
@@ -19,6 +17,7 @@ exports.getMedicines = function (request, response, next) {
 exports.getMedicine = function (request, response, next) {
     Medicine.findOne({ _id: request.params._id })
         .then(result => {
+            if (result == null) next(new Error("Medicine id not Found"))
             response.status(200).json(result);
         })
         .catch(error => {
@@ -86,15 +85,15 @@ exports.deleteMedicine = (request, response, next) => {
         next(error);
     }
     else {
-            Medicine.deleteOne({ _id: request.params._id })
-                .then(result => {
-                    response.status(201).json({ message: "Medicine Deleted" })
-                })
-                .catch(error => {
-                    error.status = 500;
+        Medicine.deleteOne({ _id: request.params._id })
+            .then(result => {
+                response.status(201).json({ message: "Medicine Deleted" })
+            })
+            .catch(error => {
+                error.status = 500;
 
-                    next(error);
-                })
+                next(error);
+            })
     }
 }
 
