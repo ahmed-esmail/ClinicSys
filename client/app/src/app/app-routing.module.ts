@@ -23,9 +23,9 @@ const routes: Routes = [
   { path: "prescriptions", component: ListPrescriptionsComponent },
   { path: "medicines", component: ListMedicinesComponent },
   {  path:'patient',loadChildren:()=>import("./patients/patient.module").then(m=>m.PatientModule  )              
-    },{
-    path:"**",component:HomeComponent
-  }
+    },
+ 
+ 
 
   {path:"**",component:ErrorComponent},
 ];

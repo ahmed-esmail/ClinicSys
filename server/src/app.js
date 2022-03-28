@@ -44,7 +44,7 @@ app.get("/", (req, res, next) => {
 app.use(authentication);
 app.use(payment);
 
-})
+
 // routes
 app.use("/doctors", doctorRouter);
 app.use("/receptionists", receptionistRouter);

@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FormsModule } from '@angular/forms';
+
 
 import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http'
 import { AppRoutingModule } from './app-routing.module';
-import { HttpClientModule } from "@angular/common/http"
+
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { DoctorService } from './doctor.service';
@@ -68,7 +68,7 @@ import { PhoneNumberPipe } from './phone-number.pipe';
     EditpatientComponent,
     DeletepatientComponent,
     PhoneNumberPipe,
-    DetailspatientComponent
+    DetailspatientComponent,
 
     ListMedicinesComponent,
     AddMedicineComponent,
