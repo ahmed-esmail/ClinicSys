@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { FormGroup,  FormBuilder,  Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { error } from 'console';
-import { PhoneNumberPipe } from 'src/app/phone-number.pipe';
+import { PhoneNumberPipe } from './../.././phone-number.pipe';
 @Component({
   selector: 'app-addpatient',
   templateUrl: './addpatient.component.html',
