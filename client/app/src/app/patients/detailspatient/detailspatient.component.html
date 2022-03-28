@@ -81,7 +81,7 @@
             <div class="card-header p-2">
               <ul class="nav nav-pills">
                 <li class="nav-item"><a class="nav-link active" href="#Appointment" data-toggle="tab">Appointment</a></li>
-                <li class="nav-item"><a class="nav-link" href="#Medicine" data-toggle="tab">Medicine</a></li>
+                <li class="nav-item"><a class="nav-link" href="#Drug" data-toggle="tab">Drugs</a></li>
                 <li class="nav-item"><a class="nav-link" href="#prescription" data-toggle="tab">prescription</a></li>
               </ul>
             </div><!-- /.card-header -->
@@ -110,10 +110,10 @@
 
                 </div>
                 <!-- /.tab-pane -->
-                <div class="tab-pane  flex mh-100 p-scrollpanel-bar-y" id="Medicine">
+                <div class="tab-pane  flex mh-100 p-scrollpanel-bar-y" id="Drug">
                   <!-- The Medicine -->
                  
-              <p>medecine</p>
+         
                
               <ul>
                 
@@ -121,7 +121,7 @@
                  <p></p>
                   <ul>
                   <li *ngFor="let n of m.med" > 
-                    <p class="pre"><strong> <i class="fa fa-medkit" aria-hidden="true"></i>Medicine {{i+1}} </strong></p>
+                    <p class="pre"><strong> <i class="fa fa-medkit" aria-hidden="true"></i>Drug{{i+1}} </strong></p>
                     <strong> Name</strong>
                    <p class="text-muted">{{n.medicine.name}}</p> 
                    <strong> Dose </strong>
@@ -154,7 +154,7 @@
                    
                     <ul>
                       <li *ngFor="let m of n.medicines ;index  as i">
-                        <p ><strong> <i class="fa fa-medkit" aria-hidden="true"></i>Medicine {{i+1}} </strong></p>
+                        <p ><strong> <i class="fa fa-medkit" aria-hidden="true"></i>Drug{{i+1}} </strong></p>
                          <strong> Name</strong>
                         <p class="text-muted">{{m.medicine.name}}</p> 
                         <strong> Dose </strong>
