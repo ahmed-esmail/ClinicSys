@@ -25,7 +25,7 @@ const auth = async (req, res, next) => {
 function authRole(permissions) {
   return (req, res, next) => {
     const userRole = req.user.type;
-    if (permissions.includes(userRole?.toLowerCase())) {
+    if (permissions.includes(userRole.toLowerCase())) {
       next();
     } else {
       res.status(401);
@@ -39,7 +39,7 @@ function authRole(permissions) {
 
 const ROLE = {
   ADMIN: "admin",
-  DOCTOR:"doctor",
-  RECEPTIONIST:"receptionist"
-}
+  DOCTOR: "doctor",
+  RECEPTIONIST: "receptionist",
+};
 module.exports = { auth, authRole, ROLE };
