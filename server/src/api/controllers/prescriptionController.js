@@ -1,11 +1,8 @@
 const { validationResult } = require("express-validator");
-
 const Prescription = require("../models/prescriptionModel");
-
 
 //----------------------------  Get All Prescriptions
 exports.getPrescriptions = function (request, response, next) {
-
     Prescription.find({})
         .populate({
             path: 'medicines',
@@ -29,14 +26,12 @@ exports.getPrescriptions = function (request, response, next) {
         })
 }
 
-
-//----------------------------  Get one Prescriptions
+//----------------------------  Get All Prescriptions
 exports.getPrescription = function (request, response, next) {
-
     Prescription.findOne({ _id: request.params._id })
-        .populate({ path: "medicines" })
-        // .populate({ path: "Doctor" })
-        //.populate({ path: "patient" })
+        .populate({ path: "medicines.medicine" })
+        .populate({ path: "doctor" })
+        .populate({ path: "patient" })
         .then(result => {
             response.status(200).json(result);
         })
@@ -57,7 +52,6 @@ exports.createPrescription = (request, response, next) => {
         next(error);
     }
     else {
-
         let PrescriptionObject = new Prescription({
             doctor: request.body.doctor,
             patient: request.body.patient,
@@ -82,10 +76,10 @@ exports.updatePrescription = (request, response, next) => {
         Prescription.updateOne({ _id: request.body._id },
             {
                 $set: {
-                    doctor: request.body.doctor,
+                    // doctor: request.body.doctor,
                     medicines: request.body.medicines,
-                    patient: request.body, patient,
-                    date: request.body.date,
+                    // patient: request.body, patient,
+                    // date: request.body.date,
                 }
             }).then(result => {
                 response.status(201).json({ message: "Prescription Updated" })

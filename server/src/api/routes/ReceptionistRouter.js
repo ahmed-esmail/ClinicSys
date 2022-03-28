@@ -7,21 +7,6 @@ const router = express.Router();
 const mongoose = require("mongoose");
 const User = mongoose.model("User");
 
-const multer = require("multer");
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "./../images/");
-  },
-  filename: (req, file, cb) => {
-    cb(
-      null,
-      new Date().toLocaleDateString().replace(/\//g, "-") +
-        "-" +
-        file.originalname
-    );
-  },
-});
-const upload = multer({ storage: storage }).single("profileImg");
 
 //get all doctors
 router.get("", receptionistController.getReceptionists);
@@ -36,7 +21,6 @@ router.get(
 //add a doctor
 router.post(
   "",
-  upload,
   [
     body("firstName").isAlpha().withMessage("First name should be string"),
     body("lastName").isAlpha().withMessage("Last name should be string"),
@@ -69,10 +53,12 @@ router.post(
       }),
     body("password")
       .isAlphanumeric()
-      .isLength({ min: 8 })
+      .isLength({ min: 7 })
       .withMessage("Invalid Password"),
-    body("address").isAlphanumeric().withMessage("Address should be string"),
-    //body('profileImg').isAlpha().withMessage("profileImg path should be string"),
+    body("address")
+      .isLength({ min: 3 })
+      .withMessage("invalid address"),
+    body('profileImg').not().isEmpty().withMessage("profileImg path should be string"),
     body("gender").custom((value, { req }) => {
       if (value == "male" || value == "female") {
         return true;
@@ -86,9 +72,8 @@ router.post(
 //update
 router.put(
   "",
-  upload,
   [
-    body("id").isMongoId().withMessage("ID should be ObjectId"),
+    body("_id").isMongoId().withMessage("ID should be ObjectId"),
     body("firstName").isAlpha().withMessage("First name should be string"),
     body("lastName").isAlpha().withMessage("Last name should be string"),
     body("phoneNumber")
@@ -98,7 +83,7 @@ router.put(
       .custom((value, { req }) => {
         return User.findOne({
           phoneNumber: value,
-          _id: { $nin: [req.body.id] },
+          _id: { $nin: [req.body._id] },
         }).then((user) => {
           if (user) {
             throw new Error("Phone number already exist");
@@ -117,19 +102,17 @@ router.put(
       .custom((value, { req }) => {
         return User.findOne({
           email: value,
-          _id: { $nin: [req.body.id] },
+          _id: { $nin: [req.body._id] },
         }).then((user) => {
           if (user) {
             throw new Error("Email already exist");
           }
         });
       }),
-    body("password")
-      .isAlphanumeric()
-      .isLength({ min: 8 })
-      .withMessage("Invalid Password"),
-    body("address").isAlphanumeric().withMessage("Address should be string"),
-    //body('profileImg').isAlpha().withMessage("profileImg path should be string"),
+    body("address")
+      .isLength({ min: 3 })
+      .withMessage("invalid address"),
+    body('profileImg').not().isEmpty().withMessage("profileImg path should be string"),
     body("gender").custom((value, { req }) => {
       if (value == "male" || value == "female") {
         return true;

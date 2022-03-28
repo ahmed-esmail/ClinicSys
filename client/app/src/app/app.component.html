@@ -1,8 +1,11 @@
- <p>app component</p>
-   <!-- <app-listpatient></app-listpatient>  -->
+<div class="container-fluid g-0">
+    <div class="row w-100 g-0">
+        <app-navbar class="col-2 bg-light"></app-navbar>
+        <div class="col-10 row flex-column g-0 pos">
+            <!-- <app-header class="bg-light"></app-header> -->
+            <router-outlet></router-outlet>
+             <a class="btn btn-success mx-5 my-1" routerLink="/patient">patient </a> 
 
-  <!-- <app-home></app-home>   -->
-
- <a class="btn btn-success mx-5 my-1" routerLink="/patient">patient </a> 
-
-<router-outlet></router-outlet> 
+        </div>
+    </div>
+</div>

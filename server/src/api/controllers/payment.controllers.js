@@ -55,3 +55,14 @@ exports.update = async (req, res) => {
     res.status(400).send(e);
   }
 };
+
+exports.getAll = (req, res, next) => {
+  Payment.find({})
+    .then((result) => {
+      res.status(200).json(result);
+    })
+    .catch((error) => {
+      error.status = 500;
+      next(error);
+    });
+};

@@ -3,3 +3,5 @@ config
 
 .vs
 .idea
+.vs/slnx.sqlite
+slnx.sqlite

@@ -37,4 +37,9 @@ function authRole(permissions) {
   };
 }
 
-module.exports = { auth, authRole };
+const ROLE = {
+  ADMIN: "admin",
+  DOCTOR:"doctor",
+  RECEPTIONIST:"receptionist"
+}
+module.exports = { auth, authRole, ROLE };
