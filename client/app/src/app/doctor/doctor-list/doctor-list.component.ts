@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Table } from 'primeng/table';
 import { DoctorService } from 'src/app/doctor.service';
@@ -23,7 +22,7 @@ export class DoctorListComponent implements OnInit {
 
   imgurl:any;
 
-  constructor(private drSer:DoctorService, public router:Router, public domSanitizer:DomSanitizer) { }
+  constructor(private drSer:DoctorService, public router:Router) { }
 
   ngOnInit(): void {
     this.drSer.getAllDoctors().subscribe({

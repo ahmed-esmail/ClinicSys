@@ -23,3 +23,7 @@
     border: 1px solid var(--primary) !important;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px !important;
 }
+.inp-form:hover {
+    border-color: var(--grey);
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 10px 10px;
+}
