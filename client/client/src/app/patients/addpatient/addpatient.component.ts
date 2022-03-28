@@ -14,7 +14,7 @@ import { PhoneNumberPipe } from 'src/app/phone-number.pipe';
 
 export class AddpatientComponent implements OnInit {
   angForm: FormGroup|any;
-  newPatient: Patient =new Patient (0,'','','',1,'','',null);
+  newPatient: Patient =new Patient (0,'','','',1,'','',null,[]);
   errormessage:string|any;
   //newPatient: Patient |any;
   fileName :string|any = "user.png";

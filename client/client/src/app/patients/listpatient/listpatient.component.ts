@@ -18,7 +18,7 @@ export class ListpatientComponent implements OnInit {
   loading: boolean = true;
   patlist: Patient[] = [];
   imagePath: any;
-  codes :string[]=["aldd" ,"dfg","dfgh"];
+  
   constructor(private patser: PatientService, private router: Router, private sanitizer: DomSanitizer) { }
 
   ngOnInit(): void {

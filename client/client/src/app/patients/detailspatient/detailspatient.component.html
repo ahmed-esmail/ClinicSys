@@ -1,5 +1,5 @@
 <p>detailspatient works!</p>
-<section class="content-header">
+<!-- <section class="content-header">
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
@@ -13,11 +13,11 @@
         </div>
       </div>
     </div><!-- /.container-fluid -->
-  </section>
+  <!-- </section> --> 
   <section class="content">
     <div class="container-fluid">
       <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-5">
 
           <!-- Profile Image -->
           <div class="card card-primary card-outline">
@@ -76,7 +76,7 @@
           <!-- /.card -->
         </div>
         <!-- /.col -->
-        <div class="col-md-8">
+        <div class="col-md-7">
           <div class="card">
             <div class="card-header p-2">
               <ul class="nav nav-pills">
@@ -88,7 +88,26 @@
             <div class="card-body">
               <div class="tab-content">
                 <div class="active tab-pane" id="Appointment">
-                 <p>Appointment</p>
+                 
+                  <ul>
+                  <li *ngFor="let n of  appontments ;index  as i">
+                    <p class="pre"> 
+                    <strong><i class="fa fa-window-maximize" aria-hidden="true"></i> Appontment{{i+1}}</strong></p>
+                    <strong><i class="fa fa-calendar-check-o" aria-hidden="true"></i>Date </strong>
+                    <p class="text-muted">{{n.time |date:'M/d/yy, h:mm a'}}</p>
+                   
+                    <strong><i class="fa fa-bars" aria-hidden="true"></i> complaint </strong>
+                    <p class="text-muted">{{n.condition}}</p>
+                    <strong><i class="fa fa-user-md" aria-hidden="true"></i>Doctor Name</strong>
+                   <p class="text-muted">{{n.doctor._id.firstName}}   {{n.doctor._id.lastName}}</p>
+                   <strong>  <i class="fa fa-stethoscope" aria-hidden="true"></i>Doctor Speciality</strong>
+                  <p class="text-muted">{{n.doctor.speciality}}</p>
+               
+                  <hr>
+                </li>
+                </ul> 
+                 
+
                 </div>
                 <!-- /.tab-pane -->
                 <div class="tab-pane" id="Medicine">
@@ -102,9 +121,13 @@
                  <p></p>
                   <ul>
                   <li *ngFor="let n of m.med" > 
-                    <p>{{n.medicine.name}}</p> 
-                  <p>{{n.dose}}</p>
-                  <p>{{n.medicine.description}} </p>
+                    <p class="pre"><strong> <i class="fa fa-medkit" aria-hidden="true"></i>Medicine {{i+1}} </strong></p>
+                    <strong> Name</strong>
+                   <p class="text-muted">{{n.medicine.name}}</p> 
+                   <strong> Dose </strong>
+                   <p class="text-muted">{{n.dose}}</p>
+                   <strong> Description</strong>
+                   <p class="text-muted">{{n.medicine.description}} </p>
                   <hr>
                   </li>
                 </ul>
@@ -117,18 +140,26 @@
                 <!-- /.tab-pane -->
 
                 <div class="tab-pane" id="prescription">
-                 <p>prescription</p>
+           
                   <ul>
                     <li *ngFor="let n of prescriptions ;index  as i">
-                      <p>prescription {{i+1}}</p>
-                      <p>{{n.date | date }}</p>
-                     <p>{{n.doctor._id.firstName}}   {{n.doctor._id.lastName}}</p>
+                      <p class="pre"><strong> <i class="fa fa-id-card-o" aria-hidden="true"></i>prescription {{i+1}} </strong></p>
+                      <strong><i class="fa fa-calendar-check-o" aria-hidden="true"></i>Date </strong>
+                      <p class="text-muted">{{n.date |date:'M/d/yy, h:mm a'}}</p>
+                      <strong><i class="fa fa-user-md" aria-hidden="true"></i>Doctor Name</strong>
+                      <p class="text-muted">{{n.doctor._id.firstName}}   {{n.doctor._id.lastName}}</p>
+                      <strong>  <i class="fa fa-stethoscope" aria-hidden="true"></i>Doctor Speciality</strong>
+                      <p class="text-muted">{{n.doctor.speciality}}</p>
+                  
                    
                     <ul>
-                      <li *ngFor="let m of n.medicines">
-                        <p>{{m.medicine.name}}</p> 
-                        <p>{{m.dose}}</p>
-                        <p>{{m.medicine.description}} </p>
+                      <li *ngFor="let m of n.medicines ;index  as i">
+                        <p ><strong> <i class="fa fa-medkit" aria-hidden="true"></i>Medicine {{i+1}} </strong></p>
+                         <strong> Name</strong>
+                        <p class="text-muted">{{m.medicine.name}}</p> 
+                        <strong> Dose </strong>
+                        <p class="text-muted">{{m.dose}}</p>
+                       
                         <hr>
                       </li>
                       

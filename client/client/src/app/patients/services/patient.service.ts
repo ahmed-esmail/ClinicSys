@@ -4,6 +4,7 @@ import { map } from 'rxjs';
 import { Patient } from './../models/patient';
 import { pid } from 'process';
 import { Prescription } from '../models/prescription';
+import { Appointment } from '../models/appointment';
 @Injectable({
   providedIn: 'root'
 })
@@ -45,4 +46,10 @@ getPatientPrescription(Pid:any)
 {
 return this.http.get<Prescription[]>("http://localhost:3000/prescription/patient/"+Pid)
 }
+getAppointmentById(appid:any)
+{
+  return this.http.get<Appointment |any>("http://localhost:3000/appointments/"+appid)
+}
+
+
 }

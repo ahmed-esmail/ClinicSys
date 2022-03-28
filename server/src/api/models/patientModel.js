@@ -13,10 +13,8 @@ const patientSchema = new Schema({
   Doctor: [{ type: Schema.Types.ObjectId, required: false, ref: "Doctor" }],
   Appointment: [
     { type: Schema.Types.ObjectId, required: false, ref: "Appointment" },
-  ],
-  Prescriptions: [
-    { type: Schema.Types.ObjectId, required: false, ref: "Prescription" },
-  ],
+  ]
+
 });
 
 module.exports = mongoose.model("Patient", patientSchema);

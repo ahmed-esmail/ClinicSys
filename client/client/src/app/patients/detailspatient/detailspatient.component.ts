@@ -8,6 +8,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Table } from 'primeng/table';
+import { Appointment } from '../models/appointment';
 @Component({
   selector: 'app-detailspatient',
   templateUrl: './detailspatient.component.html',
@@ -17,8 +18,8 @@ export class DetailspatientComponent implements OnInit {
   Patient: Patient |any ;
  prescriptions:any;
  patientmedecines:any[]=[];
- codes :string[]=["aldd" ,"dfg","dfgh"];
-  i=0;
+ appontments :any | Appointment[]=[] ;
+  
   constructor(private patser: PatientService, private router: Router) { }
 
   ngOnInit(): void {
@@ -27,6 +28,24 @@ export class DetailspatientComponent implements OnInit {
       next:a=>{
         this.Patient=a;
         console.log(a);
+        console.log(this.Patient.Appointment);
+        this.Patient.Appointment.forEach((element: any)  => {
+      
+   
+   //   const element = this.Patient.Appointment[index];
+      this.patser.getAppointmentById(element).subscribe({
+        next:a=>{
+        
+          console.log(a);
+          this.appontments.push(a);
+        
+        }
+      })
+      
+    });
+    
+
+    console.log(this.appontments);
       
       }
     });
@@ -47,6 +66,7 @@ export class DetailspatientComponent implements OnInit {
       
       }
     });
+    
   }
   edit(): void {
     this.patser.editePatientID = this.Patient._id;
