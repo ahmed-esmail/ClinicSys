@@ -1,6 +1,6 @@
 <div id="myModal">
 
-  <form id="form" autocomplete="off" enctype="multipart/form-data" [formGroup]="form" novalidate>
+    <form id="form" autocomplete="off" enctype="multipart/form-data" [formGroup]="form" novalidate>
 
         <div class="field">
             <label for="date">date</label>
@@ -19,20 +19,20 @@
             </p-dropdown>
         </div>
 
-    <p-table #dt2 [value]="arr">
-      <ng-template pTemplate="header">
-        <tr>
-          <th>mdicine</th>
-          <th>dose</th>
-        </tr>
-      </ng-template>
-      <ng-template pTemplate="body" let-med>
-        <tr>
-          <td>{{med.medicine.name}}</td>
-          <td>{{med.dose}}</td>
-        </tr>
-      </ng-template>
-    </p-table>
+        <p-table #dt2 [value]="arr">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>mdicine</th>
+                    <th>dose</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-med>
+                <tr>
+                    <td>{{med.medicine.name}}</td>
+                    <td>{{med.dose}}</td>
+                </tr>
+            </ng-template>
+        </p-table>
 
             <div>
                 <div *ngIf="isAdd">
@@ -50,11 +50,12 @@
                         </form>
                 </div>
                 <button type="submit" pButton pRipple label="Add Medicine" icon="pi pi-check" class="p-button-text" (click)="add()"></button>
+
             </div>
 
-    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="save()"></button>
+        <button  pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="save()"></button>
 
-  </form>
+    </form>
 </div>
 
 

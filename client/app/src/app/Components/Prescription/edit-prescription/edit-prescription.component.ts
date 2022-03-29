@@ -50,8 +50,8 @@ export class EditPrescriptionComponent implements OnInit {
   // presDialog: boolean = false;
   isAdd: boolean = false;
 
-  arr: [{ medicine: string, dose: string }] = [{medicine: '', dose: ''}];
-  prescription: Prescription = new Prescription('', new Date, '', '', [{medicine: "", dose: ""},]);
+  arr: [{ medicine: string, dose: string }] = [{ medicine: '', dose: '' }];
+  prescription: Prescription = new Prescription('', new Date, '', '', [{ medicine: "", dose: "" },]);
 
   ngOnInit(): void {
     console.log("pres");
@@ -64,7 +64,6 @@ export class EditPrescriptionComponent implements OnInit {
 
     this.formValidation();
   }
-
   add() {
     if (this.isAdd) {
       if (this.med != "" && this.dose != "") {
@@ -96,7 +95,7 @@ export class EditPrescriptionComponent implements OnInit {
         console.log(i);
         this.arr.splice(i, 1);
         this.reloadData();
-        this.messageService.add({severity: 'success', summary: 'Successful', detail: 'Medicine Deleted', life: 3000});
+        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Medicine Deleted', life: 3000 });
       }
     });
   }
@@ -110,7 +109,7 @@ export class EditPrescriptionComponent implements OnInit {
         this.hideDialog();
       },
       error: () => {
-        this.messageService.add({ severity: 'error', summary: 'Foailed', detail: 'Prescription Not Updated', life: 3000 });
+        this.messageService.add({ severity: 'error', summary: 'Foailed', detail: 'Prescription  Not Updated', life: 3000 });
       }
     });
   }
