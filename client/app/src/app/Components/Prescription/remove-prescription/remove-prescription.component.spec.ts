@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { RemovePrescriptionComponent } from './remove-prescription.component';
+import {RemovePrescriptionComponent} from './remove-prescription.component';
 
 describe('RemovePrescriptionComponent', () => {
   let component: RemovePrescriptionComponent;
@@ -8,9 +8,9 @@ describe('RemovePrescriptionComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ RemovePrescriptionComponent ]
+      declarations: [RemovePrescriptionComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

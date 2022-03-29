@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { DoctorService } from 'src/app/doctor.service';
-import { Doctor } from 'src/app/_models/doctor';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {DoctorService} from 'src/app/doctor.service';
+import {Doctor} from 'src/app/_models/doctor';
 
 
 @Component({
@@ -11,26 +11,27 @@ import { Doctor } from 'src/app/_models/doctor';
 })
 export class DoctorDeleteComponent implements OnInit {
 
-  dDoctor!:Doctor;
+  dDoctor!: Doctor;
 
-  constructor(private drSer:DoctorService, private router:Router, public ar:ActivatedRoute) { }
+  constructor(private drSer: DoctorService, private router: Router, public ar: ActivatedRoute) {
+  }
 
   ngOnInit(): void {
     (<any>$('#myModal')).modal('show');
-    this.ar.params.subscribe(a=>{
+    this.ar.params.subscribe(a => {
       //console.log(a['id']);
       this.drSer.getDoctorById(a['id']).subscribe({
-        next: a=> {
+        next: a => {
           this.dDoctor = a;
         }
       })
     })
   }
 
-  delete(){
-    this.ar.params.subscribe(a=>{
+  delete() {
+    this.ar.params.subscribe(a => {
       this.drSer.deleteDoctor(a['id']).subscribe({
-        next: a=> {
+        next: a => {
           (<any>$('#myModal')).modal('hide');
           this.router.navigate(['/doctors']);
         }
@@ -38,7 +39,7 @@ export class DoctorDeleteComponent implements OnInit {
     })
   }
 
-  goBack(){
+  goBack() {
     this.router.navigate(['/doctors']);
   }
 

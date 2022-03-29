@@ -96,5 +96,3 @@ exports.deleteMedicine = (request, response, next) => {
             })
     }
 }
-
-

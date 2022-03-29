@@ -185,9 +185,9 @@ exports.addPatientToDoctor = function (request, response, next) {
     Doctor.updateOne(
       { _id: request.body.id },
       {
-        $push: {
-          patients: request.body.patient,
-        },
+        $addToSet: {
+          patients: request.body.patient
+        }
       }
     )
       .then((result) => {

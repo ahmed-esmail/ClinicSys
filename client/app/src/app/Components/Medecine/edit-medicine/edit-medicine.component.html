@@ -1,0 +1,16 @@
+<p>edit-medicine works!</p>
+<div>
+  <h2>edit medicine</h2>
+
+  <div>
+    <label for="name">name</label>
+    <input type="text" [(ngModel)]="newMedicine.name">
+  </div>
+  <div>
+    <label for="description">description</label>
+    <input type="text" id="description" [(ngModel)]="newMedicine.description">
+  </div>
+
+  <button class="btn btn-success" (click)="edit()">Save</button>
+  {{newMedicine|json}}
+</div>

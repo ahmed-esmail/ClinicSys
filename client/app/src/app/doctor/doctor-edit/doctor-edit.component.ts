@@ -1,10 +1,10 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
-import { DoctorService } from 'src/app/doctor.service';
-import { Doctor } from 'src/app/_models/doctor';
-import { User } from 'src/app/_models/user';
+import {HttpClient} from '@angular/common/http';
+import {Component, OnInit} from '@angular/core';
+import {FormGroup, FormBuilder, Validators} from '@angular/forms';
+import {Router, ActivatedRoute} from '@angular/router';
+import {DoctorService} from 'src/app/doctor.service';
+import {Doctor} from 'src/app/_models/doctor';
+import {User} from 'src/app/_models/user';
 
 @Component({
   selector: 'app-doctor-edit',
@@ -12,31 +12,32 @@ import { User } from 'src/app/_models/user';
   styleUrls: ['./doctor-edit.component.css']
 })
 export class DoctorEditComponent implements OnInit {
-  
-  editForm: FormGroup|any;
 
-  eDoctor:Doctor = new Doctor(new User( "", "", "", "", 25, "", "", "", "Doctor", "", ""), "", [], [])
+  editForm: FormGroup | any;
+
+  eDoctor: Doctor = new Doctor(new User("", "", "", "", 25, "", "", "", "Doctor", "", ""), "", [], [])
 
   genders: any = [];
   specialities: any = [];
 
-  image!:File;
+  image!: File;
 
-  constructor(private drSer:DoctorService, public router:Router, public ar:ActivatedRoute, private fb: FormBuilder, public http:HttpClient) { }
+  constructor(private drSer: DoctorService, public router: Router, public ar: ActivatedRoute, private fb: FormBuilder, public http: HttpClient) {
+  }
 
   ngOnInit(): void {
     this.createFormValidation();
 
     (<any>$('#myModal')).modal('show');
 
-    this.ar.params.subscribe(a=>{
+    this.ar.params.subscribe(a => {
       this.drSer.getDoctorById(a['id']).subscribe({
-        next: a=> {
+        next: a => {
           this.eDoctor = a;
         }
       })
     })
-    
+
     this.genders = this.drSer.genders;
 
     this.specialities = this.drSer.specialities;
@@ -47,67 +48,66 @@ export class DoctorEditComponent implements OnInit {
   createFormValidation() {
     this.editForm = this.fb.group({
       firstName: ['', [
-          Validators.required,
-          Validators.pattern('^[a-zA-Z]+$')
-        ] 
+        Validators.required,
+        Validators.pattern('^[a-zA-Z]+$')
+      ]
       ],
       lastName: ['', [
-          Validators.required,
-          Validators.pattern('^[a-zA-Z]+$')
-        ] 
+        Validators.required,
+        Validators.pattern('^[a-zA-Z]+$')
+      ]
       ],
       phoneNumber: ['', [
-          Validators.required,
-          Validators.pattern('^(010|011|012|015)[0-9]{8}$'),
-        ] 
+        Validators.required,
+        Validators.pattern('^(010|011|012|015)[0-9]{8}$'),
+      ]
       ],
       age: ['', [
-          Validators.required,
-          Validators.pattern('^[2-9][0-9]$|^100$')
-        ] 
+        Validators.required,
+        Validators.pattern('^[2-9][0-9]$|^100$')
+      ]
       ],
-      gender: ['', Validators.required ],
+      gender: ['', Validators.required],
       email: ['', [
-          Validators.required,
-          Validators.pattern('^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$'),
-        ] 
+        Validators.required,
+        Validators.pattern('^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$'),
+      ]
       ],
-      speciality: ['', Validators.required ],
-      address: ['', Validators.required ]
+      speciality: ['', Validators.required],
+      address: ['', Validators.required]
     });
   }
 
-  update()
-  {
+  update() {
     console.log(this.eDoctor)
     this.drSer.editDoctor(this.eDoctor).subscribe(
-      a=>{
+      a => {
         (<any>$('#myModal')).modal('hide');
         this.router.navigate(['/doctors']);
       }
     )
   }
 
-  goBack(){
+  goBack() {
     this.router.navigate(['/doctors']);
   }
 
-  selectFile(event:any) {
-    const file:File = event.target.files[0];
-  
+  selectFile(event: any) {
+    const file: File = event.target.files[0];
+
     if (file) {
       this.image = file;
-    
+
       const formData = new FormData();
       formData.append('file', this.image);
 
       this.http.post<any>('http://localhost:3000/upload', formData)
-      .subscribe({
-        next: (a) => {
-          console.log(a);
-          this.eDoctor._id.profileImg = a.image;
-        }
-      });
+        .subscribe({
+          next: (a) => {
+            console.log(a);
+            this.eDoctor._id.profileImg = a.image;
+          }
+        });
     }
   }
 

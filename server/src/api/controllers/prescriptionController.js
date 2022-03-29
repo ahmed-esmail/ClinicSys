@@ -4,7 +4,7 @@ const Prescription = require("../models/prescriptionModel");
 //----------------------------  Get All Prescriptions
 exports.getPrescriptions = function (request, response, next) {
     Prescription.find({})
-        .populate({ path: "medicines.medicine" })
+.populate({ path: "medicines.medicine" })
         .populate({ path: "doctor" })
         .populate({ path: "doctor._id", model: "User", })
         .populate({ path: "patient" })
@@ -107,3 +107,27 @@ exports.deletePrescription = (request, response, next) => {
             })
     }
 }
+exports.getPatientPrescription = function (request, response, next) {
+
+    Prescription.find({ patient: request.params.Pid })
+        .populate({
+            path: 'medicines',
+            // Get medicines of medicines - populate the 'medicines' array for every medecin
+            populate: { path: 'medicine' }
+        })
+
+        .populate({
+            path: "doctor", populate: {
+                path: "_id",
+                model: "User"
+            }
+        })
+        .populate({ path: "patient" })
+        .then(result => {
+            response.status(200).json(result);
+        })
+        .catch(error => {
+            error.status = 500;
+            next(error);
+        })
+};

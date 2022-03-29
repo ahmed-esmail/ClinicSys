@@ -1,80 +1,82 @@
 <app-receptionist-list></app-receptionist-list>
 <!-- Modal HTML -->
 <div id="myModal" class="modal fade" data-bs-backdrop="static">
-    <div class="modal-dialog modal-confirm">
-        <div class="modal-content">
-            <div class="modal-header">		
-                <h4 class="modal-title fs-3">Update receptionist info</h4>	
+  <div class="modal-dialog modal-confirm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title fs-3">Update receptionist info</h4>
+      </div>
+      <div class="modal-body">
+        <form id="editForm" autocomplete="off" enctype="multipart/form-data" [formGroup]="editForm" novalidate>
+          <div class="row flex-nowrap align-items-center mb-4 mx-2">
+            <img class="img" src="{{ '../../../assets/' + eReceptionist.profileImg }}" alt=""/>
+            <div class="fileinputs">
+              <input type="file" class="file" name="profileImg" (change)="selectFile($event)"/>
+              <div class="fakefile row flex-nowrap align-items-center text-center">
+                <span>Change photo <i class="fa fa-user fs-5 mx-1" aria-hidden="true"></i></span>
+              </div>
             </div>
-            <div class="modal-body">
-                <form id="editForm" autocomplete="off" enctype="multipart/form-data" [formGroup]="editForm" novalidate>
-                    <div class="row flex-nowrap align-items-center mb-4 mx-2">
-                        <img class="img" src="{{ '../../../assets/' + eReceptionist.profileImg }}" alt="" />
-                        <div class="fileinputs">
-                            <input type="file" class="file" name="profileImg" (change)="selectFile($event)" />
-                            <div class="fakefile row flex-nowrap align-items-center text-center">
-                                <span>Change photo <i class="fa fa-user fs-5 mx-1" aria-hidden="true"></i></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="name" class="row my-4">
+          </div>
+          <div id="name" class="row my-4">
                         <span class="p-float-label w-50">
-                            <input [(ngModel)]="eReceptionist.firstName" 
-                                    formControlName="firstName" id="float-input" 
-                                    class="p-inputtext-sm w-100 rounded-pill bg-inp" type="text" pInputText> 
+                            <input [(ngModel)]="eReceptionist.firstName"
+                                   formControlName="firstName" id="float-input"
+                                   class="p-inputtext-sm w-100 rounded-pill bg-inp" type="text" pInputText>
                             <label for="float-input" class="mx-3">First name</label>
                         </span>
-                        <span class="p-float-label w-50">
-                            <input [(ngModel)]="eReceptionist.lastName" 
-                                    formControlName="lastName" id="float-input" 
-                                    class="p-inputtext-sm w-100 rounded-pill bg-inp" type="text" pInputText> 
+            <span class="p-float-label w-50">
+                            <input [(ngModel)]="eReceptionist.lastName"
+                                   formControlName="lastName" id="float-input"
+                                   class="p-inputtext-sm w-100 rounded-pill bg-inp" type="text" pInputText>
                             <label for="float-input" class="mx-3">Last name</label>
                         </span>
-                    </div>
-                    <span class="p-float-label w-100 my-4">
+          </div>
+          <span class="p-float-label w-100 my-4">
                         <input [(ngModel)]="eReceptionist.phoneNumber" minlength="11" maxlength="11"
-                                formControlName="phoneNumber" id="float-input" 
-                                class="p-inputtext-sm w-100 rounded-pill bg-inp" type="text" pInputText> 
+                               formControlName="phoneNumber" id="float-input"
+                               class="p-inputtext-sm w-100 rounded-pill bg-inp" type="text" pInputText>
                         <label for="float-input" class="mx-2">Phone number</label>
                     </span>
-                    <div id="name" class="row my-4">
+          <div id="name" class="row my-4">
                         <span class="p-float-label w-50">
                             <input [(ngModel)]="eReceptionist.age"
-                                formControlName="age" id="float-input" 
-                                class="p-inputtext-sm w-100 rounded-pill bg-inp" type="text" pInputText> 
+                                   formControlName="age" id="float-input"
+                                   class="p-inputtext-sm w-100 rounded-pill bg-inp" type="text" pInputText>
                             <label for="float-input" class="mx-4">Age</label>
                         </span>
-                        <span class="p-float-label w-50">
-                            <p-dropdown [(ngModel)]="eReceptionist.gender" 
-                                        formControlName="gender" autoWidth="false" [style]="{'width':'100%'}" 
-                                        [autoDisplayFirst]="false" inputId="dropdown" class="p-inputtext-sm w-100" styleClass="inp-form" 
+            <span class="p-float-label w-50">
+                            <p-dropdown [(ngModel)]="eReceptionist.gender"
+                                        formControlName="gender" autoWidth="false" [style]="{'width':'100%'}"
+                                        [autoDisplayFirst]="false" inputId="dropdown" class="p-inputtext-sm w-100"
+                                        styleClass="inp-form"
                                         [options]="genders">
                             </p-dropdown>
                             <label for="dropdown" class="mx-3">Gender</label>
                         </span>
-                    </div>
-                    <span class="p-float-label w-100 my-4">
-                        <input [(ngModel)]="eReceptionist.email" 
-                                formControlName="email" id="float-input" 
-                                class="p-inputtext-sm w-100 rounded-pill bg-inp" type="text" pInputText> 
+          </div>
+          <span class="p-float-label w-100 my-4">
+                        <input [(ngModel)]="eReceptionist.email"
+                               formControlName="email" id="float-input"
+                               class="p-inputtext-sm w-100 rounded-pill bg-inp" type="text" pInputText>
                         <label for="float-input" class="mx-2">Email</label>
                     </span>
-                    <span class="p-float-label w-100 mt-4">
+          <span class="p-float-label w-100 mt-4">
                         <input [(ngModel)]="eReceptionist.address" minlength="3"
-                                formControlName="address" id="float-input" 
-                                class="p-inputtext-sm w-100 rounded-pill bg-inp" type="text" pInputText> 
+                               formControlName="address" id="float-input"
+                               class="p-inputtext-sm w-100 rounded-pill bg-inp" type="text" pInputText>
                         <label for="float-input" class="mx-2">Address</label>
                     </span>
-                </form>
-            </div>
-            <div class="modal-footer bg-light justify-content-between">
-                <button type="button" class="btn btn-danger float-start" (click)="goBack()" data-bs-dismiss="modal" aria-label="Close">
-                    Cancel
-                </button>
-                <button type="submit" [disabled]="editForm.invalid" class="btn btn-info" 
-                        (click)="update()"> Update receptionist
-                </button>
-            </div>
-        </div>
+        </form>
+      </div>
+      <div class="modal-footer bg-light justify-content-between">
+        <button type="button" class="btn btn-danger float-start" (click)="goBack()" data-bs-dismiss="modal"
+                aria-label="Close">
+          Cancel
+        </button>
+        <button type="submit" [disabled]="editForm.invalid" class="btn btn-info"
+                (click)="update()"> Update receptionist
+        </button>
+      </div>
     </div>
-</div> 
+  </div>
+</div>

@@ -24,5 +24,8 @@ router.put("", [
 
 //----------------------------  Delete Prescription
 router.delete("/:_id", [param("_id").isMongoId().withMessage("_id Should be ObjectID")], controller.deletePrescription);
+router.get("/patient/:Pid", [
+    param('Pid').isMongoId().withMessage("ID should be ObjectId"),
+], controller.getPatientPrescription);
 
 module.exports = router;

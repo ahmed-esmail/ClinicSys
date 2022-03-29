@@ -1,24 +1,25 @@
 <app-receptionist-list></app-receptionist-list>
 <!-- Modal HTML -->
 <div id="myModal" class="modal fade">
-	<div class="modal-dialog modal-confirm">
-		<div class="modal-content">
-			<div class="modal-header flex-column">
-				<div class="icon-box">
-					<i class="pi pi-times"></i>
-				</div>				
-				<h4 class="modal-title">Are you sure?</h4>	
-                <button type="button" class="btn-close close" data-bs-dismiss="modal" aria-label="Close" (click)="goBack()"></button>
-			</div>
-			<div class="modal-body">
-				<p>Do you really want to delete this receptionist? This process cannot be undone.</p>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close" (click)="goBack()">
-					Cancel
-				</button>
-				<button type="button" class="btn btn-danger" (click)="delete()">Delete</button>
-			</div>
-		</div>
-	</div>
-</div> 
+  <div class="modal-dialog modal-confirm">
+    <div class="modal-content">
+      <div class="modal-header flex-column">
+        <div class="icon-box">
+          <i class="pi pi-times"></i>
+        </div>
+        <h4 class="modal-title">Are you sure?</h4>
+        <button type="button" class="btn-close close" data-bs-dismiss="modal" aria-label="Close"
+                (click)="goBack()"></button>
+      </div>
+      <div class="modal-body">
+        <p>Do you really want to delete this receptionist? This process cannot be undone.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close" (click)="goBack()">
+          Cancel
+        </button>
+        <button type="button" class="btn btn-danger" (click)="delete()">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,36 +1,37 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { Router } from '@angular/router';
-import { Table } from 'primeng/table';
-import { DoctorService } from 'src/app/doctor.service';
-import { Doctor } from 'src/app/_models/doctor';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {Router} from '@angular/router';
+import {Table} from 'primeng/table';
+import {DoctorService} from 'src/app/doctor.service';
+import {Doctor} from 'src/app/_models/doctor';
 
 
 @Component({
   selector: 'app-doctor-list',
   templateUrl: './doctor-list.component.html',
   styleUrls: ['./doctor-list.component.css'],
-  encapsulation : ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None
 })
 export class DoctorListComponent implements OnInit {
 
-  doctors:Doctor[] = [];
+  doctors: Doctor[] = [];
 
   loading: boolean = true;
 
   genders: any = [];
   specialities: any = [];
 
-  imgurl:any;
+  imgurl: any;
 
-  constructor(private drSer:DoctorService, public router:Router) { }
+  constructor(private drSer: DoctorService, public router: Router) {
+  }
 
   ngOnInit(): void {
     this.drSer.getAllDoctors().subscribe({
-      next: a=>{
+      next: a => {
         this.doctors = a;
         this.loading = false;
       }
-    });    
+    });
 
     this.genders = this.drSer.genders;
 
@@ -39,26 +40,26 @@ export class DoctorListComponent implements OnInit {
   }
 
   // delete
-  delete(id:string) {
+  delete(id: string) {
     this.router.navigate(['/doctors/delete', id]);
   }
 
   // update
-  edit(id:string) {
+  edit(id: string) {
     this.router.navigate(['/doctors/edit', id]);
   }
 
   // add
-  add(){
+  add() {
     this.router.navigate(['/doctors/add']);
   }
 
-  // table 
+  // table
   clear(table: Table) {
     table.clear();
   }
 
-  getEventValue($event:any) :string {
+  getEventValue($event: any): string {
     return $event.target.value;
   }
 

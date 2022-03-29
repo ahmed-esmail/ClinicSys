@@ -9,15 +9,12 @@ const patientSchema = new Schema({
    age: { type: Number },
   gender: { type: String, required: true ,enum: ['male', 'female']},
   address: { type: String },
-  profile_img:{ data: Buffer, contentType: String },
-  history :[{type: String}],
+  profile_img:{ type: String },
   Doctor: [{ type: Schema.Types.ObjectId, required: false, ref: "Doctor" }],
   Appointment: [
     { type: Schema.Types.ObjectId, required: false, ref: "Appointment" },
-  ],
-  Prescriptions: [
-    { type: Schema.Types.ObjectId, required: false, ref: "Prescription" },
-  ],
+  ]
+
 });
 
 module.exports = mongoose.model("Patient", patientSchema);

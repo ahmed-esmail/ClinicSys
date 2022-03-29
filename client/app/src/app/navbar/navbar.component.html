@@ -1,0 +1,16 @@
+<mat-toolbar color="primary" class="mat-elevation-z8" *ngIf="user">
+  <span><mat-icon>eco</mat-icon> CLINIC SYSTEM</span>
+  <div class="spacer"></div>
+  <a mat-button routerLink="/">Dashboard</a>
+  <a mat-button routerLink="admin" *ngIf="isAdmin">admin</a>
+  <a mat-button routerLink="payment">Payments</a>
+  <a mat-button routerLink="receptionists">Receptionists</a>
+  <a mat-button routerLink="doctors">Doctors</a>
+  <a mat-button routerLink="medicines">Medicines</a>
+  <a mat-button routerLink="patient">Patients</a>
+  <a mat-button routerLink="prescriptions">prescriptions</a>
+  <a mat-button routerLink="profile/receptionist/:id">Add Receptionist</a>
+  <a mat-button routerLink="profile/doctor/:id">Add Doctor</a>
+
+  <a mat-raised-button color="accent" routerLink="signup" (click)="logout()">Logout</a>
+</mat-toolbar>

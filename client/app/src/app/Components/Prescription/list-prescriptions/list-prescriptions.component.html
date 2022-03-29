@@ -1,14 +1,14 @@
-
 <p-toast></p-toast>
 
 <div class="card">
-    <p-toolbar styleClass="mb-4">
-        <ng-template pTemplate="left">
+  <p-toolbar styleClass="mb-4">
+    <ng-template pTemplate="left">
 
-                <button pButton pRipple label="New Prescription" icon="pi pi-plus" class="p-button-success mr-2" (click)="showAdd()"></button>
-        </ng-template>
+      <button pButton pRipple label="New Prescription" icon="pi pi-plus" class="p-button-success mr-2"
+              (click)="showAdd()"></button>
+    </ng-template>
 
-    </p-toolbar>
+  </p-toolbar>
 
     <p-table #dt [value]="prescriptionsList" [rowHover]="true" dataKey="id" responsiveLayout="scroll"
     [globalFilterFields]="['date']">

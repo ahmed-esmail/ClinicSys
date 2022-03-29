@@ -1,28 +1,28 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { RouterModule, Routes } from '@angular/router';
-import { DoctorListComponent } from './doctor-list/doctor-list.component';
-import { DoctorAddComponent } from './doctor-add/doctor-add.component';
-import { DoctorDeleteComponent } from './doctor-delete/doctor-delete.component';
-import { DoctorEditComponent } from './doctor-edit/doctor-edit.component';
-import { FormsModule } from '@angular/forms';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {RouterModule, Routes} from '@angular/router';
+import {DoctorListComponent} from './doctor-list/doctor-list.component';
+import {DoctorAddComponent} from './doctor-add/doctor-add.component';
+import {DoctorDeleteComponent} from './doctor-delete/doctor-delete.component';
+import {DoctorEditComponent} from './doctor-edit/doctor-edit.component';
+import {FormsModule} from '@angular/forms';
 
-import { TableModule } from 'primeng/table';
-import { DropdownModule } from 'primeng/dropdown';
-import { ButtonModule } from 'primeng/button';
-import { InputTextModule } from 'primeng/inputtext';
-import { ToastModule } from 'primeng/toast';
-import { FileUploadModule } from 'primeng/fileupload';
-import { InputNumberModule } from 'primeng/inputnumber';
-import { ReactiveFormsModule } from '@angular/forms';
+import {TableModule} from 'primeng/table';
+import {DropdownModule} from 'primeng/dropdown';
+import {ButtonModule} from 'primeng/button';
+import {InputTextModule} from 'primeng/inputtext';
+import {ToastModule} from 'primeng/toast';
+import {FileUploadModule} from 'primeng/fileupload';
+import {InputNumberModule} from 'primeng/inputnumber';
+import {ReactiveFormsModule} from '@angular/forms';
 
 
-const routes:Routes=[
-  {path:"",component:DoctorListComponent},
-  {path:"add",component:DoctorAddComponent},
+const routes: Routes = [
+  {path: "", component: DoctorListComponent},
+  {path: "add", component: DoctorAddComponent},
   //{path:"details",component:DoctorDetailsComponent},
-  {path:"edit/:id",component:DoctorEditComponent},
-  {path:"delete/:id",component:DoctorDeleteComponent},
+  {path: "edit/:id", component: DoctorEditComponent},
+  {path: "delete/:id", component: DoctorDeleteComponent},
 ]
 
 @NgModule({
@@ -48,4 +48,5 @@ const routes:Routes=[
 })
 
 
-export class DoctorModule { }
+export class DoctorModule {
+}

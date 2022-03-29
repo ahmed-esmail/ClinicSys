@@ -1,23 +1,37 @@
 const express=require("express");
 const controller=require("./../controllers/paientController")
 const {body,query,param}=require("express-validator")
+
 const router=express.Router();
-var multer = require('multer');
-  var path = require('path');
-var storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, './../images/')
-    },
-    filename: (req, file, cb) => {
-        cb(null, new Date().toLocaleDateString().replace(/\//g,"-")+"-"+file.originalname)
-    }
+const multer = require("multer");
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    //cb(null, "./images/");
+    cb(null,"./../client/client/src/assets");
+  },
+  filename: (req, file, cb) => {
+    cb(
+         null,
+      new Date().toLocaleDateString().replace(/\//g, "") + "-" +
+      new Date().toLocaleTimeString('it-IT').replace(/:/g, "") + "-" +
+      file.originalname
+    );
+  },
 });
-  
-var upload = multer({ storage: storage }).single("profileimg")
-router.route("/patient")
+const upload = multer({ storage: storage }).single('file');
+router.route("/patient");
+router.post('/file', upload, (req, res, next) => {
+    const file = req.file;
+    console.log(file.filename);
+    if (!file) {
+      const error = new Error('No File')
+      error.httpStatusCode = 400
+      return next(error)
+    }
+      res.send(file);
+  })
 router.get("",controller.getAllPatient);
-router.post("", upload
-,[
+router.post("",[
     body("first_name").isAlpha().withMessage("first_name should be string "),
     body("last_name").isAlpha().withMessage("last_name should be string "),
     body("age").isInt().withMessage("patient age should be Intger"),
@@ -27,18 +41,18 @@ router.post("", upload
         }
         throw new Error("gender should be male or female ");
     }).withMessage("gender should be string in Male or Female"),
-    body("address").isAlpha().withMessage("address should be string "),
-     body("history").isAlpha().withMessage("history should be array of string")
+    body("address").isAlpha().withMessage("address should be string ")
+ 
     ]
 ,controller.createPatient);
-router.put("", upload ,[
+router.put("",upload,[
   
     body("first_name").isAlpha().withMessage("first_name should be string "),
     body("last_name").isAlpha().withMessage("last_name should be string "),
     body("age").isInt().withMessage("patient age should be Intger"),
     body("gender").isAlpha().withMessage("gender should be string in Male or Female"),
-    body("address").isAlpha().withMessage("address should be string "),
-    body("history").isAlpha().withMessage("history should be array of string")
+    body("address").isAlpha().withMessage("address should be string ")
+   
     ],controller.updatePatient);
 router.delete("/:_id",[param("_id").isMongoId().withMessage("_id Should be ObjectID")]
 ,controller.deletePatient);

@@ -29,12 +29,12 @@ import { DoctorService } from 'src/app/Services/doctor.service';
 export class AddPrescriptionComponent implements OnInit {
 
   constructor(private prescriptionService: PrescriptionService,
-    public medicineService: MedicineService,
-    public patientService: PatientService,
-    public doctorService: DoctorService,
-    public ref: DynamicDialogRef,
-    public messageService: MessageService,
-    private formBuilder: FormBuilder
+              public medicineService: MedicineService,
+              public patientService: PatientService,
+              public doctorService: DoctorService,
+              public ref: DynamicDialogRef,
+              public messageService: MessageService,
+              private formBuilder: FormBuilder
   ) {
   }
 
@@ -71,6 +71,7 @@ export class AddPrescriptionComponent implements OnInit {
 
     this.formValidation();
   }
+
   add() {
     if (this.isAdd) {
 

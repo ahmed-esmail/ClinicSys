@@ -6,24 +6,47 @@ const controller = require("./../controllers/appointmentController");
 // -------------   Get Appointments -----------------
 router.get("", controller.listappointments);
 
+// -------------   Get appointment By Id -----------
+
+router.get("/:_id",[param("_id").isMongoId().withMessage("_id Should be ObjectID")], controller.getappointment);
+
 // -------------  Add Appointment --------------
 router.post(
   "",
   [
     // body("id").isInt().withMessage("Appointment Id should be Intger"),
-    body("date").isDate().withMessage(" ,Please enter valid date "),
-    body("time").isInt().withMessage(" ,Please enter valid time  "),
-    body("billno").isInt().withMessage(",Please enter valid billno  "),
-    // body("billdate").isDate().withMessage(" ,Please enter valid billdate  "),
-    body("billcharges").isInt().withMessage(" ,Charges not valid "),
+    body("time"),//.isDate().withMessage(" ,Please enter valid time  "),
+    body("bill")
+      .isMongoId()
+      .withMessage(",Please enter valid bill number  ")
+      .optional(),
+    body("patient")
+      .isMongoId()
+      .withMessage(",Please enter valid patient num  "),
+    body("doctor").isMongoId().withMessage(",Please enter valid  doctor "),
     body("condition").isString().withMessage(",Not valid condition"),
-    body(),
   ],
   controller.addappointment
 );
 
 // -------------- Update Appointment ----------
-router.put("", controller.updateappointment);
+router.put(
+  "",
+  [
+    // body("id").isInt().withMessage("Appointment Id should be Intger"),
+    body("time").isInt().withMessage(" ,Please enter valid time  "),
+    body("bill")
+      .isMongoId()
+      .withMessage(",Please enter valid bill number  ")
+      .optional(),
+    body("patient")
+      .isMongoId()
+      .withMessage(",Please enter valid patient num  "),
+    body("doctor").isMongoId().withMessage(",Please enter valid  doctor "),
+    body("condition").isString().withMessage(",Not valid condition"),
+  ],
+  controller.updateappointment
+);
 
 // ------------- Delete Appointment -----------
 router.delete(

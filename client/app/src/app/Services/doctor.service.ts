@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Doctor } from 'src/app/_models/doctor';
+import {HttpClient} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {Doctor} from 'src/app/_models/doctor';
 import {SelectItem} from 'primeng/api';
 
 @Injectable({
@@ -8,7 +8,8 @@ import {SelectItem} from 'primeng/api';
 })
 export class DoctorService {
 
-  constructor(public http:HttpClient) { }
+  constructor(public http: HttpClient) {
+  }
 
   genders: Array<SelectItem> = [
     {label: 'Male', value: 'male'},
@@ -41,30 +42,26 @@ export class DoctorService {
     {label: 'Hematologist', value: 'hematologist'},
   ]
 
-  private baseUrl:string = "http://localhost:3000/doctors"
+  private baseUrl: string = "http://localhost:3000/doctors"
 
-  getAllDoctors()
-  {
+  getAllDoctors() {
     return this.http.get<Doctor[]>(this.baseUrl);
   }
 
-  getDoctorById(id:string){
-    return this.http.get<Doctor>(this.baseUrl+"/"+id);
+  getDoctorById(id: string) {
+    return this.http.get<Doctor>(this.baseUrl + "/" + id);
   }
 
-  addDoctor(dr:Doctor)
-  {
+  addDoctor(dr: Doctor) {
     return this.http.post<Doctor>(this.baseUrl, dr);
   }
 
-  editDoctor(dr:Doctor)
-  {
+  editDoctor(dr: Doctor) {
     return this.http.put<Doctor>(this.baseUrl, dr);
   }
 
-  deleteDoctor(id:string)
-  {
-    return this.http.delete(this.baseUrl+"/"+id);
+  deleteDoctor(id: string) {
+    return this.http.delete(this.baseUrl + "/" + id);
   }
 
 }

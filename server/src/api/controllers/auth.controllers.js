@@ -21,11 +21,20 @@ exports.register = async (req, res, next) => {
 exports.login = async (req, res) => {
   try {
     const user = await User.findByCredentials(
-      req.body.phone_number,
+      req.body.phoneNumber,
       req.body.password
     );
     const token = await user.generateAuthToken();
-    res.send({ user, token });
+    const { firstName, lastName, phoneNumber, email, type, _id } = user;
+    res.send({
+      _id,
+      firstName,
+      lastName,
+      phoneNumber,
+      email,
+      type,
+      token,
+    });
   } catch (e) {
     res
       .status(400)

@@ -44,9 +44,13 @@ exports.createPatient=(request,response,next)=>{
            error.message=errors.array().reduce((current,object)=>current+object.msg+" ","")
            throw error;
     }
+    console.log(request.body);
+    
+
+   // let image = request.body != undefined || null ? request.body.profile_img : request.body.gender+".png"
  
-    
-    
+       // console.log(image);
+       
       let object = new  Patient({
        
         first_name: request.body.first_name,
@@ -55,10 +59,10 @@ exports.createPatient=(request,response,next)=>{
         age:request.body.age,
         gender:request.body.gender,
         address:request.body.address,
-       profile_img: {data: fs.readFileSync(path.join(__dirname + './../../../../images/' + request.file.path)),
-       //data:fs.readFileSync(request.body.profile_img),
-       contentType: 'image/png'},
-        history:request.body.history,
+        profile_img:request.body.profile_img 
+        
+    
+     
      
       })
  
@@ -82,10 +86,10 @@ exports.updatePatient=(request,response,next)=>{
         age:request.body.age,
         gender:request.body.gender,
         address:request.body.address,
-        profile_img: { data: fs.readFileSync(path.join(__dirname + './../../../../images/' + request.file.path)),
-            //data:fs.readFileSync(request.body.profile_img),
-           contentType: 'image/png'},
-        history:request.body.history,
+        // profile_img: { data: fs.readFileSync(path.join(__dirname + './../../../../images/' + request.file.path)),
+        //     //data:fs.readFileSync(request.body.profile_img),
+        //    contentType: 'image/png'},
+     
         
             }
         })
@@ -119,7 +123,7 @@ exports.addDoctortoPatient=(request,response,next)=>{
     else{
         Patient.updateOne({_id:request.body._id},
         {
-            $push:{Doctor: request.body.doctor}
+            $addToSet:{Doctor: request.body.doctor}
         }).then(data=>{
             if(data==null) throw new Error("Patient Is not Found!")
             response.status(200).json({message:"Doctor add to Patient"})
@@ -141,7 +145,7 @@ exports.addAppointmenttoPatient=(request,response,next)=>{
     else{
         Patient.updateOne({_id:request.body._id},
         {
-            $push:{Appointment: request.body.appointment}
+            $addToSet:{Appointment: request.body.appointment}
         }).then(data=>{
             if(data==null) throw new Error("Patient Is not Found!")
             response.status(200).json({message:"Appointment add to Patient"})
@@ -163,7 +167,7 @@ exports.addPrescriptiontoPatient=(request,response,next)=>{
     else{
         Patient.updateOne({_id:request.body._id},
         {
-            $push:{Prescriptions: request.body.prescription}
+            $addToSet:{Prescriptions: request.body.prescription}
         }).then(data=>{
             if(data==null) throw new Error("Patient Is not Found!")
             response.status(200).json({message:"Prescription add to Patient"})

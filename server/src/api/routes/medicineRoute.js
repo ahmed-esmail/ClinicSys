@@ -11,13 +11,13 @@ router.get("/:_id", [param('_id').isMongoId().withMessage("ID should be ObjectId
 //---------------------------- Add Medicine
 router.post("", [
     body("name").isAlpha().withMessage("Medicine name should be String"),
-    body("description").isAlphanumeric().withMessage("Medicine description should be string")
+    body("description").isString().withMessage("Medicine description should be string")
 ], controller.createMedicine);
 
 //---------------------------- Update Medicine
 router.put("", [
     body("name").isAlpha().withMessage("Medicine name should be String"),
-    body("description").isAlphanumeric().withMessage("Medicine description should be string")
+    body("description").isString().withMessage("Medicine description should be string")
 ], controller.updateMedicine);
 
 //---------------------------- Delete Medicine

@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { PrescriptionService } from 'src/app/Services/prescription.service';
+import {Component, OnInit} from '@angular/core';
+import {PrescriptionService} from 'src/app/Services/prescription.service';
 
-import { Location } from '@angular/common'
+import {Location} from '@angular/common'
 
 @Component({
   selector: 'app-remove-prescription',
@@ -10,14 +10,17 @@ import { Location } from '@angular/common'
 })
 export class RemovePrescriptionComponent implements OnInit {
 
-  constructor(private prescriptionService: PrescriptionService, private location: Location) { }
+  constructor(private prescriptionService: PrescriptionService, private location: Location) {
+  }
 
   ngOnInit(): void {
     console.log(this.prescriptionService.id)
   }
+
   remove() {
     this.prescriptionService.deleteprescription(this.prescriptionService.id).subscribe(() => {
-    });;
+    });
+
   }
 
   cansel() {
