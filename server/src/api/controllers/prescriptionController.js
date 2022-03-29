@@ -6,6 +6,7 @@ exports.getPrescriptions = function (request, response, next) {
     Prescription.find({})
         .populate({ path: "medicines.medicine" })
         .populate({ path: "doctor" })
+        .populate({ path: "doctor._id", model: "User", })
         .populate({ path: "patient" })
         .then(result => {
             response.status(200).json(result);
@@ -16,11 +17,12 @@ exports.getPrescriptions = function (request, response, next) {
         })
 }
 
-//----------------------------  Get All Prescriptions
+//----------------------------  Get Prescriptions
 exports.getPrescription = function (request, response, next) {
     Prescription.findOne({ _id: request.params._id })
         .populate({ path: "medicines.medicine" })
         .populate({ path: "doctor" })
+        .populate({ path: "doctor._id", model: "User", })
         .populate({ path: "patient" })
         .then(result => {
             response.status(200).json(result);

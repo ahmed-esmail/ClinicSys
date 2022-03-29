@@ -3,7 +3,6 @@ import { Medicine } from 'src/app/_models/medicine';
 import { Prescription } from 'src/app/_models/prescription';
 import { PrescriptionService } from 'src/app/Services/prescription.service';
 import { MedicineService } from 'src/app/Services/medicine.service';
-// import { FormGroup } from '@angular/forms';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ConfirmationService } from 'primeng/api';
 import { MessageService } from 'primeng/api';
@@ -25,11 +24,10 @@ import { DoctorService } from 'src/app/Services/doctor.service';
              display: block;
          }
      `],
-     
+
 })
 export class AddPrescriptionComponent implements OnInit {
 
-  //service of doctors
   constructor(private prescriptionService: PrescriptionService,
     public medicineService: MedicineService,
     public patientService: PatientService,
@@ -46,7 +44,6 @@ export class AddPrescriptionComponent implements OnInit {
 
   med: string = "";
   dose: string = "";
-  // pa: string = "";
 
   form: FormGroup | any;
   addForm: FormGroup | any;
@@ -55,11 +52,11 @@ export class AddPrescriptionComponent implements OnInit {
   presDialog: boolean = false;
   isAdd: boolean = false;
 
-  
-  arr: [{ medicine: string, dose: string }] = [{ medicine:'',dose:''}];
+
+  arr: [{ medicine: string, dose: string }] = [{ medicine: '', dose: '' }];
   prescription: Prescription = new
-    Prescription('', new Date,'','', [{ medicine:"", dose: "" },]);
-  
+    Prescription('', new Date, '', '', [{ medicine: "", dose: "" },]);
+
   ngOnInit(): void {
     this.presDialog = true;
     this.medicineService.getAllMedicines().subscribe((res) => {
@@ -76,31 +73,42 @@ export class AddPrescriptionComponent implements OnInit {
   }
   add() {
     if (this.isAdd) {
-      console.log(this.med);
-      if (this.arr[0].medicine != "" && this.arr[0].dose != "") {
-        this.arr.push({ medicine: this.med, dose: this.dose });
-      } else if (this.med != "" && this.dose != "") {
-        this.arr[0] = { medicine: this.med, dose: this.dose };
+
+      if (this.med != "" && this.dose != "") {
+
+        if (this.arr.find((x) => x.medicine === this.med)) {
+          console.log("find med");
+          this.messageService.add({ severity: 'error', summary: 'Failed', detail: 'Failed To Add Duplicated Medicine', life: 3000 });
+        } else {
+          console.log(" not find med");
+          if (this.arr[0].medicine != "" && this.arr[0].dose != "") {
+            this.arr.push({ medicine: this.med, dose: this.dose });
+          } else {
+            this.arr[0] = { medicine: this.med, dose: this.dose };
+          }
+        }
       }
     } else {
       this.isAdd = true;
     }
-    // this.reloadData();
-    // console.log(this.arr);
-    // console.log(this.pa);
   }
 
   save() {
     this.presDialog = false;
     this.submitted = true;
-    // this.prescription.patient = this.pa;
     this.prescription.medicines = this.arr;
-    console.log("ppre");
-    console.log(this.prescription);
-    this.prescriptionService.addprescription(this.prescription).subscribe(() => {});
-    this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Prescription Added', life: 3000 });
 
-    this.hideDialog();
+    this.prescriptionService.addprescription(this.prescription).subscribe({
+      next: a => {
+        this.prescription = a;
+        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Prescription Added', life: 3000 });
+        this.hideDialog();
+      },
+      error: () => {
+        this.messageService.add({ severity: 'error', summary: 'Foailed', detail: 'Prescription  Not Added', life: 3000 });
+      }
+    });
+
   }
 
   hideDialog() {
@@ -108,15 +116,6 @@ export class AddPrescriptionComponent implements OnInit {
     this.submitted = false;
     this.ref.close();
   }
-
-  // reloadData() {
-  //   // this.prescriptionService.getAllprescriptions().subscribe((res) => {
-  //   //   this.prescriptions = res;
-  //   // });
-  //   this.medicineService.getAllMedicines().subscribe((res) => {
-  //     this.medicines = res;
-  //   });
-  // }
 
   formValidation() {
     this.form = this.formBuilder.group({
@@ -129,7 +128,7 @@ export class AddPrescriptionComponent implements OnInit {
         // Validators.minLength(8),
       ],
     });
-    this.addForm= this.formBuilder.group({
+    this.addForm = this.formBuilder.group({
       medDose: ['', [
         Validators.required,
         Validators.pattern('^[a-zA-Z]+$'),

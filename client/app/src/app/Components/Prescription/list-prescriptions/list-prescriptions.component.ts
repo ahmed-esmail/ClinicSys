@@ -6,12 +6,9 @@ import { MessageService } from 'primeng/api';
 import { MedicineService } from 'src/app/Services/medicine.service';
 import { Medicine } from 'src/app/_models/medicine';
 import { DialogService } from 'primeng/dynamicdialog';
-import { AddMedicineComponent } from '../../Medecine/add-medicine/add-medicine.component';
 import { AddPrescriptionComponent } from '../add-prescription/add-prescription.component';
 import { EditPrescriptionComponent } from '../edit-prescription/edit-prescription.component';
-import { DynamicDialogConfig } from 'primeng/dynamicdialog';
-import { PatientService } from 'src/app/Services/patient.service';
-import { Patient } from 'src/app/_models/patient';
+
 
 @Component({
   selector: 'app-list-prescriptions',
@@ -112,7 +109,7 @@ export class ListPrescriptionsComponent implements OnInit {
         this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Prescription Deleted', life: 3000 });
       }
     });
-
+    this.reloadData();
   }
 
   findIndexById(id: string): number {
@@ -135,7 +132,9 @@ export class ListPrescriptionsComponent implements OnInit {
       this.medicines = res;
     });
   }
-
+  getEventValue($event: any): string {
+    return $event.target.value;
+  }
   findData() {
     this.prescriptionsList = [... this.prescriptions];
   }

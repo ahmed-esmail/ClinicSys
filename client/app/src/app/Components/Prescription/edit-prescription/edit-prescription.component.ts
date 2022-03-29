@@ -12,6 +12,8 @@ import { PatientService } from 'src/app/Services/patient.service';
 import { Patient } from 'src/app/_models/patient';
 import { Doctor } from 'src/app/_models/doctor';
 import { DoctorService } from 'src/app/Services/doctor.service';
+import { User } from 'src/app/_models/user';
+
 
 
 @Component({
@@ -32,23 +34,20 @@ export class EditPrescriptionComponent implements OnInit {
     public patientService: PatientService,
     public doctorService: DoctorService,
     public ref: DynamicDialogRef,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
   ) {
   }
 
   medicines: Medicine[] = [];
-  patients: Patient[] = [];
-  doctors: Doctor[] = [];
-  // id: string = "";
-  
+
   med: string = "";
   dose: string = "";
 
   form: FormGroup | any;
   addForm: FormGroup | any;
-  
+
   submitted: boolean = false;
-  presDialog: boolean = false;
+  // presDialog: boolean = false;
   isAdd: boolean = false;
 
   arr: [{ medicine: string, dose: string }] = [{ medicine: '', dose: '' }];
@@ -57,37 +56,35 @@ export class EditPrescriptionComponent implements OnInit {
   ngOnInit(): void {
     console.log("pres");
     console.log(this.dynamicDialogConfig.data.pre);
-    this.prescription = this.dynamicDialogConfig.data.pre;
-    console.log(this.prescription);
-
-
+    this.prescription = { ...this.dynamicDialogConfig.data.pre };
     this.arr = this.prescription.medicines;
-    this.presDialog = true;
     this.medicineService.getAllMedicines().subscribe((res) => {
       this.medicines = res;
     });
 
     this.formValidation();
-    // this.prescription._id = this.prescriptionService.id;
-    // this.prescriptionService.getprescription(this.prescriptionService.id).subscribe((res) => {
-    //   this.prescription = res;
-    //   this.arr = res.medicines;
-    // });
   }
   add() {
     if (this.isAdd) {
-      if (this.arr[0].medicine != "") {
-        this.arr.push({ medicine: this.med, dose: this.dose });
-      } else {
-        this.arr[0] = { medicine: this.med, dose: this.dose };
+      if (this.med != "" && this.dose != "") {
+
+        if (this.arr.find((x) => x.medicine === this.med)) {
+          console.log("find med");
+          this.messageService.add({ severity: 'error', summary: 'Failed', detail: 'Failed To Add Duplicated Medicine', life: 3000 });
+        } else {
+          console.log(" not find med");
+          if (this.arr[0].medicine != "" && this.arr[0].dose != "") {
+            this.arr.push({ medicine: this.med, dose: this.dose });
+          } else {
+            this.arr[0] = { medicine: this.med, dose: this.dose };
+          }
+        }
       }
-      this.reloadData();
-      console.log(this.arr);
     } else {
       this.isAdd = true;
     }
   }
-  delete(i : number) {
+  delete(i: number) {
     this.confirmationService.confirm({
 
       message: 'Are you sure you want to delete ' + this.prescription._id + '?',
@@ -104,33 +101,26 @@ export class EditPrescriptionComponent implements OnInit {
   }
 
   edit() {
-    console.log(this.prescription._id);
-    console.log(this.prescription.date);
-    console.log(this.prescription.medicines);
-    console.log(this.prescription.doctor);
-    console.log(this.prescription.patient);
-    this.presDialog = false;
     this.prescription.medicines = this.arr;
-
-    this.prescriptionService.editprescription(this.prescription).subscribe((res) => {
-      // this.medicines = res;
-      this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Prescription Updated', life: 3000 });
-
-      this.hideDialog();
+    this.prescriptionService.editprescription(this.prescription).subscribe({
+      next: a => {
+        this.prescription = a;
+        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Prescription Updated', life: 3000 });
+        this.hideDialog();
+      },
+      error: () => {
+        this.messageService.add({ severity: 'error', summary: 'Foailed', detail: 'Prescription Not Updated', life: 3000 });
+      }
     });
   }
 
 
   hideDialog() {
-    this.presDialog = false;
     this.submitted = false;
     this.dynamicDialogRef.close();
   }
 
   reloadData() {
-    // this.prescriptionService.getAllprescriptions().subscribe((res) => {
-    //   this.prescriptions = res;
-    // });
     this.medicineService.getAllMedicines().subscribe((res) => {
       this.medicines = res;
     });

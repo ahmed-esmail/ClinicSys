@@ -1,29 +1,18 @@
 <div id="myModal">
-
-    <!-- <form id="form" autocomplete="off" enctype="multipart/form-data" [formGroup]="form" novalidate> -->
-
-                <div class="field">
-                    <label for="date">date</label>
-                    <label >{{prescription.date}}</label>
-                    <!-- <p-calendar type="date" [(ngModel)]="prescription.date" formControlName="date" id="date"></p-calendar> -->
-                    <!-- <small class="p-error" *ngIf="submitted && !prescription.date">Date is required.</small> -->
-                </div>
+    <div class="field">
+        <label for="date">date</label>
+        <label class="form-control">{{prescription.date}}</label>
+    </div>
 
     <div class="field">
         <label for="doctor">doctor</label>
-        <label >{{prescription.doctor}}</label>
-        <!-- <input type="text" pInputText id="doctor" [(ngModel)]="prescription.doctor" required formControlName="doctor" />
-        <small class="p-error" *ngIf="submitted && !prescription.doctor">Name is required.</small> -->
-    </div>
 
-            <div class="field">
-                <label for="pa">Patient </label>
-                <label>{{prescription.patient}} {{prescription.patient}}</label>
-                <!-- <p-dropdown  [options]="patients" name="prescription.patient" [(ngModel)]="prescription.patient" formControlName="patient"
-                     optionValue="_id" optionLabel="first_name">
-                </p-dropdown> -->
-                <!-- <small class="p-error" *ngIf="submitted && !prescription.patient">Patient is required.</small> -->
-            </div>
+        <label class="form-control">{{prescription.doctor + " " + prescription.doctor}}</label>
+    </div>
+    <div class="field">
+        <label for="pa">Patient </label>
+        <label class="form-control">{{prescription.patient+ " " + prescription.patient}}</label>
+    </div>
 
     <p-table #dt2 [value]="arr">
         <ng-template pTemplate="header">
@@ -46,21 +35,22 @@
     </p-table>
     <div>
         <div *ngIf="isAdd">
-                                    <form id="addForm" autocomplete="off" enctype="multipart/form-data" [formGroup]="addForm" novalidate>
-            <div class="field">
-                <label for="med">medicine</label>
-                <p-dropdown [options]="medicines" [(ngModel)]="med" optionLabel="name" formControlName="medicine"></p-dropdown>
-            </div>
-            <div class="field">
-                <label for="dose">dose</label>
-                <input type="text" pInputText id="dose" [(ngModel)]="dose" required formControlName="medDose"/>
-                <small class="p-error" *ngIf="submitted && !dose">Name is required.</small>
-            </div>
+            <form id="addForm" autocomplete="off" enctype="multipart/form-data" [formGroup]="addForm" novalidate>
+                <div class="field">
+                    <label for="med">medicine</label>
+                    <p-dropdown [options]="medicines" [(ngModel)]="med" optionLabel="name" formControlName="medicine"
+                        placeholder="Select Medicine"></p-dropdown>
+                </div>
+                <div class="field">
+                    <label for="dose">dose</label>
+                    <input type="text" pInputText id="dose" [(ngModel)]="dose" required formControlName="medDose" />
+                    <small class="p-error" *ngIf="submitted && !dose">Name is required.</small>
+                </div>
             </form>
         </div>
-        <button type="submit" pButton pRipple label="add" icon="pi pi-check" class="p-button-text" (click)="add()"></button>
+        <button type="submit" pButton pRipple label="add" icon="pi pi-check" class="p-button-text"
+            (click)="add()"></button>
     </div>
 
     <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="edit()"></button>
-    <!-- </form> -->
 </div>

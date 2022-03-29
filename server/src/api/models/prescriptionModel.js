@@ -6,7 +6,7 @@ const PrescriptionSchema = new Schema({
   date: { type: Date, required: true },
   doctor: { type: Schema.Types.ObjectId, required: true, ref: "Doctor" },
   medicines: [{
-    medicine: { type: Schema.Types.ObjectId, required: true, ref: "Medicine",unique:true },
+    medicine: { type: Schema.Types.ObjectId, required: true, ref: "Medicine",unique:false},
     dose: { type: String, required: true, },
   }],
 });

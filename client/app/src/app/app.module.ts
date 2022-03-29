@@ -13,9 +13,6 @@ import { ErrorComponent } from './error/error.component';
 import { DoctorProfileComponent } from './doctor-profile/doctor-profile.component';
 
 import { ListMedicinesComponent } from './Components/Medecine/list-medicines/list-medicines.component';
-import { AddMedicineComponent } from './Components/Medecine/add-medicine/add-medicine.component';
-import { EditMedicineComponent } from './Components/Medecine/edit-medicine/edit-medicine.component';
-import { RemoveMedicineComponent } from './Components/Medecine/remove-medicine/remove-medicine.component';
 import { RemovePrescriptionComponent } from './Components/Prescription/remove-prescription/remove-prescription.component';
 import { AddPrescriptionComponent } from './Components/Prescription/add-prescription/add-prescription.component';
 import { EditPrescriptionComponent } from './Components/Prescription/edit-prescription/edit-prescription.component';
@@ -55,10 +52,6 @@ import { CalendarModule } from 'primeng/calendar';
     ReceptionistProfileComponent,
 
     ListMedicinesComponent,
-    AddMedicineComponent,
-    EditMedicineComponent,
-    RemoveMedicineComponent,
-
     RemovePrescriptionComponent,
     AddPrescriptionComponent,
     EditPrescriptionComponent,

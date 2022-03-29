@@ -3,6 +3,7 @@ import { Medicine } from 'src/app/_models/medicine';
 import { MedicineService } from 'src/app/Services/medicine.service';
 import { ConfirmationService } from 'primeng/api';
 import { MessageService } from 'primeng/api';
+// import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-list-medicines',
@@ -16,41 +17,40 @@ import { MessageService } from 'primeng/api';
      `],
   providers: [MessageService, ConfirmationService]
 })
-export class ListMedicinesComponent implements OnInit,OnChanges {
+export class ListMedicinesComponent implements OnInit {
 
   medicines: Medicine[] = [];
-  // medicinesCopy: Medicine[] = this.medicines;
-  // medc: Medicine[] = [];
   medicineDialog: boolean = false;
   medicine: Medicine = new Medicine('', '', '');
   submitted: boolean = false;
   isEdit: boolean = false;
-  // dt: any;
+  // addForm: FormGroup | any;
 
-  constructor(public medicineService: MedicineService, private messageService: MessageService, private confirmationService: ConfirmationService){}
-  ngOnChanges(): void {
-    this.medicineService.getAllMedicines().subscribe((res) => {
-      this.medicines = res;
-    });
-  }
+  constructor(public medicineService: MedicineService,
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService,
+    // private formBuilder: FormBuilder
+  ) { }
 
   ngOnInit(): void {
     this.medicineService.getAllMedicines().subscribe((res) => {
       this.medicines = res;
     });
+
+    // this.formValidation();
   }
 
   
   clickEdit(med: Medicine) {
     this.isEdit = true;
     this.medicine = { ...med };
-    this.submitted = false;
+    // this.submitted = false;
     this.medicineDialog = true;
   }
   clickAdd() {
     this.isEdit = false;
     this.medicine = new Medicine('', '', '');
-    this.submitted = false;
+    // this.submitted = false;
     this.medicineDialog = true;
   }
   clickDelete(i: string) {
@@ -60,47 +60,50 @@ export class ListMedicinesComponent implements OnInit,OnChanges {
       header: 'Confirm',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        // console.log(this.medicines.length);
         this.medicineService.deleteMedicine(this.medicineService.id).subscribe(() => {
         });;
         this.reloadData();
-        // console.log(this.medicines.length);
         this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Medicine Deleted', life: 3000 });
       }
     });
   }
 
   save() {
-    console.log(this.medicine);
     if (this.isEdit) {
-      // this.medicines[this.findIndexById(this.medicine._id)] = this.medicine;
-      this.medicineService.editMedicine(this.medicine).subscribe(() => {
-      });;
-      this.reloadData();
-    } else {
-      // this.medicines.push(this.medicine); 
-      this.medicineService.addMedicine(this.medicine).subscribe(() => {
+      this.medicineService.editMedicine(this.medicine).subscribe({
+        next: a => {
+          this.medicine = a;
+          this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Medicine Updated', life: 3000 });
+          this.hideDialog();
+        },
+        error: () => {
+          this.messageService.add({ severity: 'error', summary: 'Foailed', detail: 'Medicine  Not Updated', life: 3000 });
+        }
       });
       this.reloadData();
+    } else {
+      this.medicineService.addMedicine(this.medicine).subscribe({
+        next: a => {
+          this.medicine = a;
+          this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Medicine Added', life: 3000 });
+          this.hideDialog();
+        },
+        error: () => {
+          this.messageService.add({ severity: 'error', summary: 'Foailed', detail: 'Medicine  Not Added', life: 3000 });
+        }
+      });
     }
-    this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Medicine Updated', life: 3000 });
-    this.medicineDialog = false;
+    this.reloadData();
   }
 
   hideDialog() {
+    this.reloadData();
     this.medicineDialog = false;
     this.submitted = false;
   }
 
-  findIndexById(id: string): number {
-    let index = -1;
-    for (let i = 0; i < this.medicines.length; i++) {
-      if (this.medicines[i]._id === id) {
-        index = i;
-        break;
-      }
-    }
-    return index;
+  getEventValue($event: any): string {
+    return $event.target.value;
   }
 
   reloadData() {
@@ -109,10 +112,4 @@ export class ListMedicinesComponent implements OnInit,OnChanges {
     });
   }
 
-  // applyFilterGlobal($event: { target: HTMLInputElement; }, stringVal: any) {
-  //   this.dt.filterGlobal(($event.target as HTMLInputElement).value, stringVal);
-  // }
-  // applyFilterGlobal($event: any, stringVal: any) {
-  //   this.dt!.filterGlobal(($event.target as HTMLInputElement).value, stringVal);
-  // }
 }
