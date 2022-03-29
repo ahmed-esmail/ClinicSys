@@ -62,6 +62,7 @@ import {MatIconModule} from "@angular/material/icon";
 import {PaymentModule} from "./payment/payment.module";
 import {MatButtonModule} from "@angular/material/button";
 import {ErrorInterceptor, JwtInterceptor} from "./_helpers";
+import { DoctorPatientsComponent } from './doctor-patients/doctor-patients.component';
 
 @NgModule({
   declarations: [
@@ -90,6 +91,7 @@ import {ErrorInterceptor, JwtInterceptor} from "./_helpers";
     AdminComponent,
     LoginComponent,
     NavbarComponent,
+    DoctorPatientsComponent,
 
   ],
   imports: [
