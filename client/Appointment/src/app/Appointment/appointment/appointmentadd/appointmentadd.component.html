@@ -12,7 +12,7 @@
     <mat-form-field appearance="fill">
         <mat-select [(ngModel)]="nappointment.doctor" name="doctor">
             <mat-option *ngFor="let doc of Doctors" [value]="doc._id">
-                {{doc.first_name + " " + doc.last_name}}
+                {{doc.firstName + " " + doc.lastName}}
             </mat-option>
         </mat-select>
     </mat-form-field>
@@ -35,4 +35,4 @@
     <textarea class="form-control" [(ngModel)]="nappointment.condition" aria-label="With textarea"></textarea>
 </div>
 
-<button type="submit" class="btn btn-primary" (click)="save()">Add</button>
+<button type="submit" class="btn btn-primary" style="margin: 10px;" (click)="save()">Add</button>

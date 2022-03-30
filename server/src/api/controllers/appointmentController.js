@@ -79,7 +79,7 @@ exports.addappointment = async function (request, response, next) {
 exports.updateappointment = async function (request, response, next) {
   let c = await Payment.exists({ _id: request.body.bill });
 
-  if (!c) {
+  if (!c && request.body.bill != null) {
     let error = new Error();
     error.status = 404;
     error.message = "Bill not found";
@@ -89,7 +89,6 @@ exports.updateappointment = async function (request, response, next) {
       .where({ _id: request.body.id })
       .update({
         $set: {
-          date: request.body.date,
           time: request.body.time,
           bill: request.body.bill,
           patient: request.body.patient,
@@ -97,8 +96,8 @@ exports.updateappointment = async function (request, response, next) {
           condition: request.body.condition,
         },
       })
-      .then((result) => {
-        response.status(201).json({ message: " Appointment Updated" });
+      .then((object) => {
+        response.status(201).json(object);
       })
       .catch((error) => {
         error.status = 500;
@@ -118,7 +117,7 @@ exports.deleteappointment = function (request, response, next) {
       .reduce((current, object) => current + object.msg + "", "");
     next(error);
   } else {
-    Appointment.deleteOne({ _id: request.body.id })
+    Appointment.deleteOne({ _id: request.params.id })
       .then((result) => {
         response.status(201).json({ message: "Appointment Deleted" });
       })

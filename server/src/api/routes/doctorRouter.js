@@ -33,6 +33,12 @@ router.get(
   doctorController.getDoctorById
 );
 
+router.get(
+  "",
+  [body("id").isMongoId().withMessage("ID should be ObjectId")],
+  doctorController.getDoctorByBodyId
+);
+
 //add a doctor
 router.post(
   "",

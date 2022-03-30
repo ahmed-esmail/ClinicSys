@@ -15,7 +15,7 @@ router.post(
   "",
   [
     // body("id").isInt().withMessage("Appointment Id should be Intger"),
-    body("time"),//.isDate().withMessage(" ,Please enter valid time  "),
+    body("time"), //.isDate().withMessage(" ,Please enter valid time  "),
     body("bill")
       .isMongoId()
       .withMessage(",Please enter valid bill number  ")
@@ -50,8 +50,8 @@ router.put(
 
 // ------------- Delete Appointment -----------
 router.delete(
-  "",
-  [body("id").isInt().withMessage(" Id should be Integer")],
+  "/:id",
+  [param("id").isMongoId().withMessage(" Id should be Integer")],
   controller.deleteappointment
 );
 

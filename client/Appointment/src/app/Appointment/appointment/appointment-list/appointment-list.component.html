@@ -1,13 +1,12 @@
-<mat-toolbar color="blue">
-    <mat-toolbar-row>
+<p>
+    <mat-toolbar color="primary">
         <span>Apppointments</span>
         <span class="example-spacer"></span>
         <button pButton type="button" label="Search" icon="pi pi-search" iconPos="right"
             class="p-button-text p-button-text"></button>
         <button pButton type="button" class="p-button-rounded" icon="pi pi-plus" (click)="openAddForm()"></button>
-    </mat-toolbar-row>
-</mat-toolbar>
-
+    </mat-toolbar>
+</p>
 
 <div>
     <p-table class="table" [value]="Appointments" [paginator]="true" [rows]="5">
@@ -15,8 +14,6 @@
             <ng-template pTemplate="header">
                 <tr>
                     <th>Patient</th>
-                    <th>Name</th>
-                    <th>Date</th>
                     <th>Time</th>
                     <th>Doctor</th>
                     <th>Condition</th>
@@ -26,17 +23,16 @@
         </thead>
         <ng-template pTemplate="body" let-App>
             <tr>
-                <td>{{App._id}}</td>
-                <td>{{App}}</td>
-                <td>{{App.date}}</td>
+                <td>{{App.patient.first_name + " " + App.patient.last_name}}</td>
                 <td>{{App.time}}</td>
-                <td>{{App.doctor}}</td>
+                <td>{{App.doctor.speciality}}</td>
                 <td>{{App.condition}}</td>
                 <td>
                     <span class="p-buttonset">
-                        <button pButton type="button" label="Edit" class="p-button-raised p-button-rounded"></button>
-                        <button pButton type="button" icon="pi pi-trash"
+                        <button pButton type="button" label="Edit" (click)="updateAppointment(App)"
                             class="p-button-raised p-button-rounded"></button>
+                        <button pButton type="button" icon="pi pi-trash" class="p-button-raised p-button-rounded"
+                            (click)="delete(App)"></button>
 
                     </span>
 

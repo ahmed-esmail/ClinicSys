@@ -51,6 +51,36 @@ exports.getDoctorById = function (request, response, next) {
   }
 };
 
+exports.getDoctorByBodyId = function (request, response, next) {
+  let errors = validationResult(request);
+
+  if (!errors.isEmpty()) {
+    let error = new Error();
+    error.status = 422;
+    error.message = errors
+      .array()
+      .reduce((current, object) => current + object.msg + " , ", "");
+    next(error);
+  } else {
+    User.findOne({ _id: request.body.id, type: "Doctor" })
+      .populate({
+        path: "_id",
+        model: "Doctor",
+      })
+      .then((data) => {
+        if (!data) {
+          next(new Error("Doctor id not Found"));
+          response.status(422).json(data);
+        } else {
+          response.status(200).json(data);
+        }
+      })
+      .catch((error) => {
+        next(error);
+      });
+  }
+};
+
 exports.addDoctor = function (request, response, next) {
   let errors = validationResult(request);
 
@@ -63,8 +93,8 @@ exports.addDoctor = function (request, response, next) {
     next(error);
   } else {
     let userObject = new User({
-      first_name: request.body.firstName,
-      last_name: request.body.lastName,
+      firstName: request.body.firstName,
+      lastName: request.body.lastName,
       phoneNumber: request.body.phoneNumber,
       age: request.body.age,
       email: request.body.email,

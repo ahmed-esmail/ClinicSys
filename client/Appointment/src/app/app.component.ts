@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { appointmentService } from './Appointment/appointment-service.service';
+import { appointmentService } from './Appointment/appointment/appointment-service.service';
 
 @Component({
   selector: 'app-root',

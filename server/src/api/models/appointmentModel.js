@@ -15,4 +15,15 @@ const appointmentSchema = new Schema({
   condition: { type: String, required: true },
 });
 
+appointmentSchema.index(
+  {
+    time: 1,
+    patient: 1,
+    doctor: 1,
+  },
+  {
+    unique: true,
+  }
+);
+
 module.exports = mongoose.model("Appointment", appointmentSchema);

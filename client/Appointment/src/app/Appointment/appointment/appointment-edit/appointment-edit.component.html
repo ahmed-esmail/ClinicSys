@@ -1,0 +1,38 @@
+<h1 mat-dialog-title>Update appointment</h1>
+
+<h2>Time</h2>
+<div class="input-group mb-3">
+    <input type="datetime-local" [(ngModel)]="this.appser.editable.time" class="form-control" aria-label="Date"
+        aria-describedby="basic-addon1">
+</div>
+
+
+<h2> Doctor </h2>
+<div class="input-group mb-3">
+    <mat-form-field appearance="fill">
+        <mat-select [(ngModel)]="this.appser.editable.doctor" name="doctor">
+            <mat-option *ngFor="let doc of Doctors" [value]="doc._id">
+                {{doc.firstName + " " + doc.lastName}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+</div>
+
+<h2> Patient </h2>
+<div class="input-group mb-3">
+    <mat-form-field appearance="fill">
+        <mat-select [(ngModel)]="this.appser.editable.patient" name="patient">
+            <mat-option *ngFor="let p of Patients" [value]="p._id">
+                {{p.first_name + " " + p.last_name}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+</div>
+
+
+<div class="input-group">
+    <span class="input-group-text">Condition</span>
+    <textarea class="form-control" [(ngModel)]="this.appser.editable.condition" aria-label="With textarea"></textarea>
+</div>
+
+<button type="submit" class="btn btn-primary" style="margin: 10px;" (click)="update(this.appser.editable)">Edit Appointment</button>
