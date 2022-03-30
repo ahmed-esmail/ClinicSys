@@ -10,7 +10,7 @@
 <h2> Doctor </h2>
 <div class="input-group mb-3">
     <mat-form-field appearance="fill">
-        <mat-select [(ngModel)]="this.appser.editable.doctor" name="doctor">
+        <mat-select [(ngModel)]="this.appser.editable.doctor._id" name="doctor">
             <mat-option *ngFor="let doc of Doctors" [value]="doc._id">
                 {{doc.firstName + " " + doc.lastName}}
             </mat-option>
@@ -21,7 +21,7 @@
 <h2> Patient </h2>
 <div class="input-group mb-3">
     <mat-form-field appearance="fill">
-        <mat-select [(ngModel)]="this.appser.editable.patient" name="patient">
+        <mat-select [(ngModel)]="this.appser.editable.patient._id" name="patient">
             <mat-option *ngFor="let p of Patients" [value]="p._id">
                 {{p.first_name + " " + p.last_name}}
             </mat-option>
@@ -35,4 +35,5 @@
     <textarea class="form-control" [(ngModel)]="this.appser.editable.condition" aria-label="With textarea"></textarea>
 </div>
 
-<button type="submit" class="btn btn-primary" style="margin: 10px;" (click)="update(this.appser.editable)">Edit Appointment</button>
+<button type="submit" class="btn btn-primary" style="margin: 10px;" (click)="update(this.appser.editable)">Edit
+    Appointment</button>
