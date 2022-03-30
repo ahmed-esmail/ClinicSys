@@ -59,7 +59,8 @@ export class LoginComponent implements OnInit {
           this.router.navigateByUrl(returnUrl);
         },
         error: error => {
-          this.error = error;
+          console.log(error)
+          this.error = "Failed To Login Incorrect Phone Number or Password ";
           this.loading = false;
         }
       });

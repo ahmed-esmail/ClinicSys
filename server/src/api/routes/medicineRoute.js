@@ -6,7 +6,7 @@ const router = express.Router()
 //---------------------------- Git All Medicines
 router.get("", controller.getMedicines);
 //---------------------------- Git Medicine
-router.get("/:id", [param('id').isMongoId().withMessage("ID should be ObjectId")], controller.getMedicine);
+router.get("/:_id", [param('_id').isMongoId().withMessage("ID should be ObjectId")], controller.getMedicine);
 
 //---------------------------- Add Medicine
 router.post("", [
@@ -21,6 +21,6 @@ router.put("", [
 ], controller.updateMedicine);
 
 //---------------------------- Delete Medicine
-router.delete("/:_id", [param("_id").isMongoId().withMessage("_id Should be ObjectID")], controller.deleteMedicine);
+router.delete("/:_id", [param("_id").isMongoId().withMessage("ID Should be ObjectID")], controller.deleteMedicine);
 
 module.exports = router;

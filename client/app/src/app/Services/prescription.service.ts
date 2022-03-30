@@ -3,27 +3,15 @@ import {Injectable} from '@angular/core';
 import {catchError, throwError} from 'rxjs';
 import {Prescription} from 'src/app/_models/prescription';
 
-//   import { HttpClient } from '@angular/common/http';
-// import { Injectable } from '@angular/core';
-
 @Injectable({
   providedIn: 'root'
 })
 export class PrescriptionService {
 
-//   import { HttpClient } from '@angular/common/http';
-// import { Injectable } from '@angular/core';
-
-// import { Car } from '../domain/car';
-
   private prescriptionUrl: string = "http://localhost:3000/prescription";
-
-  constructor(private http: HttpClient) {
-  }
+  constructor(private http: HttpClient) { }
 
   id: string = "";
-
-
   getprescription(id: string) {
     return this.http.get<Prescription>(this.prescriptionUrl + '/' + id)
       .pipe(catchError(this.handleError));

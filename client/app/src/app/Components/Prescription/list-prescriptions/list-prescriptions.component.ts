@@ -1,17 +1,14 @@
-import {Component, OnInit} from '@angular/core';
-import {Prescription} from 'src/app/_models/prescription';
-import {PrescriptionService} from 'src/app/Services/prescription.service';
-import {ConfirmationService} from 'primeng/api';
-import {MessageService} from 'primeng/api';
-import {MedicineService} from 'src/app/Services/medicine.service';
-import {Medicine} from 'src/app/_models/medicine';
-import {DialogService} from 'primeng/dynamicdialog';
-import {AddMedicineComponent} from '../../Medecine/add-medicine/add-medicine.component';
-import {AddPrescriptionComponent} from '../add-prescription/add-prescription.component';
-import {EditPrescriptionComponent} from '../edit-prescription/edit-prescription.component';
-import {DynamicDialogConfig} from 'primeng/dynamicdialog';
-import {PatientService} from 'src/app/Services/patient.service';
-import {Patient} from 'src/app/_models/patient';
+import { Component, OnInit } from '@angular/core';
+import { Prescription } from 'src/app/_models/prescription';
+import { PrescriptionService } from 'src/app/Services/prescription.service';
+import { ConfirmationService } from 'primeng/api';
+import { MessageService } from 'primeng/api';
+import { MedicineService } from 'src/app/Services/medicine.service';
+import { Medicine } from 'src/app/_models/medicine';
+import { DialogService } from 'primeng/dynamicdialog';
+import { AddPrescriptionComponent } from '../add-prescription/add-prescription.component';
+import { EditPrescriptionComponent } from '../edit-prescription/edit-prescription.component';
+
 
 @Component({
   selector: 'app-list-prescriptions',
@@ -117,7 +114,7 @@ export class ListPrescriptionsComponent implements OnInit {
         });
       }
     });
-
+    this.reloadData();
   }
 
   findIndexById(id: string): number {
@@ -140,7 +137,9 @@ export class ListPrescriptionsComponent implements OnInit {
       this.medicines = res;
     });
   }
-
+  getEventValue($event: any): string {
+    return $event.target.value;
+  }
   findData() {
     this.prescriptionsList = [...this.prescriptions];
   }

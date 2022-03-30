@@ -1,17 +1,19 @@
-import {Component, OnInit} from '@angular/core';
-import {Medicine} from 'src/app/_models/medicine';
-import {Prescription} from 'src/app/_models/prescription';
-import {PrescriptionService} from 'src/app/Services/prescription.service';
-import {MedicineService} from 'src/app/Services/medicine.service';
-import {ConfirmationService} from 'primeng/api';
-import {MessageService} from 'primeng/api';
-import {DialogService, DynamicDialogConfig} from 'primeng/dynamicdialog';
-import {DynamicDialogRef} from 'primeng/dynamicdialog';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {PatientService} from 'src/app/Services/patient.service';
-import {Patient} from 'src/app/_models/patient';
-import {Doctor} from 'src/app/_models/doctor';
-import {DoctorService} from 'src/app/Services/doctor.service';
+import { Component, OnInit } from '@angular/core';
+import { Medicine } from 'src/app/_models/medicine';
+import { Prescription } from 'src/app/_models/prescription';
+import { PrescriptionService } from 'src/app/Services/prescription.service';
+import { MedicineService } from 'src/app/Services/medicine.service';
+import { ConfirmationService } from 'primeng/api';
+import { MessageService } from 'primeng/api';
+import { DialogService, DynamicDialogConfig } from 'primeng/dynamicdialog';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { PatientService } from 'src/app/Services/patient.service';
+import { Patient } from 'src/app/_models/patient';
+import { Doctor } from 'src/app/_models/doctor';
+import { DoctorService } from 'src/app/Services/doctor.service';
+import { User } from 'src/app/_models/user';
+
 
 
 @Component({
@@ -23,23 +25,20 @@ import {DoctorService} from 'src/app/Services/doctor.service';
 export class EditPrescriptionComponent implements OnInit {
 
   constructor(private prescriptionService: PrescriptionService,
-              public medicineService: MedicineService,
-              public dynamicDialogRef: DynamicDialogRef,
-              public dialogService: DialogService,
-              public messageService: MessageService,
-              private dynamicDialogConfig: DynamicDialogConfig,
-              private confirmationService: ConfirmationService,
-              public patientService: PatientService,
-              public doctorService: DoctorService,
-              public ref: DynamicDialogRef,
-              private formBuilder: FormBuilder
+    public medicineService: MedicineService,
+    public dynamicDialogRef: DynamicDialogRef,
+    public dialogService: DialogService,
+    public messageService: MessageService,
+    private dynamicDialogConfig: DynamicDialogConfig,
+    private confirmationService: ConfirmationService,
+    public patientService: PatientService,
+    public doctorService: DoctorService,
+    public ref: DynamicDialogRef,
+    private formBuilder: FormBuilder,
   ) {
   }
 
   medicines: Medicine[] = [];
-  patients: Patient[] = [];
-  doctors: Doctor[] = [];
-  // id: string = "";
 
   med: string = "";
   dose: string = "";
@@ -48,47 +47,43 @@ export class EditPrescriptionComponent implements OnInit {
   addForm: FormGroup | any;
 
   submitted: boolean = false;
-  presDialog: boolean = false;
+  // presDialog: boolean = false;
   isAdd: boolean = false;
 
-  arr: [{ medicine: string, dose: string }] = [{medicine: '', dose: ''}];
-  prescription: Prescription = new Prescription('', new Date, '', '', [{medicine: "", dose: ""},]);
+  arr: [{ medicine: string, dose: string }] = [{ medicine: '', dose: '' }];
+  prescription: Prescription = new Prescription('', new Date, '', '', [{ medicine: "", dose: "" },]);
 
   ngOnInit(): void {
     console.log("pres");
     console.log(this.dynamicDialogConfig.data.pre);
-    this.prescription = this.dynamicDialogConfig.data.pre;
-    console.log(this.prescription);
-
-
+    this.prescription = { ...this.dynamicDialogConfig.data.pre };
     this.arr = this.prescription.medicines;
-    this.presDialog = true;
     this.medicineService.getAllMedicines().subscribe((res) => {
       this.medicines = res;
     });
 
     this.formValidation();
-    // this.prescription._id = this.prescriptionService.id;
-    // this.prescriptionService.getprescription(this.prescriptionService.id).subscribe((res) => {
-    //   this.prescription = res;
-    //   this.arr = res.medicines;
-    // });
   }
-
   add() {
     if (this.isAdd) {
-      if (this.arr[0].medicine != "") {
-        this.arr.push({medicine: this.med, dose: this.dose});
-      } else {
-        this.arr[0] = {medicine: this.med, dose: this.dose};
+      if (this.med != "" && this.dose != "") {
+
+        if (this.arr.find((x) => x.medicine === this.med)) {
+          console.log("find med");
+          this.messageService.add({ severity: 'error', summary: 'Failed', detail: 'Failed To Add Duplicated Medicine', life: 3000 });
+        } else {
+          console.log(" not find med");
+          if (this.arr[0].medicine != "" && this.arr[0].dose != "") {
+            this.arr.push({ medicine: this.med, dose: this.dose });
+          } else {
+            this.arr[0] = { medicine: this.med, dose: this.dose };
+          }
+        }
       }
-      this.reloadData();
-      console.log(this.arr);
     } else {
       this.isAdd = true;
     }
   }
-
   delete(i: number) {
     this.confirmationService.confirm({
 
@@ -100,39 +95,32 @@ export class EditPrescriptionComponent implements OnInit {
         console.log(i);
         this.arr.splice(i, 1);
         this.reloadData();
-        this.messageService.add({severity: 'success', summary: 'Successful', detail: 'Medicine Deleted', life: 3000});
+        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Medicine Deleted', life: 3000 });
       }
     });
   }
 
   edit() {
-    console.log(this.prescription._id);
-    console.log(this.prescription.date);
-    console.log(this.prescription.medicines);
-    console.log(this.prescription.doctor);
-    console.log(this.prescription.patient);
-    this.presDialog = false;
     this.prescription.medicines = this.arr;
-
-    this.prescriptionService.editprescription(this.prescription).subscribe((res) => {
-      // this.medicines = res;
-      this.messageService.add({severity: 'success', summary: 'Successful', detail: 'Prescription Updated', life: 3000});
-
-      this.hideDialog();
+    this.prescriptionService.editprescription(this.prescription).subscribe({
+      next: a => {
+        this.prescription = a;
+        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Prescription Updated', life: 3000 });
+        this.hideDialog();
+      },
+      error: () => {
+        this.messageService.add({ severity: 'error', summary: 'Foailed', detail: 'Prescription  Not Updated', life: 3000 });
+      }
     });
   }
 
 
   hideDialog() {
-    this.presDialog = false;
     this.submitted = false;
     this.dynamicDialogRef.close();
   }
 
   reloadData() {
-    // this.prescriptionService.getAllprescriptions().subscribe((res) => {
-    //   this.prescriptions = res;
-    // });
     this.medicineService.getAllMedicines().subscribe((res) => {
       this.medicines = res;
     });

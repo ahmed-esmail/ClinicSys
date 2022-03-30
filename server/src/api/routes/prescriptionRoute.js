@@ -6,8 +6,8 @@ const router = express.Router()
 //----------------------------  Get All Prescriptions
 router.get("", controller.getPrescriptions);
 //----------------------------  Ger Prescription
-router.get("/:id", [
-    param('id').isMongoId().withMessage("ID should be ObjectId"),
+router.get("/:_id", [
+    param('_id').isMongoId().withMessage("ID should be ObjectId"),
 ], controller.getPrescription);
 
 //----------------------------  Add Prescription
