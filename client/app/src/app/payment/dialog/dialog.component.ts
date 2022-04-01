@@ -3,6 +3,7 @@ import {FormGroup, FormBuilder, Validators} from "@angular/forms";
 import {PaymentService} from "../../_services/payment.service";
 import {MatDialogRef, MAT_DIALOG_DATA} from "@angular/material/dialog";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {PatientService} from "../../Services/patient.service";
 
 
 @Component({
@@ -14,25 +15,29 @@ export class DialogComponent implements OnInit {
 
   paymentForm!: FormGroup
   actionBtn: string = "Save"
+  patients: any[] = []
 
   constructor(private formBuilder: FormBuilder,
               private paymentService: PaymentService,
               private dialogRef: MatDialogRef<DialogComponent>,
               @Inject(MAT_DIALOG_DATA) public editDate: any,
-              private _snackBar: MatSnackBar
+              private _snackBar: MatSnackBar,
+              public patientService: PatientService
   ) {
   }
 
   ngOnInit(): void {
+    this.getAllPatient()
     this.paymentForm = this.formBuilder.group({
       amount: ['', Validators.required],
-      method: ['', Validators.required]
+      method: ['', Validators.required],
+      patient: ['', Validators.required]
     })
     if (this.editDate) {
       this.actionBtn = "Update"
       this.paymentForm.controls['method'].setValue(this.editDate.method)
       this.paymentForm.controls['amount'].setValue(this.editDate.charges)
-
+      this.paymentForm.controls['patient'].setValue(this.editDate.patient)
     }
   }
 
@@ -43,8 +48,8 @@ export class DialogComponent implements OnInit {
   addPayment() {
     if (!this.editDate) {
       if (this.paymentForm?.valid) {
-        const {method, amount} = this.paymentForm?.value;
-        this.paymentService.create({date: new Date().toDateString(), method, charges: amount}).subscribe({
+        const {method, amount, patient} = this.paymentForm?.value;
+        this.paymentService.create({date: new Date().toDateString(), method, charges: amount, patient}).subscribe({
           next: value => {
             this.paymentForm?.reset();
             this.dialogRef.close('save')
@@ -60,12 +65,26 @@ export class DialogComponent implements OnInit {
   }
 
   private updateProduct() {
-    const {method, amount} = this.paymentForm?.value
-    this.paymentService.update({charges: amount, method, id: this.editDate._id}).subscribe({
+    const {method, amount, patient} = this.paymentForm?.value
+    this.paymentService.update({
+      charges: amount,
+      method,
+      id: this.editDate._id,
+      patient
+    }).subscribe({
       next: value => {
         this.paymentForm?.reset();
         this.dialogRef.close('update')
 
+      },
+      error: err => console.error(err)
+    })
+  }
+
+  getAllPatient() {
+    this.patientService.getpatients().subscribe({
+      next: values => {
+        this.patients = values
       },
       error: err => console.error(err)
     })

@@ -16,7 +16,7 @@ export class PaymentComponent implements OnInit {
 
   payments: any[] = [];
   durationInSeconds = 5;
-  displayedColumns: string[] = ['_id', 'date', 'charges', 'method', 'action'];
+  displayedColumns: string[] = ['_id','patient', 'date', 'charges', 'method', 'action'];
   dataSource!: MatTableDataSource<any>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -50,7 +50,6 @@ export class PaymentComponent implements OnInit {
     this.paymentService.getAll().subscribe({
       next: values => {
         this.payments = values
-        console.log(values)
         this.dataSource = new MatTableDataSource<any>(values);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;

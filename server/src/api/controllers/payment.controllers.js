@@ -58,6 +58,7 @@ exports.update = async (req, res) => {
 
 exports.getAll = (req, res, next) => {
   Payment.find({})
+    .populate("patient", ["first_name", "last_name"])
     .then((result) => {
       res.status(200).json(result);
     })

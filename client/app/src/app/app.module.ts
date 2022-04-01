@@ -40,6 +40,7 @@ import {TabViewModule} from 'primeng/tabview';
 import {MessageService, ConfirmationService} from 'primeng/api';
 import {DynamicDialogModule} from 'primeng/dynamicdialog';
 import {CalendarModule} from 'primeng/calendar';
+import {ChartModule} from 'primeng/chart';
 
 
 import {TooltipModule} from 'primeng/tooltip';
@@ -123,7 +124,8 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
     MatToolbarModule,
     MatButtonModule,
     MatIconModule,
-    PaymentModule
+    PaymentModule,
+    ChartModule
 
   ],
   providers: [DoctorService, ReceptionistService, MessageService, ConfirmationService,

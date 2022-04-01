@@ -12,5 +12,9 @@ table {
 }
 
 td, th {
-  width: 25%;
+  width: 15%;
+}
+
+th {
+  font-weight: bold;
 }
