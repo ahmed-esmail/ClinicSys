@@ -3,7 +3,7 @@
 <router-outlet></router-outlet>
 <!-- //////////////// -->
 <div class="card">
-  <h5><b>Patients </b></h5>
+  <!-- <h5><b>Patients </b></h5> -->
   <!-- styleClass="p-datatable-gridlines" >> table with borders -->
   <p-table #dt1 [value]="patlist" dataKey="id" class="m-2 p-0 " responsiveLayout="scroll"
            [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [loading]="loading"
@@ -12,7 +12,7 @@
            [filterDelay]="0" [globalFilterFields]="['first_name','last_name','phone_number','age','address', 'gender']">
     <ng-template pTemplate="caption">
       <div class="text-center">
-        <h5><b>Patients </b></h5>
+        <h1><b>Patients </b></h1>
       </div>
       <div class="flex justify-content-between align-items-center ">
         <button pButton label="Clear" class="p-button-outlined mx-2" icon="pi pi-filter-slash" (click)="clear(dt1)">
