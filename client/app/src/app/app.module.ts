@@ -57,7 +57,7 @@ import {ErrorInterceptor, JwtInterceptor} from "./_helpers";
 import { DoctorPatientsComponent } from './doctor-patients/doctor-patients.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-
+import { PatientReportComponent } from './patient-report/patient-report.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -125,7 +125,8 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
     MatButtonModule,
     MatIconModule,
     PaymentModule,
-    ChartModule
+    ChartModule,
+    PatientReportComponent,
 
   ],
   providers: [DoctorService, ReceptionistService, MessageService, ConfirmationService,
