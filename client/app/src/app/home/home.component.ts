@@ -4,7 +4,7 @@ import {first} from 'rxjs/operators';
 import {UserAuth} from '../_models/userAuth';
 import {AuthenticationService} from '../_services/authentication.service';
 import {UserService} from '../_services/user.service';
-
+import { PatientReportComponent } from '../patient-report/patient-report.component';
 @Component({templateUrl: 'home.component.html'})
 export class HomeComponent {
   loading = false;
