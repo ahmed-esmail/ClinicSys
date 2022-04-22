@@ -26,7 +26,6 @@ export class IncomePerMonthComponent implements OnInit {
           var y = b.date.toLowerCase();
           return x < y ? -1 : x > y ? 1 : 0;
         });
-        console.log(values);
         values.forEach((item: any) => {
           if (new Date(item.date).getFullYear() == 2022) {
             let monthIndex = new Date(item.date).getMonth();
@@ -36,7 +35,6 @@ export class IncomePerMonthComponent implements OnInit {
             this.income21[monthIndex] += item.charges;
           }
         });
-        //console.log(this.income21, this.income22);
         this.chart?.refresh();
       },
       error: (err) => console.error(err),
@@ -60,12 +58,12 @@ export class IncomePerMonthComponent implements OnInit {
       datasets: [
         {
           label: 'income 2021',
-          backgroundColor: '#3f51b5',
+          backgroundColor: '#6878d5',
           data: this.income21,
         },
         {
           label: 'income 2022',
-          backgroundColor: '#FFA726',
+          backgroundColor: '#ff9999',
           data: this.income22,
         },
       ],
