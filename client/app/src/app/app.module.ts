@@ -59,6 +59,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { IncomePerMonthComponent } from './income-per-month/income-per-month.component';
 
+import { PatientReportComponent } from './patient-report/patient-report.component';
+import "chart.js";
 @NgModule({
   declarations: [
     AppComponent,
@@ -85,6 +87,7 @@ import { IncomePerMonthComponent } from './income-per-month/income-per-month.com
     DoctorPatientsComponent,
     IncomePerMonthComponent,
 
+    PatientReportComponent,
   ],
   imports: [
     AppRoutingModule,
@@ -127,7 +130,8 @@ import { IncomePerMonthComponent } from './income-per-month/income-per-month.com
     MatButtonModule,
     MatIconModule,
     PaymentModule,
-    ChartModule
+    ChartModule,
+   
 
   ],
   providers: [DoctorService, ReceptionistService, MessageService, ConfirmationService,
