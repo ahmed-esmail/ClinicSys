@@ -58,6 +58,7 @@ import { DoctorPatientsComponent } from './doctor-patients/doctor-patients.compo
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { PatientReportComponent } from './patient-report/patient-report.component';
+import "chart.js";
 @NgModule({
   declarations: [
     AppComponent,
@@ -82,7 +83,7 @@ import { PatientReportComponent } from './patient-report/patient-report.componen
     LoginComponent,
     NavbarComponent,
     DoctorPatientsComponent,
-
+    PatientReportComponent,
   ],
   imports: [
     AppRoutingModule,
@@ -126,7 +127,7 @@ import { PatientReportComponent } from './patient-report/patient-report.componen
     MatIconModule,
     PaymentModule,
     ChartModule,
-    PatientReportComponent,
+   
 
   ],
   providers: [DoctorService, ReceptionistService, MessageService, ConfirmationService,

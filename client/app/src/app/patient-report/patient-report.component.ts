@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ChartDataset, ChartOptions, ChartType } from 'chart.js';
-import { NgChartsModule } from 'ng2-charts'
+
 import { Patient } from "../patients/models/patient";
 import { PatientService } from '../patients/services/patient.service';
 @Component({
