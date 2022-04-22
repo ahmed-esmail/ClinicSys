@@ -26,6 +26,7 @@
 
 .p-datatable .p-datatable-tbody > tr {
   border: none;
+  background-color: white !important;
 }
 
 .p-datatable .p-datatable-thead {
@@ -59,6 +60,12 @@ th .flex {
   top: 88vh;
   right: 2vw;
   border-radius: 50%;
+  background-color: #ff4081;
+  border-color: #ff4081;
+}
+.addBtn:hover {
+  background-color: #ff5c92 !important;
+  border-color: #ff5c92 !important;
 }
 
 .pi-user-plus {
@@ -83,9 +90,9 @@ th, td {
 }
 
 .p-datatable .p-datatable-thead > tr > th {
-  color: white !important;
+  /* color: white !important; */
   text-align: left !important;
-  background-color: var(--primary) !important;
+  background-color: var(--base) !important;
 }
 
 .p-datatable .p-datatable-tbody > tr, .p-datatable .p-datatable-thead > tr {
@@ -100,12 +107,12 @@ th, td {
 }
 
 .pi-sort-alt:before, .pi-filter-icon:before {
-  color: white;
+  /* color: white; */
   font-size: 0.8rem;
 }
 
 .pi-sort-amount-up-alt:before, .pi-sort-amount-down:before {
-  color: white;
+  /* color: white; */
 }
 
 .p-button.p-button-icon-only {

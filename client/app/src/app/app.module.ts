@@ -57,6 +57,7 @@ import {ErrorInterceptor, JwtInterceptor} from "./_helpers";
 import { DoctorPatientsComponent } from './doctor-patients/doctor-patients.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { IncomePerMonthComponent } from './income-per-month/income-per-month.component';
 
 @NgModule({
   declarations: [
@@ -82,6 +83,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
     LoginComponent,
     NavbarComponent,
     DoctorPatientsComponent,
+    IncomePerMonthComponent,
 
   ],
   imports: [

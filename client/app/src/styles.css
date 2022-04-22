@@ -5,7 +5,7 @@
 :root{
     --lightGrey: rgb(246, 246, 244);
     --grey: rgb(240, 238, 238);
-    --primary: #2196F3;
+    --base: #e7f0fd;
 }
 *{
     margin: 0;
