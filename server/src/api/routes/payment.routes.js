@@ -32,7 +32,6 @@ router.patch(
 router.get(
   "/payments",
   auth,
-  authRole([ROLE.ADMIN, ROLE.RECEPTIONIST]),
   paymentController.getAll
 );
 

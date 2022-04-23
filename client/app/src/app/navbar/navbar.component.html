@@ -3,7 +3,7 @@
   <div class="spacer"></div>
   <a mat-button routerLink="/">Dashboard</a>
   <a mat-button routerLink="admin" *ngIf="isAdmin">admin</a>
-  <a mat-button routerLink="payment">Payments</a>
+  <a mat-button routerLink="payment" *ngIf="isAdmin">Payments</a>
   <a mat-button routerLink="receptionists">Receptionists</a>
   <a mat-button routerLink="doctors">Doctors</a>
   <a mat-button routerLink="medicines">Medicines</a>
