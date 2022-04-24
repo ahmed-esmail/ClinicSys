@@ -34,14 +34,23 @@ const routes: Routes = [
     path: 'login',
     component: LoginComponent
   },
-  {path: 'payment', loadChildren: () => import('./payment/payment.module').then(m => m.PaymentModule)},
+  {path: 'payment',
+    loadChildren: () => import('./payment/payment.module').then(m => m.PaymentModule),
+    canActivate: [AuthGuard],
+    data: { roles: [Role.Admin] },},
 
-  {path: "doctors", loadChildren: () => import("./doctor/doctor.module").then(m => m.DoctorModule)},
+  {path: "doctors",
+    loadChildren: () => import("./doctor/doctor.module").then(m => m.DoctorModule),
+    canActivate: [AuthGuard],
+    data: { roles: [Role.Admin]
+  }},
   {path: "profile/doctor/:id", component: DoctorProfileComponent},
 
   {
     path: "receptionists",
-    loadChildren: () => import("./receptionist/receptionist.module").then(m => m.ReceptionistModule)
+    loadChildren: () => import("./receptionist/receptionist.module").then(m => m.ReceptionistModule),
+    canActivate: [AuthGuard],
+    data: { roles: [Role.Admin] }
   },
   {path: "profile/receptionist/:id", component: ReceptionistProfileComponent},
 

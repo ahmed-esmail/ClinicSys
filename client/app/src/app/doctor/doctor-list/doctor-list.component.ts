@@ -30,6 +30,7 @@ export class DoctorListComponent implements OnInit {
       next: a => {
         this.doctors = a;
         this.loading = false;
+        console.log(this.doctors)
       }
     });
 

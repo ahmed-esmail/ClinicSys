@@ -131,7 +131,7 @@
     <ng-template pTemplate="body" let-doctor>
       <tr class="bg-light">
         <td class="images">
-          <img class="img" src="{{ '../../../assets/' + doctor._id.profileImg }}" alt=""/>
+          <img class="img" src="{{ '../../../assets/' + doctor._id?.profileImg }}" alt=""/>
         </td>
         <td class=" text-black">
           {{doctor._id.firstName + " " + doctor._id.lastName}}
