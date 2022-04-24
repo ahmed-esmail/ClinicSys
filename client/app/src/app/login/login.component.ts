@@ -1,9 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {Router, ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {first} from 'rxjs/operators';
 
 import {AuthenticationService} from '../_services/authentication.service';
+import {Role} from "../_models/role";
 
 @Component({
   selector: 'app-login',
@@ -54,9 +55,16 @@ export class LoginComponent implements OnInit {
       .pipe(first())
       .subscribe({
         next: () => {
+          if (this.authenticationService.userValue.type == Role.User){
+            const _id = this.authenticationService.userValue._id
+            const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/DoctorProfile/' + _id;
+            this.router.navigateByUrl(returnUrl);
+          }
+           else {
+             const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+            this.router.navigateByUrl(returnUrl);
+           }
           // get return url from query parameters or default to home page
-          const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
-          this.router.navigateByUrl(returnUrl);
         },
         error: error => {
           console.log(error)

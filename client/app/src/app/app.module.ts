@@ -61,6 +61,7 @@ import { IncomePerMonthComponent } from './income-per-month/income-per-month.com
 
 import { PatientReportComponent } from './patient-report/patient-report.component';
 import "chart.js";
+import {RouterModule} from "@angular/router";
 @NgModule({
   declarations: [
     AppComponent,
@@ -131,7 +132,7 @@ import "chart.js";
     MatIconModule,
     PaymentModule,
     ChartModule,
-   
+   RouterModule
 
   ],
   providers: [DoctorService, ReceptionistService, MessageService, ConfirmationService,

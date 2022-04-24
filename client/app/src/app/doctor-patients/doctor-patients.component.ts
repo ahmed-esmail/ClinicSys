@@ -24,15 +24,15 @@ export class DoctorPatientsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
     this.ar.params.subscribe(a => {
+      console.log(a['id'])
       this.docSer.getDoctorById(a['id']).subscribe({
         next: a => {
           this.doctor = a;
         }
       })
     })
-    this.doctor.patients.forEach(element => {
+    this.doctor?.patients.forEach(element => {
       this.patser.getPatientByID(element).subscribe({
         next: a=> {
           this.patlist.push(a);
@@ -54,5 +54,5 @@ export class DoctorPatientsComponent implements OnInit {
     this.patser.detailsPatientID = detpt;
     this.router.navigate(['/patient/details']);
   }
-  
+
 }

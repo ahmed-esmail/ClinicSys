@@ -1,6 +1,7 @@
 <mat-toolbar color="primary" class="mat-elevation-z8" *ngIf="user">
   <span><mat-icon>eco</mat-icon> CLINIC SYSTEM</span>
   <div class="spacer"></div>
+<div *ngIf="isAdmin">
   <a mat-button routerLink="/">Dashboard</a>
   <a mat-button routerLink="admin" *ngIf="isAdmin">admin</a>
   <a mat-button routerLink="payment" *ngIf="isAdmin">Payments</a>
@@ -9,7 +10,15 @@
   <a mat-button routerLink="medicines">Medicines</a>
   <a mat-button routerLink="patient">Patients</a>
   <a mat-button routerLink="prescriptions">prescriptions</a>
+</div>
+  <div *ngIf="!isAdmin">
+    <a mat-button [routerLink]="['DoctorProfile', user._id]" ><mat-icon>person</mat-icon>
+      Doctor Profile </a>
+    <a mat-button [routerLink]="['DoctorPatient', user._id]" ><mat-icon>supervised_user_circle</mat-icon>
+      Patients </a>
+    <a mat-button [routerLink]="['prescriptions']" ><mat-icon>assignment</mat-icon>
+      Doctor Prescriptions </a>
 
-
+  </div>
   <a mat-raised-button color="accent" routerLink="signup" (click)="logout()">Logout</a>
 </mat-toolbar>

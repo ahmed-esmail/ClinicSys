@@ -13,18 +13,21 @@ import {ListpatientComponent} from './patients/listpatient/listpatient.component
 import {AuthGuard} from "./_helpers";
 import {AdminComponent} from "./admin/admin.component";
 import {LoginComponent} from "./login/login.component";
+import {Role} from "./_models/role";
+import {DoctorPatientsComponent} from "./doctor-patients/doctor-patients.component";
 
 const routes: Routes = [
   {
     path: '',
     component: HomeComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
+    data: { roles: [Role.Admin] }
   },
   {
     path: 'admin',
     component: AdminComponent,
     canActivate: [AuthGuard],
-    // data: { roles: [Role.Admin] }
+    data: { roles: [Role.Admin] }
   },
 
   {
@@ -47,8 +50,8 @@ const routes: Routes = [
   {
     path: 'patient', loadChildren: () => import("./patients/patient.module").then(m => m.PatientModule)
   },
-
-
+  {path: "DoctorProfile/:id", component: DoctorProfileComponent},
+  {path: "DoctorPatient/:id", component: DoctorPatientsComponent},
   {path: "**", component: ErrorComponent},
 ];
 
