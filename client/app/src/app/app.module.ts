@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {AppComponent} from './app.component';
 import {DoctorService} from './doctor.service';
@@ -27,17 +27,14 @@ import {InputTextModule} from 'primeng/inputtext';
 import {ToastModule} from 'primeng/toast';
 import {FileUploadModule} from 'primeng/fileupload';
 import {InputNumberModule} from 'primeng/inputnumber';
-import {ReactiveFormsModule} from '@angular/forms';
 import {ReceptionistProfileComponent} from './receptionist-profile/receptionist-profile.component';
 
 import {BrowserModule} from '@angular/platform-browser';
 import {ToolbarModule} from 'primeng/toolbar';
 import {DialogModule} from 'primeng/dialog';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
-import {CheckboxModule} from 'primeng/checkbox';
-import {ListboxModule} from 'primeng/listbox';
 import {TabViewModule} from 'primeng/tabview';
-import {MessageService, ConfirmationService} from 'primeng/api';
+import {ConfirmationService, MessageService} from 'primeng/api';
 import {DynamicDialogModule} from 'primeng/dynamicdialog';
 import {CalendarModule} from 'primeng/calendar';
 import {ChartModule} from 'primeng/chart';
@@ -49,19 +46,31 @@ import {PhoneNumberPipe} from './phone-number.pipe';
 import {AdminComponent} from "./admin/admin.component";
 import {LoginComponent} from "./login/login.component";
 import {NavbarComponent} from "./navbar/navbar.component";
-import { MatToolbarModule } from "@angular/material/toolbar";
+import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatIconModule} from "@angular/material/icon";
 import {PaymentModule} from "./payment/payment.module";
 import {MatButtonModule} from "@angular/material/button";
 import {ErrorInterceptor, JwtInterceptor} from "./_helpers";
-import { DoctorPatientsComponent } from './doctor-patients/doctor-patients.component';
-import { AppRoutingModule } from './app-routing.module';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { IncomePerMonthComponent } from './income-per-month/income-per-month.component';
+import {DoctorPatientsComponent} from './doctor-patients/doctor-patients.component';
+import {AppRoutingModule} from './app-routing.module';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {IncomePerMonthComponent} from './income-per-month/income-per-month.component';
 
-import { PatientReportComponent } from './patient-report/patient-report.component';
+import {PatientReportComponent} from './patient-report/patient-report.component';
 import "chart.js";
 import {RouterModule} from "@angular/router";
+import {
+  AgendaService,
+  DayService,
+  MonthAgendaService,
+  MonthService,
+  ScheduleModule,
+  TimelineMonthService,
+  TimelineViewsService,
+  WeekService,
+  WorkWeekService
+} from "@syncfusion/ej2-angular-schedule";
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -132,12 +141,14 @@ import {RouterModule} from "@angular/router";
     MatIconModule,
     PaymentModule,
     ChartModule,
-   RouterModule
+    RouterModule,
+    ScheduleModule
 
   ],
   providers: [DoctorService, ReceptionistService, MessageService, ConfirmationService,
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
-    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}
+    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
+    DayService, WeekService, WorkWeekService, MonthService, AgendaService, MonthAgendaService, TimelineViewsService, TimelineMonthService
   ],
   bootstrap: [AppComponent]
 })
