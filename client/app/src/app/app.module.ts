@@ -59,6 +59,14 @@ import {IncomePerMonthComponent} from './income-per-month/income-per-month.compo
 import {PatientReportComponent} from './patient-report/patient-report.component';
 import "chart.js";
 import {RouterModule} from "@angular/router";
+import { ReportInvoicesComponent } from './report-invoices/report-invoices.component';
+
+
+import { MatTableModule } from "@angular/material/table";
+import { MatPaginatorModule } from "@angular/material/paginator";
+import { MatSortModule } from "@angular/material/sort";
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+
 import {
   AgendaService,
   DayService,
@@ -98,6 +106,7 @@ import {
     IncomePerMonthComponent,
 
     PatientReportComponent,
+      ReportInvoicesComponent,
   ],
   imports: [
     AppRoutingModule,
@@ -141,6 +150,11 @@ import {
     MatIconModule,
     PaymentModule,
     ChartModule,
+    RouterModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatSnackBarModule,
     RouterModule,
     ScheduleModule
 
