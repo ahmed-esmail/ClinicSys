@@ -62,6 +62,14 @@ import { IncomePerMonthComponent } from './income-per-month/income-per-month.com
 import { PatientReportComponent } from './patient-report/patient-report.component';
 import "chart.js";
 import {RouterModule} from "@angular/router";
+import { ReportInvoicesComponent } from './report-invoices/report-invoices.component';
+
+
+import { MatTableModule } from "@angular/material/table";
+import { MatPaginatorModule } from "@angular/material/paginator";
+import { MatSortModule } from "@angular/material/sort";
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -89,6 +97,7 @@ import {RouterModule} from "@angular/router";
     IncomePerMonthComponent,
 
     PatientReportComponent,
+      ReportInvoicesComponent,
   ],
   imports: [
     AppRoutingModule,
@@ -132,7 +141,11 @@ import {RouterModule} from "@angular/router";
     MatIconModule,
     PaymentModule,
     ChartModule,
-   RouterModule
+    RouterModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatSnackBarModule
 
   ],
   providers: [DoctorService, ReceptionistService, MessageService, ConfirmationService,
