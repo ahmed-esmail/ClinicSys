@@ -4,13 +4,13 @@
 
   <div>
     <label for="name">name</label>
-    <input type="text" [(ngModel)]="newMedicine.name">
+    <input [(ngModel)]="newMedicine.name" type="text">
   </div>
   <div>
     <label for="description">description</label>
-    <input type="text" id="description" [(ngModel)]="newMedicine.description">
+    <input [(ngModel)]="newMedicine.description" id="description" type="text">
   </div>
 
-  <button class="btn btn-success" (click)="edit()">Save</button>
+  <button (click)="edit()" class="btn btn-success">Save</button>
   {{newMedicine|json}}
 </div>

@@ -2,10 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {Patient} from '../models/patient';
 import {PatientService} from '../services/patient.service';
 import {Router} from '@angular/router';
-import {FormGroup, FormBuilder, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {HttpClient} from '@angular/common/http';
-import {error} from 'console';
-import {PhoneNumberPipe} from './../.././phone-number.pipe';
 
 @Component({
   selector: 'app-addpatient',

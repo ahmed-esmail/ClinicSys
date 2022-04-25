@@ -30,16 +30,16 @@ export class LoginComponent implements OnInit {
     }
   }
 
+  // convenience getter for easy access to form fields
+  get f() {
+    return this.loginForm.controls;
+  }
+
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
       phone_number: ['', Validators.required],
       password: ['', Validators.required]
     });
-  }
-
-  // convenience getter for easy access to form fields
-  get f() {
-    return this.loginForm.controls;
   }
 
   onSubmit() {
@@ -55,15 +55,14 @@ export class LoginComponent implements OnInit {
       .pipe(first())
       .subscribe({
         next: () => {
-          if (this.authenticationService.userValue.type == Role.User){
+          if (this.authenticationService.userValue.type == Role.User) {
             const _id = this.authenticationService.userValue._id
             const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/DoctorProfile/' + _id;
             this.router.navigateByUrl(returnUrl);
-          }
-           else {
-             const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+          } else {
+            const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
             this.router.navigateByUrl(returnUrl);
-           }
+          }
           // get return url from query parameters or default to home page
         },
         error: error => {

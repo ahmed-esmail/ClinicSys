@@ -9,11 +9,11 @@ import {MedicineService} from 'src/app/Services/medicine.service';
 })
 export class AddMedicineComponent implements OnInit {
 
+  newMedicine: Medicine = new Medicine('', '', '');
+
   constructor(private medicineService: MedicineService) {
 
   }
-
-  newMedicine: Medicine = new Medicine('', '', '');
 
   ngOnInit(): void {
   }

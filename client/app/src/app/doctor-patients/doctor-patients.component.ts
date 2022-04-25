@@ -1,12 +1,11 @@
-import {Component, OnInit, SecurityContext} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Patient} from '../_models/patient';
 import {PatientService} from '../patients/services/patient.service';
 import {ActivatedRoute, Router} from '@angular/router';
 
 import {Table} from 'primeng/table';
-import {PhoneNumberPipe} from 'src/app/phone-number.pipe';
-import { DoctorService } from '../doctor.service';
-import { Doctor } from '../_models/doctor';
+import {DoctorService} from '../doctor.service';
+import {Doctor} from '../_models/doctor';
 
 @Component({
   selector: 'app-doctor-patients',
@@ -17,10 +16,10 @@ export class DoctorPatientsComponent implements OnInit {
 
   loading: boolean = true;
   patlist: Patient[] = [];
-  doctor!:Doctor;
+  doctor!: Doctor;
   imagePath: any;
 
-  constructor(private patser: PatientService, private router: Router, private docSer:DoctorService, public ar:ActivatedRoute) {
+  constructor(private patser: PatientService, private router: Router, private docSer: DoctorService, public ar: ActivatedRoute) {
   }
 
   ngOnInit(): void {
@@ -29,13 +28,16 @@ export class DoctorPatientsComponent implements OnInit {
       this.docSer.getDoctorById(a['id']).subscribe({
         next: a => {
           this.doctor = a;
+          console.log(this.doctor)
         }
       })
     })
-    this.doctor?.patients.forEach(element => {
+
+    this.doctor.patients.forEach(element => {
       this.patser.getPatientByID(element).subscribe({
-        next: a=> {
+        next: a => {
           this.patlist.push(a);
+          console.log(a)
         }
       })
     });

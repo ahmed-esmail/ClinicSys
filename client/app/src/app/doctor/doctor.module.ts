@@ -5,7 +5,7 @@ import {DoctorListComponent} from './doctor-list/doctor-list.component';
 import {DoctorAddComponent} from './doctor-add/doctor-add.component';
 import {DoctorDeleteComponent} from './doctor-delete/doctor-delete.component';
 import {DoctorEditComponent} from './doctor-edit/doctor-edit.component';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import {TableModule} from 'primeng/table';
 import {DropdownModule} from 'primeng/dropdown';
@@ -14,7 +14,6 @@ import {InputTextModule} from 'primeng/inputtext';
 import {ToastModule} from 'primeng/toast';
 import {FileUploadModule} from 'primeng/fileupload';
 import {InputNumberModule} from 'primeng/inputnumber';
-import {ReactiveFormsModule} from '@angular/forms';
 
 
 const routes: Routes = [

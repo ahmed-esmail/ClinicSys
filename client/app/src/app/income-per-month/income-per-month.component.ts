@@ -1,6 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { UIChart } from 'primeng/chart/chart';
-import { PaymentService } from '../_services/payment.service';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {UIChart} from 'primeng/chart/chart';
+import {PaymentService} from '../_services/payment.service';
 
 @Component({
   selector: 'app-income-per-month',
@@ -11,12 +11,13 @@ export class IncomePerMonthComponent implements OnInit {
   basicData: any;
   basicOptions: any;
   chartOptions: any;
-  income21: number[] =  new Array(12).fill(0);
-  income22: number[] =  new Array(12).fill(0);
+  income21: number[] = new Array(12).fill(0);
+  income22: number[] = new Array(12).fill(0);
 
   @ViewChild('chart') chart?: UIChart;
 
-  constructor(public paymentService: PaymentService) {}
+  constructor(public paymentService: PaymentService) {
+  }
 
   ngOnInit(): void {
     this.paymentService.getAll().subscribe({

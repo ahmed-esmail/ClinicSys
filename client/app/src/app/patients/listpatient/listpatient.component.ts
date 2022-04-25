@@ -5,8 +5,6 @@ import {Router} from '@angular/router';
 
 import {Table} from 'primeng/table';
 import {DomSanitizer} from '@angular/platform-browser';
-import {join} from 'path';
-import {PhoneNumberPipe} from 'src/app/phone-number.pipe';
 
 @Component({
   selector: 'app-listpatient',

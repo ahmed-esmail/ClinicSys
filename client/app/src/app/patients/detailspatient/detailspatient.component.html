@@ -1,4 +1,3 @@
-<p>detailspatient works!</p>
 <!-- <section class="content-header">
     <div class="container-fluid">
       <div class="row mb-2">
@@ -12,7 +11,7 @@
           </ol>
         </div>
       </div>
-    </div><!-- /.container-fluid -->
+    </div><-- /.container-fluid -->
 <!-- </section> -->
 <section class="content">
   <div class="container-fluid">
@@ -23,8 +22,8 @@
         <div class="card card-primary card-outline">
           <div class="card-body box-profile">
             <div class="text-center">
-              <img class="profile-user-img img-fluid img-circle w-50 " src="{{ '../../../assets/'+Patient.profile_img}}"
-                   alt="User profile picture">
+              <img alt="User profile picture" class="profile-user-img img-fluid img-circle w-50 "
+                   src="{{ '../../../assets/'+Patient.profile_img}}">
             </div>
 
             <h3 class="profile-username text-center">{{Patient.first_name}}  {{ Patient.last_name }}</h3>
@@ -32,7 +31,7 @@
             <p class="text-muted text-center">Patient</p>
 
 
-            <button class="btn btn-danger  mx-auto w-25" (click)="edit()"><b>Edit</b></button>
+            <button (click)="edit()" class="btn btn-danger  mx-auto w-25"><b>Edit</b></button>
           </div>
           <!-- /.card-body -->
         </div>
@@ -45,7 +44,7 @@
           </div>
           <!-- /.card-header -->
           <div class="card-body ">
-            <strong><i class="fa fa-user-circle-o" aria-hidden="true"></i> Name</strong>
+            <strong><i aria-hidden="true" class="fa fa-user-circle-o"></i> Name</strong>
 
             <p class="text-muted">
               {{Patient.first_name}}  {{ Patient.last_name }}
@@ -53,13 +52,13 @@
 
             <hr>
 
-            <strong><i class="fa fa-address-book-o" aria-hidden="true"></i> Address </strong>
+            <strong><i aria-hidden="true" class="fa fa-address-book-o"></i> Address </strong>
 
             <p class="text-muted ">{{Patient.address}}</p>
 
             <hr>
 
-            <strong><i class="fa fa-venus-mars" aria-hidden="true"></i>Gender </strong>
+            <strong><i aria-hidden="true" class="fa fa-venus-mars"></i>Gender </strong>
 
             <p class="text-muted">
               {{Patient.gender}}
@@ -68,7 +67,7 @@
             <hr>
 
             <strong>
-              <i class="fa fa-phone" aria-hidden="true"></i> Phone Number</strong>
+              <i aria-hidden="true" class="fa fa-phone"></i> Phone Number</strong>
 
             <p class="text-muted"> {{Patient.phone_number}}</p>
           </div>
@@ -81,9 +80,9 @@
         <div class="card">
           <div class="card-header p-2">
             <ul class="nav nav-pills">
-              <li class="nav-item"><a class="nav-link active" href="#Appointment" data-toggle="tab">Appointment</a></li>
-              <li class="nav-item"><a class="nav-link" href="#Drug" data-toggle="tab">Drugs</a></li>
-              <li class="nav-item"><a class="nav-link" href="#prescription" data-toggle="tab">prescription</a></li>
+              <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#Appointment">Appointment</a></li>
+              <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#Drug">Drugs</a></li>
+              <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#prescription">prescription</a></li>
             </ul>
           </div><!-- /.card-header -->
           <div class="card-body">
@@ -93,15 +92,15 @@
                 <ul>
                   <li *ngFor="let n of  appontments ;index  as i">
                     <p class="pre">
-                      <strong><i class="fa fa-window-maximize" aria-hidden="true"></i> Appontment{{i + 1}}</strong></p>
-                    <strong><i class="fa fa-calendar-check-o" aria-hidden="true"></i>Date </strong>
+                      <strong><i aria-hidden="true" class="fa fa-window-maximize"></i> Appontment{{i + 1}}</strong></p>
+                    <strong><i aria-hidden="true" class="fa fa-calendar-check-o"></i>Date </strong>
                     <p class="text-muted">{{n.time |date:'M/d/yy, h:mm a'}}</p>
 
-                    <strong><i class="fa fa-bars" aria-hidden="true"></i> complaint </strong>
+                    <strong><i aria-hidden="true" class="fa fa-bars"></i> complaint </strong>
                     <p class="text-muted">{{n.condition}}</p>
-                    <strong><i class="fa fa-user-md" aria-hidden="true"></i>Doctor Name</strong>
+                    <strong><i aria-hidden="true" class="fa fa-user-md"></i>Doctor Name</strong>
                     <p class="text-muted">{{n.doctor._id.firstName}}   {{n.doctor._id.lastName}}</p>
-                    <strong> <i class="fa fa-stethoscope" aria-hidden="true"></i>Doctor Speciality</strong>
+                    <strong> <i aria-hidden="true" class="fa fa-stethoscope"></i>Doctor Speciality</strong>
                     <p class="text-muted">{{n.doctor.speciality}}</p>
 
                     <hr>
@@ -121,7 +120,7 @@
                     <p></p>
                     <ul>
                       <li *ngFor="let n of m.med">
-                        <p class="pre"><strong> <i class="fa fa-medkit" aria-hidden="true"></i>Drug{{i + 1}} </strong>
+                        <p class="pre"><strong> <i aria-hidden="true" class="fa fa-medkit"></i>Drug{{i + 1}} </strong>
                         </p>
                         <strong> Name</strong>
                         <p class="text-muted">{{n.medicine.name}}</p>
@@ -144,19 +143,19 @@
 
                 <ul>
                   <li *ngFor="let n of prescriptions ;index  as i">
-                    <p class="pre"><strong> <i class="fa fa-id-card-o" aria-hidden="true"></i>prescription {{i + 1}}
+                    <p class="pre"><strong> <i aria-hidden="true" class="fa fa-id-card-o"></i>prescription {{i + 1}}
                     </strong></p>
-                    <strong><i class="fa fa-calendar-check-o" aria-hidden="true"></i>Date </strong>
+                    <strong><i aria-hidden="true" class="fa fa-calendar-check-o"></i>Date </strong>
                     <p class="text-muted">{{n.date |date:'M/d/yy, h:mm a'}}</p>
-                    <strong><i class="fa fa-user-md" aria-hidden="true"></i>Doctor Name</strong>
+                    <strong><i aria-hidden="true" class="fa fa-user-md"></i>Doctor Name</strong>
                     <p class="text-muted">{{n.doctor._id.firstName}}   {{n.doctor._id.lastName}}</p>
-                    <strong> <i class="fa fa-stethoscope" aria-hidden="true"></i>Doctor Speciality</strong>
+                    <strong> <i aria-hidden="true" class="fa fa-stethoscope"></i>Doctor Speciality</strong>
                     <p class="text-muted">{{n.doctor.speciality}}</p>
 
 
                     <ul>
                       <li *ngFor="let m of n.medicines ;index  as i">
-                        <p><strong> <i class="fa fa-medkit" aria-hidden="true"></i>Drug{{i + 1}} </strong></p>
+                        <p><strong> <i aria-hidden="true" class="fa fa-medkit"></i>Drug{{i + 1}} </strong></p>
                         <strong> Name</strong>
                         <p class="text-muted">{{m.medicine.name}}</p>
                         <strong> Dose </strong>

@@ -1,14 +1,12 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {Router, RouterModule, Routes} from '@angular/router';
+import {RouterModule, Routes} from '@angular/router';
 import {AddpatientComponent} from './addpatient/addpatient.component';
 import {ListpatientComponent} from './listpatient/listpatient.component';
 import {EditpatientComponent} from './editpatient/editpatient.component';
 import {DeletepatientComponent} from './deletepatient/deletepatient.component';
 import {DetailspatientComponent} from './detailspatient/detailspatient.component';
 import {FormsModule} from '@angular/forms';
-
-import {BrowserModule} from '@angular/platform-browser';
 
 
 const router: Routes = [

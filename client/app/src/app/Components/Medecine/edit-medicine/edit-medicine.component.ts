@@ -9,11 +9,11 @@ import {MedicineService} from 'src/app/Services/medicine.service';
 })
 export class EditMedicineComponent implements OnInit {
 
-  constructor(private medicineService: MedicineService) {
-  }
-
   newMedicine: Medicine = new Medicine('', '', '');
   id: string = '';
+
+  constructor(private medicineService: MedicineService) {
+  }
 
   ngOnInit(): void {
     this.newMedicine._id = this.medicineService.id;

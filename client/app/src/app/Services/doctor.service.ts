@@ -8,14 +8,10 @@ import {SelectItem} from 'primeng/api';
 })
 export class DoctorService {
 
-  constructor(public http: HttpClient) {
-  }
-
   genders: Array<SelectItem> = [
     {label: 'Male', value: 'male'},
     {label: 'Female', value: 'female'},
   ]
-
   specialities: Array<SelectItem> = [
     {label: 'Dentist', value: 'dentist'},
     {label: 'Allergist', value: 'allergist'},
@@ -41,8 +37,10 @@ export class DoctorService {
     {label: 'Family Physician', value: 'family physician'},
     {label: 'Hematologist', value: 'hematologist'},
   ]
-
   private baseUrl: string = "http://localhost:3000/doctors"
+
+  constructor(public http: HttpClient) {
+  }
 
   getAllDoctors() {
     return this.http.get<Doctor[]>(this.baseUrl);

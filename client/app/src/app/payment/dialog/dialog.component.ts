@@ -1,7 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {FormGroup, FormBuilder, Validators} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {PaymentService} from "../../_services/payment.service";
-import {MatDialogRef, MAT_DIALOG_DATA} from "@angular/material/dialog";
+import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {PatientService} from "../../Services/patient.service";
 
@@ -64,6 +64,15 @@ export class DialogComponent implements OnInit {
     }
   }
 
+  getAllPatient() {
+    this.patientService.getpatients().subscribe({
+      next: values => {
+        this.patients = values
+      },
+      error: err => console.error(err)
+    })
+  }
+
   private updateProduct() {
     const {method, amount, patient} = this.paymentForm?.value
     this.paymentService.update({
@@ -76,15 +85,6 @@ export class DialogComponent implements OnInit {
         this.paymentForm?.reset();
         this.dialogRef.close('update')
 
-      },
-      error: err => console.error(err)
-    })
-  }
-
-  getAllPatient() {
-    this.patientService.getpatients().subscribe({
-      next: values => {
-        this.patients = values
       },
       error: err => console.error(err)
     })

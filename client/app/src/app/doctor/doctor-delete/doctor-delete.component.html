@@ -1,6 +1,6 @@
 <app-doctor-list></app-doctor-list>
 <!-- Modal HTML -->
-<div id="myModal" class="modal fade">
+<div class="modal fade" id="myModal">
   <div class="modal-dialog modal-confirm">
     <div class="modal-content">
       <div class="modal-header flex-column">
@@ -8,17 +8,17 @@
           <i class="pi pi-times"></i>
         </div>
         <h4 class="modal-title">Are you sure?</h4>
-        <button type="button" class="btn-close close" data-bs-dismiss="modal" aria-label="Close"
-                (click)="goBack()"></button>
+        <button (click)="goBack()" aria-label="Close" class="btn-close close" data-bs-dismiss="modal"
+                type="button"></button>
       </div>
       <div class="modal-body">
         <p>Do you really want to delete this doctor? This process cannot be undone.</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close" (click)="goBack()">
+        <button (click)="goBack()" aria-label="Close" class="btn btn-secondary" data-bs-dismiss="modal" type="button">
           Cancel
         </button>
-        <button type="button" class="btn btn-danger" (click)="delete()">Delete</button>
+        <button (click)="delete()" class="btn btn-danger" type="button">Delete</button>
       </div>
     </div>
   </div>

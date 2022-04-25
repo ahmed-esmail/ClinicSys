@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
-import { Patient } from "../patients/models/patient";
-import { PatientService } from '../patients/services/patient.service';
+import {Patient} from "../patients/models/patient";
+import {PatientService} from '../patients/services/patient.service';
+
 @Component({
   selector: 'app-patient-report',
   templateUrl: './patient-report.component.html',
@@ -13,7 +14,9 @@ export class PatientReportComponent implements OnInit {
   patlist: Patient[] = [];
   Female = 0;
   Male = 0;
-  constructor(private patser: PatientService) { }
+
+  constructor(private patser: PatientService) {
+  }
 
   ngOnInit(): void {
     this.patlist = this.patser.patientlist;
@@ -35,7 +38,7 @@ export class PatientReportComponent implements OnInit {
               {
                 data: [this.Female, this.Male],
                 backgroundColor: [
-                 
+
                   "#E685B5",
                   "#42A5F5",
 

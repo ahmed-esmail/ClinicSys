@@ -5,86 +5,86 @@
 <div class="card">
   <!-- <h5><b>Patients </b></h5> -->
   <!-- styleClass="p-datatable-gridlines" >> table with borders -->
-  <p-table #dt1 [value]="patlist" dataKey="id" class="m-2 p-0 " responsiveLayout="scroll"
-           [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [loading]="loading"
-           styleClass="p-datatable-gridlines "
-           [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-           [filterDelay]="0" [globalFilterFields]="['first_name','last_name','phone_number','age','address', 'gender']">
+  <p-table #dt1 [filterDelay]="0" [globalFilterFields]="['first_name','last_name','phone_number','age','address', 'gender']" [loading]="loading" [paginator]="true"
+           [rowsPerPageOptions]="[10,25,50]" [rows]="10" [showCurrentPageReport]="true" [value]="patlist"
+           class="m-2 p-0 "
+           currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" dataKey="id"
+           responsiveLayout="scroll" styleClass="p-datatable-gridlines ">
     <ng-template pTemplate="caption">
       <div class="text-center">
         <h1><b>Patients </b></h1>
       </div>
       <div class="flex justify-content-between align-items-center ">
-        <button pButton label="Clear" class="p-button-outlined mx-2" icon="pi pi-filter-slash" (click)="clear(dt1)">
+        <button (click)="clear(dt1)" class="p-button-outlined mx-2" icon="pi pi-filter-slash" label="Clear" pButton>
           Clear
         </button>
         <span class="p-input-icon-left ml-auto">
                         <i class="pi pi-search"></i>
-                        <input pInputText type="text" (input)="dt1.filterGlobal(getEventValue($event), 'contains')"
-                               placeholder="Search keyword" class="w-100"/>
+                        <input (input)="dt1.filterGlobal(getEventValue($event), 'contains')" class="w-100" pInputText
+                               placeholder="Search keyword" type="text"/>
                     </span>
       </div>
     </ng-template>
     <ng-template pTemplate="header">
       <tr>
-        <th class="label" [style]="{'text-align':'center'}">
+        <th [style]="{'text-align':'center'}" class="label">
           <div class="flex justify-content-center align-items-left ">
             Photo
           </div>
         </th>
-        <th pSortableColumn="first_name" class="th">
+        <th class="th" pSortableColumn="first_name">
           <div class="flex justify-content-center align-items-left ">
             <div class="label">
               Name
             </div>
             <div class="flex-row">
               <p-sortIcon field="first_name"></p-sortIcon>
-              <p-columnFilter type="text" field="first_name" display="menu"></p-columnFilter>
+              <p-columnFilter display="menu" field="first_name" type="text"></p-columnFilter>
             </div>
           </div>
         </th>
-        <th pSortableColumn="phone_number" class="th">
+        <th class="th" pSortableColumn="phone_number">
           <div class="flex justify-content-center align-items-left">
             <diV class="label">
               Phone
             </diV>
             <div class="flex-row">
               <p-sortIcon field="phone_number"></p-sortIcon>
-              <p-columnFilter type="text" field="phone_number" display="menu"></p-columnFilter>
+              <p-columnFilter display="menu" field="phone_number" type="text"></p-columnFilter>
             </div>
           </div>
         </th>
 
-        <th pSortableColumn="address" class="th">
+        <th class="th" pSortableColumn="address">
           <div class="flex justify-content-center align-items-left">
             <diV class="label">
               Address
             </diV>
             <div class="flex-row">
               <p-sortIcon field="address"></p-sortIcon>
-              <p-columnFilter type="text" field="address" display="menu"></p-columnFilter>
+              <p-columnFilter display="menu" field="address" type="text"></p-columnFilter>
             </div>
           </div>
         </th>
-        <th pSortableColumn="age" class="th">
+        <th class="th" pSortableColumn="age">
           <div class="flex justify-content-center align-items-left">
             <diV class="label">
               Age
             </diV>
             <div class="flex-row">
               <p-sortIcon field="age"></p-sortIcon>
-              <p-columnFilter type="numeric" field="age" display="menu"></p-columnFilter>
+              <p-columnFilter display="menu" field="age" type="numeric"></p-columnFilter>
             </div>
           </div>
         </th>
-        <th pSortableColumn="gender" class="th">
+        <th class="th" pSortableColumn="gender">
           <div class="flex justify-content-center align-items-left">
             <diV class="label">
               Gender
             </diV>
             <div class="flex-row">
               <p-sortIcon field="gender"></p-sortIcon>
-              <p-columnFilter type="text" field="gender" display="menu"></p-columnFilter>
+              <p-columnFilter display="menu" field="gender" type="text"></p-columnFilter>
             </div>
           </div>
         </th>
@@ -96,11 +96,11 @@
         </th>
       </tr>
     </ng-template>
-    <ng-template pTemplate="body" let-patient>
+    <ng-template let-patient pTemplate="body">
       <tr class="bg-light">
         <td class=" text-black ">
           <!-- <td class="images"> -->
-          <img class="img" src="{{ './../.././../../assets/'+patient.profile_img }}" alt=""/>
+          <img alt="" class="img" src="{{ './../.././../../assets/'+patient.profile_img }}"/>
         </td>
         <!-- </td>   -->
         <td class=" text-black">
@@ -121,12 +121,12 @@
         </td>
 
         <td class="text-center actionBut">
-          <button pButton pRipple icon="pi pi-user-edit" class="p-button-rounded p-button-success "
-                  (click)="edit(patient._id)"></button>
-          <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
-                  (click)="deleteID(patient._id)"></button>
-          <button pButton pRipple icon="pi pi-id-card" class="p-button-rounded p-button-info"
-                  (click)="detailsID(patient._id)"></button>
+          <button (click)="edit(patient._id)" class="p-button-rounded p-button-success " icon="pi pi-user-edit" pButton
+                  pRipple></button>
+          <button (click)="deleteID(patient._id)" class="p-button-rounded p-button-warning" icon="pi pi-trash" pButton
+                  pRipple></button>
+          <button (click)="detailsID(patient._id)" class="p-button-rounded p-button-info" icon="pi pi-id-card" pButton
+                  pRipple></button>
         </td>
       </tr>
     </ng-template>
@@ -138,19 +138,19 @@
   </p-table>
 
   <!-- <button pButton type="button" icon="pi pi-user-plus" iconPos="left" class="p-button-lg addBtn" (click)="add()"></button> -->
-  <button pButton type="button" class="p-button-danger addBtn " (click)="add()">
+  <button (click)="add()" class="p-button-danger addBtn " pButton type="button">
     <i class="pi pi-user-plus"></i>
   </button>
 </div>
 
 
 <!-- /////////////////// -->
-<div class="modal" tabindex="1" role="dialog" id="myModal" data-bs-backdrop="static">
+<div class="modal" data-bs-backdrop="static" id="myModal" role="dialog" tabindex="1">
   <div class="modal-dialog modal-confirm">
     <div class="modal-content">
       <div class="modal-header flex-column">
         <div class=" justify-content-end">
-          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+          <button aria-label="Close" class="close" data-bs-dismiss="modal" type="button">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
@@ -161,8 +161,8 @@
         <p>Do you really want to delete these records? This process cannot be undone.</p>
       </div>
       <div class="modal-footer justify-content-center">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-danger" (click)="delete()">Delete</button>
+        <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">Cancel</button>
+        <button (click)="delete()" class="btn btn-danger" type="button">Delete</button>
       </div>
     </div>
   </div>

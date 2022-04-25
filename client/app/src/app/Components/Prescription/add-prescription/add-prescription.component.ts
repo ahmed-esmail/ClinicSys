@@ -1,16 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { Medicine } from 'src/app/_models/medicine';
-import { Prescription } from 'src/app/_models/prescription';
-import { PrescriptionService } from 'src/app/Services/prescription.service';
-import { MedicineService } from 'src/app/Services/medicine.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ConfirmationService } from 'primeng/api';
-import { MessageService } from 'primeng/api';
-import { DynamicDialogRef } from 'primeng/dynamicdialog';
-import { PatientService } from 'src/app/Services/patient.service';
-import { Patient } from 'src/app/_models/patient';
-import { Doctor } from 'src/app/_models/doctor';
-import { DoctorService } from 'src/app/Services/doctor.service';
+import {Component, OnInit} from '@angular/core';
+import {Medicine} from 'src/app/_models/medicine';
+import {Prescription} from 'src/app/_models/prescription';
+import {PrescriptionService} from 'src/app/Services/prescription.service';
+import {MedicineService} from 'src/app/Services/medicine.service';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {MessageService} from 'primeng/api';
+import {DynamicDialogRef} from 'primeng/dynamicdialog';
+import {PatientService} from 'src/app/Services/patient.service';
+import {Patient} from 'src/app/_models/patient';
+import {Doctor} from 'src/app/_models/doctor';
+import {DoctorService} from 'src/app/Services/doctor.service';
 
 
 @Component({
@@ -28,34 +27,29 @@ import { DoctorService } from 'src/app/Services/doctor.service';
 })
 export class AddPrescriptionComponent implements OnInit {
 
-  constructor(private prescriptionService: PrescriptionService,
-    public medicineService: MedicineService,
-    public patientService: PatientService,
-    public doctorService: DoctorService,
-    public ref: DynamicDialogRef,
-    public messageService: MessageService,
-    private formBuilder: FormBuilder
-  ) {
-  }
-
   medicines: Medicine[] = [];
   patients: Patient[] = [];
   doctors: Doctor[] = [];
-
   med: string = "";
   dose: string = "";
-
   form: FormGroup | any;
   addForm: FormGroup | any;
-
   submitted: boolean = false;
   presDialog: boolean = false;
   isAdd: boolean = false;
-
-
-  arr: [{ medicine: string, dose: string }] = [{ medicine: '', dose: '' }];
+  arr: [{ medicine: string, dose: string }] = [{medicine: '', dose: ''}];
   prescription: Prescription = new
-    Prescription('', new Date, '', '', [{ medicine: "", dose: "" },]);
+  Prescription('', new Date, '', '', [{medicine: "", dose: ""},]);
+
+  constructor(private prescriptionService: PrescriptionService,
+              public medicineService: MedicineService,
+              public patientService: PatientService,
+              public doctorService: DoctorService,
+              public ref: DynamicDialogRef,
+              public messageService: MessageService,
+              private formBuilder: FormBuilder
+  ) {
+  }
 
   ngOnInit(): void {
     this.presDialog = true;
@@ -71,6 +65,7 @@ export class AddPrescriptionComponent implements OnInit {
 
     this.formValidation();
   }
+
   add() {
     if (this.isAdd) {
 
@@ -78,13 +73,18 @@ export class AddPrescriptionComponent implements OnInit {
 
         if (this.arr.find((x) => x.medicine === this.med)) {
           console.log("find med");
-          this.messageService.add({ severity: 'error', summary: 'Failed', detail: 'Failed To Add Duplicated Medicine', life: 3000 });
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Failed',
+            detail: 'Failed To Add Duplicated Medicine',
+            life: 3000
+          });
         } else {
           console.log(" not find med");
           if (this.arr[0].medicine != "" && this.arr[0].dose != "") {
-            this.arr.push({ medicine: this.med, dose: this.dose });
+            this.arr.push({medicine: this.med, dose: this.dose});
           } else {
-            this.arr[0] = { medicine: this.med, dose: this.dose };
+            this.arr[0] = {medicine: this.med, dose: this.dose};
           }
         }
       }
@@ -101,11 +101,11 @@ export class AddPrescriptionComponent implements OnInit {
     this.prescriptionService.addprescription(this.prescription).subscribe({
       next: a => {
         this.prescription = a;
-        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Prescription Added', life: 3000 });
+        this.messageService.add({severity: 'success', summary: 'Successful', detail: 'Prescription Added', life: 3000});
         this.hideDialog();
       },
       error: () => {
-        this.messageService.add({ severity: 'error', summary: 'Foailed', detail: 'Prescription  Not Added', life: 3000 });
+        this.messageService.add({severity: 'error', summary: 'Foailed', detail: 'Prescription  Not Added', life: 3000});
       }
     });
 

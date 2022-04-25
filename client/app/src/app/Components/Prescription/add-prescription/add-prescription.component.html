@@ -1,61 +1,66 @@
 <div id="myModal">
 
-    <form id="form" autocomplete="off" enctype="multipart/form-data" [formGroup]="form" novalidate>
+  <form [formGroup]="form" autocomplete="off" enctype="multipart/form-data" id="form" novalidate>
 
-        <div class="field">
-            <label for="date">date</label>
-             <input type="date" class="form-control" min="2022-01-01" max="2022-04-01" [(ngModel)]="prescription.date" formControlName="date" />
-        </div>
-        <div class="field">
-            <label for="doctor">doctor</label>
-            <p-dropdown [options]="doctors" [(ngModel)]="prescription.doctor" formControlName="doctor" placeholder="Select a Doctor" optionValue="_id"
-                optionLabel="_id.firstName" >
+    <div class="field">
+      <label for="date">date</label>
+      <input [(ngModel)]="prescription.date" class="form-control" formControlName="date" max="2022-06-01" min="2022-01-01"
+             type="date"/>
+    </div>
+    <div class="field">
+      <label for="doctor">doctor</label>
+      <p-dropdown [(ngModel)]="prescription.doctor" [options]="doctors" formControlName="doctor"
+                  optionLabel="_id.firstName" optionValue="_id"
+                  placeholder="Select a Doctor">
+      </p-dropdown>
+    </div>
+    <div class="field">
+      <label for="pa">Patient </label>
+      <p-dropdown [(ngModel)]="prescription.patient" [options]="patients" formControlName="patient"
+                  optionLabel="first_name" optionValue="_id"
+                  placeholder="Select a Patient">
+      </p-dropdown>
+    </div>
+
+    <p-table #dt2 [value]="arr">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>mdicine</th>
+          <th>dose</th>
+        </tr>
+      </ng-template>
+      <ng-template let-med pTemplate="body">
+        <tr>
+          <td>{{med.medicine.name}}</td>
+          <td>{{med.dose}}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+
+    <div>
+      <div *ngIf="isAdd">
+        <form [formGroup]="addForm" autocomplete="off" enctype="multipart/form-data" id="addForm" novalidate>
+
+          <div class="field">
+            <label for="med">medicine</label>
+            <p-dropdown [(ngModel)]="med" [options]="medicines" formControlName="medicine"
+                        optionLabel="name" placeholder="Select a Medicine">
             </p-dropdown>
-        </div>
-        <div class="field">
-            <label for="pa">Patient </label>
-            <p-dropdown [options]="patients" [(ngModel)]="prescription.patient"  formControlName="patient" placeholder="Select a Patient" optionValue="_id"
-                optionLabel="first_name">
-            </p-dropdown>
-        </div>
+          </div>
+          <div class="field">
+            <label for="dose">dose</label>
+            <input [(ngModel)]="dose" autofocus formControlName="medDose" id="dose" pInputText required type="text"/>
+          </div>
+        </form>
+      </div>
+      <button (click)="add()" class="p-button-text" icon="pi pi-check" label="Add Medicine" pButton pRipple
+              type="submit"></button>
 
-        <p-table #dt2 [value]="arr">
-            <ng-template pTemplate="header">
-                <tr>
-                    <th>mdicine</th>
-                    <th>dose</th>
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-med>
-                <tr>
-                    <td>{{med.medicine.name}}</td>
-                    <td>{{med.dose}}</td>
-                </tr>
-            </ng-template>
-        </p-table>
+    </div>
 
-            <div>
-                <div *ngIf="isAdd">
-                        <form id="addForm" autocomplete="off" enctype="multipart/form-data" [formGroup]="addForm" novalidate>
-                        
-                            <div class="field">
-                                <label for="med">medicine</label>
-                                <p-dropdown [options]="medicines" [(ngModel)]="med" formControlName="medicine" placeholder="Select a Medicine" optionLabel="name">
-                                </p-dropdown>
-                            </div>
-                            <div class="field">
-                                <label for="dose">dose</label>
-                                <input type="text" pInputText id="dose" [(ngModel)]="dose" formControlName="medDose" required autofocus />
-                            </div>
-                        </form>
-                </div>
-                <button type="submit" pButton pRipple label="Add Medicine" icon="pi pi-check" class="p-button-text" (click)="add()"></button>
+    <button (click)="save()" class="p-button-text" icon="pi pi-check" label="Save" pButton pRipple></button>
 
-            </div>
-
-        <button  pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="save()"></button>
-
-    </form>
+  </form>
 </div>
 
 

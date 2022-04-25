@@ -16,7 +16,7 @@ export class PaymentComponent implements OnInit {
 
   payments: any[] = [];
   durationInSeconds = 5;
-  displayedColumns: string[] = ['_id','patient', 'date', 'charges', 'method', 'action'];
+  displayedColumns: string[] = ['_id', 'patient', 'date', 'charges', 'method', 'action'];
   dataSource!: MatTableDataSource<any>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;

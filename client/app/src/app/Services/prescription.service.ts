@@ -8,10 +8,12 @@ import {Prescription} from 'src/app/_models/prescription';
 })
 export class PrescriptionService {
 
-  private prescriptionUrl: string = "http://localhost:3000/prescription";
-  constructor(private http: HttpClient) { }
-
   id: string = "";
+  private prescriptionUrl: string = "http://localhost:3000/prescription";
+
+  constructor(private http: HttpClient) {
+  }
+
   getprescription(id: string) {
     return this.http.get<Prescription>(this.prescriptionUrl + '/' + id)
       .pipe(catchError(this.handleError));

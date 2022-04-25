@@ -1,97 +1,97 @@
 <div class="card">
 
   <!-- styleClass="p-datatable-gridlines" >> table with borders -->
-  <p-table #dt1 [value]="receptionists" dataKey="id" class="m-3" responsiveLayout="scroll"
-           [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [loading]="loading"
-           [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-           [filterDelay]="0"
-           [globalFilterFields]="['firstName', 'lastName','phoneNumber','email','address', 'gender', 'age']">
+  <p-table #dt1 [filterDelay]="0" [globalFilterFields]="['firstName', 'lastName','phoneNumber','email','address', 'gender', 'age']" [loading]="loading" [paginator]="true"
+           [rowsPerPageOptions]="[10,25,50]" [rows]="10" [showCurrentPageReport]="true" [value]="receptionists"
+           class="m-3" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+           dataKey="id"
+           responsiveLayout="scroll">
     <ng-template pTemplate="caption">
       <div class="text-center">
         <h3>Receptionists</h3>
       </div>
       <div class="flex justify-content-between align-items-center">
-        <button pButton label="Clear" class="p-button-outlined mx-2" icon="pi pi-filter-slash"
-                (click)="clear(dt1)"></button>
+        <button (click)="clear(dt1)" class="p-button-outlined mx-2" icon="pi pi-filter-slash" label="Clear"
+                pButton></button>
         <span class="p-input-icon-left ml-auto mx-2">
                     <i class="pi pi-search"></i>
-                    <input pInputText type="text" (input)="dt1.filterGlobal(getEventValue($event), 'contains')"
-                           placeholder="Search keyword" class="w-100"/>
+                    <input (input)="dt1.filterGlobal(getEventValue($event), 'contains')" class="w-100" pInputText
+                           placeholder="Search keyword" type="text"/>
                 </span>
       </div>
     </ng-template>
     <ng-template pTemplate="header">
       <tr>
-        <th class="label" [style]="{'text-align':'left'}">
+        <th [style]="{'text-align':'left'}" class="label">
           <div class="flex justify-content-center align-items-left">
             Photo
           </div>
         </th>
-        <th pSortableColumn="firstName" class="th">
+        <th class="th" pSortableColumn="firstName">
           <div class="flex justify-content-center align-items-left">
             <div class="label">
               Name
             </div>
             <div class="flex-row">
               <p-sortIcon field="firstName"></p-sortIcon>
-              <p-columnFilter type="text" field="firstName" display="menu"></p-columnFilter>
+              <p-columnFilter display="menu" field="firstName" type="text"></p-columnFilter>
             </div>
           </div>
         </th>
-        <th pSortableColumn="phoneNumber" class="th">
+        <th class="th" pSortableColumn="phoneNumber">
           <div class="flex justify-content-center align-items-left">
             <diV class="label">
               Phone
             </diV>
             <div class="flex-row">
               <p-sortIcon field="phoneNumber"></p-sortIcon>
-              <p-columnFilter type="text" field="phoneNumber" display="menu"></p-columnFilter>
+              <p-columnFilter display="menu" field="phoneNumber" type="text"></p-columnFilter>
             </div>
           </div>
         </th>
-        <th pSortableColumn="email" class="th">
+        <th class="th" pSortableColumn="email">
           <div class="flex justify-content-center align-items-left">
             <div class="label">
               Email
             </div>
             <div class="flex-row">
               <p-sortIcon field="email"></p-sortIcon>
-              <p-columnFilter type="text" field="email" display="menu"></p-columnFilter>
+              <p-columnFilter display="menu" field="email" type="text"></p-columnFilter>
             </div>
           </div>
         </th>
-        <th pSortableColumn="address" class="th">
+        <th class="th" pSortableColumn="address">
           <div class="flex justify-content-center align-items-left">
             <div class="label">
               Address
             </div>
             <div class="flex-row">
               <p-sortIcon field="address"></p-sortIcon>
-              <p-columnFilter type="text" field="address" display="menu"></p-columnFilter>
+              <p-columnFilter display="menu" field="address" type="text"></p-columnFilter>
             </div>
           </div>
         </th>
-        <th pSortableColumn="age" class="th">
+        <th class="th" pSortableColumn="age">
           <div class="flex justify-content-center align-items-left">
             <div class="label">
               Age
             </div>
             <div class="flex-row">
               <p-sortIcon field="age"></p-sortIcon>
-              <p-columnFilter type="numeric" field="age" display="menu"></p-columnFilter>
+              <p-columnFilter display="menu" field="age" type="numeric"></p-columnFilter>
             </div>
           </div>
         </th>
-        <th pSortableColumn="gender" class="th">
+        <th class="th" pSortableColumn="gender">
           <div class="flex justify-content-center align-items-left">
             <div class="label">
               Gender
             </div>
             <div class="flex-row">
               <p-sortIcon field="gender"></p-sortIcon>
-              <p-columnFilter field="gender" matchMode="equals" display="menu">
-                <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                  <p-dropdown [ngModel]="value" [options]="genders" (onChange)="filter($event.value)" placeholder="Any">
+              <p-columnFilter display="menu" field="gender" matchMode="equals">
+                <ng-template let-filter="filterCallback" let-value pTemplate="filter">
+                  <p-dropdown (onChange)="filter($event.value)" [ngModel]="value" [options]="genders" placeholder="Any">
                     <ng-template let-option pTemplate="item">
                       <span [class]="'receptionist-badge gender-' + option.value">{{option.label}}</span>
                     </ng-template>
@@ -108,16 +108,16 @@
         </th>
       </tr>
     </ng-template>
-    <ng-template pTemplate="body" let-receptionist>
+    <ng-template let-receptionist pTemplate="body">
       <tr class="bg-light">
         <td class="images">
-          <img class="img" src="{{ '../../../assets/' + receptionist.profileImg }}" alt=""/>
+          <img alt="" class="img" src="{{ '../../../assets/' + receptionist.profileImg }}"/>
         </td>
         <td class=" text-black">
           {{receptionist.firstName + " " + receptionist.lastName}}
         </td>
         <td class=" text-black text-blue-200">
-          <i class="fa fa-mobile" aria-hidden="true"></i>
+          <i aria-hidden="true" class="fa fa-mobile"></i>
           {{receptionist.phoneNumber}}
         </td>
         <td class=" text-black">
@@ -133,10 +133,10 @@
           <span [class]="'receptionist-badge gender-' + receptionist.gender">{{receptionist.gender}}</span>
         </td>
         <td class="text-center actionBut">
-          <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success"
-                  (click)="edit(receptionist._id)"></button>
-          <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
-                  (click)="delete(receptionist._id)"></button>
+          <button (click)="edit(receptionist._id)" class="p-button-rounded p-button-success" icon="pi pi-pencil" pButton
+                  pRipple></button>
+          <button (click)="delete(receptionist._id)" class="p-button-rounded p-button-warning" icon="pi pi-trash" pButton
+                  pRipple></button>
         </td>
       </tr>
     </ng-template>
@@ -147,7 +147,7 @@
     </ng-template>
   </p-table>
 
-  <button pButton type="button" class="p-button-lg addBtn" (click)="add()">
+  <button (click)="add()" class="p-button-lg addBtn" pButton type="button">
     <i class="pi pi-user-plus"></i>
   </button>
 

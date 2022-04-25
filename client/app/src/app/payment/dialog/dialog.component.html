@@ -11,10 +11,10 @@
       </mat-select>
       <mat-icon matSuffix> person_pin</mat-icon>
     </mat-form-field>
-    
+
     <mat-form-field appearance="outline">
       <mat-label>Amount</mat-label>
-      <input formControlName="amount" type="number" matInput placeholder="Enter amount ">
+      <input formControlName="amount" matInput placeholder="Enter amount " type="number">
       <mat-icon matSuffix>attach_money</mat-icon>
     </mat-form-field>
     <mat-form-field appearance="outline">
@@ -36,8 +36,8 @@
 
   </form>
 </div>
-<div mat-dialog-actions [align]="'end'">
-  <button mat-raised-button color="warn" mat-dialog-close> Close</button>
-  <button mat-raised-button color="primary" (click)="addPayment()"> {{actionBtn}}</button>
+<div [align]="'end'" mat-dialog-actions>
+  <button color="warn" mat-dialog-close mat-raised-button> Close</button>
+  <button (click)="addPayment()" color="primary" mat-raised-button> {{actionBtn}}</button>
 </div>
 

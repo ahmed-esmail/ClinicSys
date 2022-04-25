@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {map} from 'rxjs';
 import {Patient} from 'src/app/_models/patient';
 
 @Injectable({
@@ -8,15 +7,15 @@ import {Patient} from 'src/app/_models/patient';
 })
 export class PatientService {
 
-  constructor(public http: HttpClient) {
-
-  }
-
-  private baseUrl: string = "http://localhost:3000/patient"
   public patientlist: Patient[] = [];
   public deletePatientID: any;
   public editePatientID: any;
   public detailsPatientID: any;
+  private baseUrl: string = "http://localhost:3000/patient"
+
+  constructor(public http: HttpClient) {
+
+  }
 
   getpatients() {
     return this.http.get<Patient[]>(this.baseUrl);

@@ -1,9 +1,8 @@
-import {Component, OnInit, OnChanges} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Patient} from '../models/patient';
 import {PatientService} from '../services/patient.service';
 import {Router} from '@angular/router';
-import {FormGroup, FormBuilder, Validators} from '@angular/forms';
-import {catchError} from 'rxjs';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 
 @Component({

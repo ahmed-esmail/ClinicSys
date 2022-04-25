@@ -1,13 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { Prescription } from 'src/app/_models/prescription';
-import { PrescriptionService } from 'src/app/Services/prescription.service';
-import { ConfirmationService } from 'primeng/api';
-import { MessageService } from 'primeng/api';
-import { MedicineService } from 'src/app/Services/medicine.service';
-import { Medicine } from 'src/app/_models/medicine';
-import { DialogService } from 'primeng/dynamicdialog';
-import { AddPrescriptionComponent } from '../add-prescription/add-prescription.component';
-import { EditPrescriptionComponent } from '../edit-prescription/edit-prescription.component';
+import {Component, OnInit} from '@angular/core';
+import {Prescription} from 'src/app/_models/prescription';
+import {PrescriptionService} from 'src/app/Services/prescription.service';
+import {ConfirmationService, MessageService} from 'primeng/api';
+import {MedicineService} from 'src/app/Services/medicine.service';
+import {Medicine} from 'src/app/_models/medicine';
+import {DialogService} from 'primeng/dynamicdialog';
+import {AddPrescriptionComponent} from '../add-prescription/add-prescription.component';
+import {EditPrescriptionComponent} from '../edit-prescription/edit-prescription.component';
 
 
 @Component({
@@ -137,9 +136,11 @@ export class ListPrescriptionsComponent implements OnInit {
       this.medicines = res;
     });
   }
+
   getEventValue($event: any): string {
     return $event.target.value;
   }
+
   findData() {
     this.prescriptionsList = [...this.prescriptions];
   }

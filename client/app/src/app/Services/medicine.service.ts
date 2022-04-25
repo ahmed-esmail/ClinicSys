@@ -9,12 +9,11 @@ import {Medicine} from 'src/app/_models/medicine';
 })
 export class MedicineService {
 
+  id: string = "";
   private medicineUrl: string = "http://localhost:3000/medicine";
 
   constructor(private http: HttpClient) {
   }
-
-  id: string = "";
 
   getMedicine(id: string) {
     return this.http.get<Medicine>(this.medicineUrl + '/' + id)

@@ -3,13 +3,13 @@
 <div class="card">
   <p-toolbar styleClass="mb-4">
     <ng-template pTemplate="left">
-      <button pButton pRipple label="New Medicine" icon="pi pi-plus" class="p-button-success mr-2"
-        (click)="clickAdd()"></button>
+      <button (click)="clickAdd()" class="p-button-success mr-2" icon="pi pi-plus" label="New Medicine" pButton
+              pRipple></button>
     </ng-template>
   </p-toolbar>
 
-  <p-table #dt [value]="medicines" [rowHover]="true" dataKey="id" responsiveLayout="scroll"
-    [globalFilterFields]="['name', 'description']">
+  <p-table #dt [globalFilterFields]="['name', 'description']" [rowHover]="true" [value]="medicines" dataKey="id"
+           responsiveLayout="scroll">
     <ng-template pTemplate="caption">
       <div class="text-center m-2">
         <h3>Medicines</h3>
@@ -17,8 +17,8 @@
       <div class="flex justify-content-between align-items-center">
         <span class="p-input-icon-left ml-auto mx-2">
           <i class="pi pi-search"></i>
-          <input pInputText type="text" (input)="dt.filterGlobal(getEventValue($event), 'contains')"
-            placeholder="Search keyword" class="w-100" />
+          <input (input)="dt.filterGlobal(getEventValue($event), 'contains')" class="w-100" pInputText
+                 placeholder="Search keyword" type="text"/>
         </span>
       </div>
     </ng-template>
@@ -33,17 +33,17 @@
         <th>Action</th>
       </tr>
     </ng-template>
-    <ng-template pTemplate="body" let-med>
+    <ng-template let-med pTemplate="body">
       <tr>
         <td>{{med.name}}</td>
         <td>
           {{med.description}}
         </td>
         <td>
-          <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success m-2"
-            (click)="clickEdit(med)"></button>
-          <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-danger m-2"
-            (click)="clickDelete(med._id)"></button>
+          <button (click)="clickEdit(med)" class="p-button-rounded p-button-success m-2" icon="pi pi-pencil" pButton
+                  pRipple></button>
+          <button (click)="clickDelete(med._id)" class="p-button-rounded p-button-danger m-2" icon="pi pi-trash" pButton
+                  pRipple></button>
         </td>
       </tr>
     </ng-template>
@@ -53,25 +53,25 @@
 <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
 
 
-<p-dialog [(visible)]="medicineDialog" [style]="{width: '450px'}" header="Add Medicine" [modal]="true" presDialog="true"
-  styleClass="p-fluid">
+<p-dialog [(visible)]="medicineDialog" [modal]="true" [style]="{width: '450px'}" header="Add Medicine" presDialog="true"
+          styleClass="p-fluid">
 
   <ng-template pTemplate="content">
     <div class="field">
       <label for="name">Name</label>
-      <input type="text" pInputText id="name" [(ngModel)]="medicine.name" required autofocus />
+      <input [(ngModel)]="medicine.name" autofocus id="name" pInputText required type="text"/>
     </div>
     <div class="field">
       <label for="description">description</label>
-      <input type="text" pInputText id="description" [(ngModel)]="medicine.description" required />
+      <input [(ngModel)]="medicine.description" id="description" pInputText required type="text"/>
     </div>
 
   </ng-template>
 
 
   <ng-template pTemplate="footer">
-    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
-    <button pButton pRipple type="submit" label="Save" icon="pi pi-check" class="p-button-text"
-      (click)="save()"></button>
+    <button (click)="hideDialog()" class="p-button-text" icon="pi pi-times" label="Cancel" pButton pRipple></button>
+    <button (click)="save()" class="p-button-text" icon="pi pi-check" label="Save" pButton pRipple
+            type="submit"></button>
   </ng-template>
 </p-dialog>

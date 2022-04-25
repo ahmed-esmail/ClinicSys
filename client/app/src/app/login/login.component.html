@@ -4,23 +4,23 @@
     <h4 class="card-header d-flex justify-content-center"><b>LOGIN</b></h4>
     <div class="card-body">
       <img
+        class="profile-img-card"
         id="profile-img"
         src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-        class="profile-img-card"
       />
-      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <form (ngSubmit)="onSubmit()" [formGroup]="loginForm">
         <div class="form-group p-2">
           <label for="phone_number">Phone Number</label>
-          <input name="phone_number" type="text" formControlName="phone_number" class="form-control"
-                 [ngClass]="{ 'is-invalid': submitted && f['phone_number'].errors }"/>
+          <input [ngClass]="{ 'is-invalid': submitted && f['phone_number'].errors }" class="form-control" formControlName="phone_number" name="phone_number"
+                 type="text"/>
           <div *ngIf="submitted && f['phone_number'].errors" class="invalid-feedback">
             <div *ngIf="f['phone_number'].errors['required']">Username is required</div>
           </div>
         </div>
         <div class="form-group p-2">
           <label for="password">Password</label>
-          <input name="password" type="password" formControlName="password" class="form-control"
-                 [ngClass]="{ 'is-invalid': submitted && f['password'].errors }"/>
+          <input [ngClass]="{ 'is-invalid': submitted && f['password'].errors }" class="form-control" formControlName="password" name="password"
+                 type="password"/>
           <div *ngIf="submitted && f['password'].errors" class="invalid-feedback">
             <div *ngIf="f['password'].errors['required']">Password is required</div>
           </div>

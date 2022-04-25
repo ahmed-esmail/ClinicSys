@@ -10,8 +10,8 @@ import {TokenStorageService} from "./token-storage.service";
 
 @Injectable({providedIn: 'root'})
 export class AuthenticationService {
-  private userSubject: BehaviorSubject<any>;
   public user: Observable<UserAuth>;
+  private userSubject: BehaviorSubject<any>;
 
   constructor(
     private router: Router,
@@ -41,7 +41,7 @@ export class AuthenticationService {
 
   logout() {
     // remove user from local storage to log user out
-    this.http.post(`${environment.apiUrl}/users/logout`,{}).subscribe()
+    this.http.post(`${environment.apiUrl}/users/logout`, {}).subscribe()
     localStorage.removeItem('currentUser');
     this.userSubject.next(null);
     this.router.navigate(['/login']);

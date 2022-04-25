@@ -1,97 +1,97 @@
 <div class="card">
 
   <!-- styleClass="p-datatable-gridlines" >> table with borders -->
-  <p-table #dt1 [value]="doctors" dataKey="id" class="m-3" responsiveLayout="scroll"
-           [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [loading]="loading"
-           [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-           [filterDelay]="0"
-           [globalFilterFields]="['speciality', '_id.firstName', '_id.lastName','_id.phoneNumber','_id.email','_id.address', '_id.gender', '_id.age']">
+  <p-table #dt1 [filterDelay]="0" [globalFilterFields]="['speciality', '_id.firstName', '_id.lastName','_id.phoneNumber','_id.email','_id.address', '_id.gender', '_id.age']" [loading]="loading" [paginator]="true"
+           [rowsPerPageOptions]="[10,25,50]" [rows]="10" [showCurrentPageReport]="true" [value]="doctors"
+           class="m-3" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+           dataKey="id"
+           responsiveLayout="scroll">
     <ng-template pTemplate="caption">
       <div class="text-center">
         <h3>Doctors</h3>
       </div>
       <div class="flex justify-content-between align-items-center">
-        <button pButton label="Clear" class="p-button-outlined mx-2" icon="pi pi-filter-slash"
-                (click)="clear(dt1)"></button>
+        <button (click)="clear(dt1)" class="p-button-outlined mx-2" icon="pi pi-filter-slash" label="Clear"
+                pButton></button>
         <span class="p-input-icon-left ml-auto mx-2">
                     <i class="pi pi-search"></i>
-                    <input pInputText type="text" (input)="dt1.filterGlobal(getEventValue($event), 'contains')"
-                           placeholder="Search keyword" class="w-100"/>
+                    <input (input)="dt1.filterGlobal(getEventValue($event), 'contains')" class="w-100" pInputText
+                           placeholder="Search keyword" type="text"/>
                 </span>
       </div>
     </ng-template>
     <ng-template pTemplate="header">
       <tr>
-        <th class="label" [style]="{'text-align':'left'}">
+        <th [style]="{'text-align':'left'}" class="label">
           <div class="flex justify-content-center align-items-left">
             Photo
           </div>
         </th>
-        <th pSortableColumn="_id.firstName" class="th">
+        <th class="th" pSortableColumn="_id.firstName">
           <div class="flex justify-content-center align-items-left">
             <div class="label">
               Name
             </div>
             <div class="flex-row">
               <p-sortIcon field="_id.firstName"></p-sortIcon>
-              <p-columnFilter type="text" field="_id.firstName" display="menu"></p-columnFilter>
+              <p-columnFilter display="menu" field="_id.firstName" type="text"></p-columnFilter>
             </div>
           </div>
         </th>
-        <th pSortableColumn="_id.phoneNumber" class="th">
+        <th class="th" pSortableColumn="_id.phoneNumber">
           <div class="flex justify-content-center align-items-left">
             <diV class="label">
               Phone
             </diV>
             <div class="flex-row">
               <p-sortIcon field="_id.phoneNumber"></p-sortIcon>
-              <p-columnFilter type="text" field="_id.phoneNumber" display="menu"></p-columnFilter>
+              <p-columnFilter display="menu" field="_id.phoneNumber" type="text"></p-columnFilter>
             </div>
           </div>
         </th>
-        <th pSortableColumn="_id.email" class="th">
+        <th class="th" pSortableColumn="_id.email">
           <div class="flex justify-content-center align-items-left">
             <div class="label">
               Email
             </div>
             <div class="flex-row">
               <p-sortIcon field="_id.email"></p-sortIcon>
-              <p-columnFilter type="text" field="_id.email" display="menu"></p-columnFilter>
+              <p-columnFilter display="menu" field="_id.email" type="text"></p-columnFilter>
             </div>
           </div>
         </th>
-        <th pSortableColumn="_id.address" class="th">
+        <th class="th" pSortableColumn="_id.address">
           <div class="flex justify-content-center align-items-left">
             <div class="label">
               Address
             </div>
             <div class="flex-row">
               <p-sortIcon field="_id.address"></p-sortIcon>
-              <p-columnFilter type="text" field="_id.address" display="menu"></p-columnFilter>
+              <p-columnFilter display="menu" field="_id.address" type="text"></p-columnFilter>
             </div>
           </div>
         </th>
-        <th pSortableColumn="_id.age" class="th">
+        <th class="th" pSortableColumn="_id.age">
           <div class="flex justify-content-center align-items-left">
             <div class="label">
               Age
             </div>
             <div class="flex-row">
               <p-sortIcon field="_id.age"></p-sortIcon>
-              <p-columnFilter type="numeric" field="_id.age" display="menu"></p-columnFilter>
+              <p-columnFilter display="menu" field="_id.age" type="numeric"></p-columnFilter>
             </div>
           </div>
         </th>
-        <th pSortableColumn="_id.gender" class="th">
+        <th class="th" pSortableColumn="_id.gender">
           <div class="flex justify-content-center align-items-left">
             <div class="label">
               Gender
             </div>
             <div class="flex-row">
               <p-sortIcon field="_id.gender"></p-sortIcon>
-              <p-columnFilter field="_id.gender" matchMode="equals" display="menu">
-                <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                  <p-dropdown [ngModel]="value" [options]="genders" (onChange)="filter($event.value)" placeholder="Any">
+              <p-columnFilter display="menu" field="_id.gender" matchMode="equals">
+                <ng-template let-filter="filterCallback" let-value pTemplate="filter">
+                  <p-dropdown (onChange)="filter($event.value)" [ngModel]="value" [options]="genders" placeholder="Any">
                     <ng-template let-option pTemplate="item">
                       <span [class]="'doctor-badge _id.gender-' + option.value">{{option.label}}</span>
                     </ng-template>
@@ -101,16 +101,16 @@
             </div>
           </div>
         </th>
-        <th pSortableColumn="speciality" class="th">
+        <th class="th" pSortableColumn="speciality">
           <div class="flex justify-content-center align-items-left">
             <div class="label">
               Speciality
             </div>
             <div class="flex-row">
               <p-sortIcon field="speciality"></p-sortIcon>
-              <p-columnFilter field="speciality" matchMode="equals" display="menu">
-                <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                  <p-dropdown [ngModel]="value" [options]="specialities" (onChange)="filter($event.value)"
+              <p-columnFilter display="menu" field="speciality" matchMode="equals">
+                <ng-template let-filter="filterCallback" let-value pTemplate="filter">
+                  <p-dropdown (onChange)="filter($event.value)" [ngModel]="value" [options]="specialities"
                               placeholder="Any">
                     <ng-template let-option pTemplate="item">
                       <span [class]="'doctor-badge speciality-' + option.value">{{option.label}}</span>
@@ -128,10 +128,10 @@
         </th>
       </tr>
     </ng-template>
-    <ng-template pTemplate="body" let-doctor>
+    <ng-template let-doctor pTemplate="body">
       <tr class="bg-light">
         <td class="images">
-          <img class="img" src="{{ '../../../assets/' + doctor._id?.profileImg }}" alt=""/>
+          <img alt="" class="img" src="{{ '../../../assets/' + doctor._id?.profileImg }}"/>
         </td>
         <td class=" text-black">
           {{doctor._id.firstName + " " + doctor._id.lastName}}
@@ -155,10 +155,10 @@
           <span [class]="'doctor-badge speciality-' + doctor.speciality">{{doctor.speciality}}</span>
         </td>
         <td class="text-center actionBut">
-          <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success"
-                  (click)="edit(doctor._id._id)"></button>
-          <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
-                  (click)="delete(doctor._id._id)"></button>
+          <button (click)="edit(doctor._id._id)" class="p-button-rounded p-button-success" icon="pi pi-pencil" pButton
+                  pRipple></button>
+          <button (click)="delete(doctor._id._id)" class="p-button-rounded p-button-warning" icon="pi pi-trash" pButton
+                  pRipple></button>
         </td>
       </tr>
     </ng-template>
@@ -169,7 +169,7 @@
     </ng-template>
   </p-table>
 
-  <button pButton type="button" class="p-button-lg addBtn " (click)="add()">
+  <button (click)="add()" class="p-button-lg addBtn " pButton type="button">
     <i class="pi pi-user-plus"></i>
   </button>
 

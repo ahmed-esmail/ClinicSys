@@ -1,5 +1,3 @@
-import {Medicine} from "./medicine";
-
 export class Prescription {
   constructor(
     public doctor: string,

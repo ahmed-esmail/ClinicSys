@@ -2,12 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {Patient} from '../models/patient';
 import {PatientService} from '../services/patient.service';
 import {Router} from '@angular/router';
-import {Prescription} from '../models/prescription';
-import {Doctor} from '../models/doctor';
-import {BrowserModule} from '@angular/platform-browser';
-import {FormsModule} from '@angular/forms';
-import {CommonModule} from '@angular/common';
-import {Table} from 'primeng/table';
 import {Appointment} from '../models/appointment';
 
 @Component({

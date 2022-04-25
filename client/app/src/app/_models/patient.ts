@@ -1,5 +1,3 @@
-import {Byte} from "@angular/compiler/src/util";
-
 export class Patient {
   constructor(public _id: any,
               public first_name: string, public last_name: string,

@@ -9,15 +9,14 @@ import {User} from './_models/user';
 })
 export class ReceptionistService {
 
-  constructor(public http: HttpClient) {
-  }
-
   genders: Array<SelectItem> = [
     {label: 'Male', value: 'male'},
     {label: 'Female', value: 'female'},
   ]
-
   private baseUrl: string = "http://localhost:3000/receptionists"
+
+  constructor(public http: HttpClient) {
+  }
 
   getAllReceptionists() {
     return this.http.get<User[]>(this.baseUrl);

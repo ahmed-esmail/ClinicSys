@@ -3,7 +3,6 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 
 import {Observable, throwError} from 'rxjs';
 import {catchError} from 'rxjs/operators';
-import {IPayment} from "../_models/IPayment";
 import {environment} from "../../environments/environment";
 
 @Injectable({
@@ -11,13 +10,12 @@ import {environment} from "../../environments/environment";
 })
 export class PaymentService {
 
-  private apiURL = `${environment.apiUrl}/payments`;
-
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8;application/json'
     })
   }
+  private apiURL = `${environment.apiUrl}/payments`;
 
   constructor(private httpClient: HttpClient) {
   }
