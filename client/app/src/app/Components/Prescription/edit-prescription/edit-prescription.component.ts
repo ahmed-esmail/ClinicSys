@@ -99,6 +99,7 @@ export class EditPrescriptionComponent implements OnInit {
 
   edit() {
     this.prescription.medicines = this.arr;
+    console.log(this.prescription)
     this.prescriptionService.editprescription(this.prescription).subscribe({
       next: a => {
         this.prescription = a;
