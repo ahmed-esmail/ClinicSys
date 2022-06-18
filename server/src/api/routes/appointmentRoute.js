@@ -8,7 +8,11 @@ router.get("", controller.listappointments);
 
 // -------------   Get appointment By Id -----------
 
-router.get("/1", controller.getappointment);
+router.get(
+  "/:id",
+  [param("id").isMongoId().withMessage("ID should be ObjectId")],
+  controller.getappointment
+);
 
 // -------------  Add Appointment --------------
 router.post(
@@ -31,8 +35,9 @@ router.post(
 
 // -------------- Update Appointment ----------
 router.put(
-  "",
+  "/:id",
   [
+    param("id").isMongoId().withMessage("ID should be ObjectId"),
     // body("id").isInt().withMessage("Appointment Id should be Intger"),
     body("time").isInt().withMessage(" ,Please enter valid time  "),
     body("bill")

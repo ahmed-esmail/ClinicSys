@@ -1,4 +1,5 @@
 const express = require("express");
+//const createError = require("http-error");
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const authentication = require("./api/routes/auth.routes");
@@ -12,7 +13,6 @@ const receptionistRouter = require("./api/routes/ReceptionistRouter");
 const medicineRoute = require("./api/routes/medicineRoute");
 const prescriptionRoute = require("./api/routes/prescriptionRoute");
 const patientRoute = require("./api/routes/patientRoute");
-const appointmentModel = require("./api/models/appointmentModel");
 const appointmentRouter = require("./api/routes/appointmentRoute");
 
 const PORT = process.env.PORT || 3000;

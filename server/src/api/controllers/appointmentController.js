@@ -1,4 +1,5 @@
 const { validationResult, Result, body } = require("express-validator");
+const res = require("express/lib/response");
 const Appointment = require("./../models/appointmentModel");
 const Payment = require("./../models/paymentModel");
 // ----------------------- Get All Apointments -------------
@@ -19,7 +20,7 @@ exports.listappointments = function (request, response, next) {
 
 // ------------------Get Appointment by Id ---------------------
 exports.getappointment = function (request, response) {
-  Appointment.findOne({ _id: request.body.id })
+  Appointment.findOne({ _id: request.params.id })
     .populate("bill")
     .populate("patient")
     .populate("doctor")
@@ -68,7 +69,7 @@ exports.addappointment = async function (request, response, next) {
         })
         .catch((error) => {
           error.status = 500;
-          console.log(error);
+          res.json({ message: "No appointments available on taht time" });
           next(error);
         });
     }
@@ -85,9 +86,9 @@ exports.updateappointment = async function (request, response, next) {
     error.message = "Bill not found";
     next(error);
   } else {
-    Appointment.findOne()
-      .where({ _id: request.body.id })
-      .update({
+    Appointment.updateOne(
+      { _id: request.params.id },
+      {
         $set: {
           time: request.body.time,
           bill: request.body.bill,
@@ -95,7 +96,8 @@ exports.updateappointment = async function (request, response, next) {
           doctor: request.body.doctor,
           condition: request.body.condition,
         },
-      })
+      }
+    )
       .then((object) => {
         response.status(201).json(object);
       })
