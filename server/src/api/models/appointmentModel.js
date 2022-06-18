@@ -1,3 +1,4 @@
+const { isDate } = require("moment");
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
@@ -9,9 +10,23 @@ const appointmentSchema = new Schema({
     //unique: true,
     ref: "Payment",
   },
+  patient: {
+    type: Schema.Types.ObjectId,
+    ref: "Patient",
+    required: true,
+    unique: false,
+  },
+  doctor: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+    unique: false,
+  },
   patient: { type: Schema.Types.ObjectId, ref: "Patient", required: true },
   doctor: { type: Schema.Types.ObjectId, ref: "Doctor", required: true },
   condition: { type: String, required: true },
 });
+
+appointmentSchema.index({ time: 1, patient: 1, doctor: 1 }, { unique: true });
 
 module.exports = mongoose.model("Appointment", appointmentSchema);

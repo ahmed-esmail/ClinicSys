@@ -1,4 +1,5 @@
 const { validationResult, Result, body } = require("express-validator");
+const res = require("express/lib/response");
 const Appointment = require("./../models/appointmentModel");
 const Payment = require("./../models/paymentModel");
 // ----------------------- Get All Apointments -------------
@@ -6,12 +7,7 @@ exports.listappointments = function (request, response, next) {
   Appointment.find({})
     .populate("bill")
     .populate("patient")
-    .populate({
-      path: "doctor", populate: {
-          path: "_id",
-          model: "User"
-      }
-  })
+    .populate("doctor")
     .exec()
     .then((result) => {
       response.status(200).json(result);
@@ -24,15 +20,10 @@ exports.listappointments = function (request, response, next) {
 
 // ------------------Get Appointment by Id ---------------------
 exports.getappointment = function (request, response) {
-  Appointment.findOne({ _id: request.params._id })
+  Appointment.findOne({ _id: request.params.id })
     .populate("bill")
     .populate("patient")
-    .populate({
-      path: "doctor", populate: {
-          path: "_id",
-          model: "User"
-      }
-  })
+    .populate("doctor")
     .then((result) => {
       response.status(200).json(result);
     })
@@ -78,7 +69,7 @@ exports.addappointment = async function (request, response, next) {
         })
         .catch((error) => {
           error.status = 500;
-          console.log(error);
+          res.json({ message: "No appointments available on taht time" });
           next(error);
         });
     }
@@ -89,26 +80,26 @@ exports.addappointment = async function (request, response, next) {
 exports.updateappointment = async function (request, response, next) {
   let c = await Payment.exists({ _id: request.body.bill });
 
-  if (!c) {
+  if (!c && request.body.bill != null) {
     let error = new Error();
     error.status = 404;
     error.message = "Bill not found";
     next(error);
   } else {
-    Appointment.findOne()
-      .where({ _id: request.body.id })
-      .update({
+    Appointment.updateOne(
+      { _id: request.params.id },
+      {
         $set: {
-          date: request.body.date,
           time: request.body.time,
           bill: request.body.bill,
           patient: request.body.patient,
           doctor: request.body.doctor,
           condition: request.body.condition,
         },
-      })
-      .then((result) => {
-        response.status(201).json({ message: " Appointment Updated" });
+      }
+    )
+      .then((object) => {
+        response.status(201).json(object);
       })
       .catch((error) => {
         error.status = 500;
@@ -128,7 +119,7 @@ exports.deleteappointment = function (request, response, next) {
       .reduce((current, object) => current + object.msg + "", "");
     next(error);
   } else {
-    Appointment.deleteOne({ _id: request.body.id })
+    Appointment.deleteOne({ _id: request.params.id })
       .then((result) => {
         response.status(201).json({ message: "Appointment Deleted" });
       })

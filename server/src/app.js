@@ -1,13 +1,13 @@
 const express = require("express");
-const cors = require('cors');
+const cors = require("cors");
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const authentication = require("./api/routes/auth.routes");
 const payment = require("./api/routes/payment.routes");
 require("./api/db/mongoose");
+var cors = require("cors");
 const app = express();
-app.use(cors())
-
+app.use(cors());
 
 const doctorRouter = require("./api/routes/doctorRouter");
 const receptionistRouter = require("./api/routes/ReceptionistRouter");
@@ -22,17 +22,21 @@ app.listen(PORT, () => {
   console.log(`server Running on port http://localhost:${PORT}`);
 });
 
+app.use(cors());
 // **** -----------Middleware------------------- ***********
 // register morgan middleware
 app.use(morgan("dev"));
 
 // allow requests
-app.use((request,response,next)=>{
-  response.header("Access-Control-Allow-Origin","*");
-  response.header("Access-Control-Allow-Methods","GET,POST,DELETE,PUT,OPTIONS");
-  response.header("Access-Control-Allow-Headers","Content-Type,Authorization")
+app.use((request, response, next) => {
+  response.header("Access-Control-Allow-Origin", "*");
+  response.header(
+    "Access-Control-Allow-Methods",
+    "GET,POST,DELETE,PUT,OPTIONS"
+  );
+  response.header("Access-Control-Allow-Headers", "Content-Type,Authorization");
   next();
-})
+});
 
 // register body parser middleware
 app.use(bodyParser.json());
@@ -44,8 +48,8 @@ app.get("/", (req, res, next) => {
 app.use(authentication);
 app.use(payment);
 
-
 // routes
+
 app.use("/doctors", doctorRouter);
 app.use("/receptionists", receptionistRouter);
 app.use("/medicine", medicineRoute);
@@ -61,8 +65,8 @@ app.use((request, response) => {
 
 //************* On Error MiddleWare ************/
 app.use((err, req, res, next) => {
-  console.log(err)
+  console.log(err);
   res
     .status(err.status || 500)
-      .json({message : `${JSON.stringify(err.message)}`});
+    .json({ message: `${JSON.stringify(err.message)}` });
 });

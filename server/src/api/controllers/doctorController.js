@@ -4,7 +4,6 @@ const mongoose = require("mongoose");
 const User = mongoose.model("User");
 const Doctor = require("./../Models/doctorModel");
 
-
 exports.getDoctors = function (request, response, next) {
   Doctor.find({ type: "Doctor" })
     .populate({
@@ -35,6 +34,36 @@ exports.getDoctorById = function (request, response, next) {
       .populate({
         path: "_id",
         model: "User",
+      })
+      .then((data) => {
+        if (!data) {
+          next(new Error("Doctor id not Found"));
+          response.status(422).json(data);
+        } else {
+          response.status(200).json(data);
+        }
+      })
+      .catch((error) => {
+        next(error);
+      });
+  }
+};
+
+exports.getDoctorByBodyId = function (request, response, next) {
+  let errors = validationResult(request);
+
+  if (!errors.isEmpty()) {
+    let error = new Error();
+    error.status = 422;
+    error.message = errors
+      .array()
+      .reduce((current, object) => current + object.msg + " , ", "");
+    next(error);
+  } else {
+    User.findOne({ _id: request.body.id, type: "Doctor" })
+      .populate({
+        path: "_id",
+        model: "Doctor",
       })
       .then((data) => {
         if (!data) {
@@ -158,11 +187,9 @@ exports.removeAppointmentFromDoctor = function (request, response, next) {
       }
     )
       .then((result) => {
-        response
-          .status(201)
-          .json({
-            message: "Appointment removed successfully from the doctor",
-          });
+        response.status(201).json({
+          message: "Appointment removed successfully from the doctor",
+        });
       })
       .catch((error) => {
         error.status = 500;
@@ -186,8 +213,8 @@ exports.addPatientToDoctor = function (request, response, next) {
       { _id: request.body.id },
       {
         $addToSet: {
-          patients: request.body.patient
-        }
+          patients: request.body.patient,
+        },
       }
     )
       .then((result) => {

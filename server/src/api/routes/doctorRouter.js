@@ -7,7 +7,6 @@ const router = express.Router();
 const mongoose = require("mongoose");
 const User = mongoose.model("User");
 
-
 //get all doctors
 router.get("", doctorController.getDoctors);
 
@@ -18,6 +17,11 @@ router.get(
   doctorController.getDoctorById
 );
 
+router.get(
+  "",
+  [body("id").isMongoId().withMessage("ID should be ObjectId")],
+  doctorController.getDoctorByBodyId
+);
 //add a doctor
 router.post(
   "",
@@ -30,7 +34,7 @@ router.post(
       .withMessage("Invalid phone number")
       .custom((value, { req }) => {
         return User.findOne({
-          phoneNumber: value
+          phoneNumber: value,
         }).then((user) => {
           if (user) {
             throw new Error("Phone number already exist");
@@ -48,27 +52,29 @@ router.post(
       .withMessage("Invalid Email")
       .custom((value, { req }) => {
         return User.findOne({
-          email: value
+          email: value,
         }).then((user) => {
           if (user) {
             throw new Error("Email already exist");
           }
         });
       }),
-    body("_id.password")
-      .isLength({ min: 7 })
-      .withMessage("Invalid Password"),
-    body("_id.address")
-      .isLength({ min: 3 })
-      .withMessage("invalid address"),
-    body('_id.profileImg').not().isEmpty().withMessage("profileImg path should be string"),
+    body("_id.password").isLength({ min: 7 }).withMessage("Invalid Password"),
+    body("_id.address").isLength({ min: 3 }).withMessage("invalid address"),
+    body("_id.profileImg")
+      .not()
+      .isEmpty()
+      .withMessage("profileImg path should be string"),
     body("_id.gender").custom((value, { req }) => {
       if (value == "male" || value == "female") {
         return true;
       }
       throw new Error("invalid gender");
     }),
-    body("speciality").not().isEmpty().withMessage("speciality should be string"),
+    body("speciality")
+      .not()
+      .isEmpty()
+      .withMessage("speciality should be string"),
   ],
   doctorController.addDoctor
 );
@@ -113,17 +119,21 @@ router.put(
           }
         });
       }),
-    body("_id.address")
-      .isLength({ min: 3 })
-      .withMessage("invalid address"),
-    body('_id.profileImg').not().isEmpty().withMessage("profileImg path should be string"),
+    body("_id.address").isLength({ min: 3 }).withMessage("invalid address"),
+    body("_id.profileImg")
+      .not()
+      .isEmpty()
+      .withMessage("profileImg path should be string"),
     body("_id.gender").custom((value, { req }) => {
       if (value == "male" || value == "female") {
         return true;
       }
       throw new Error("invalid gender");
     }),
-    body("speciality").not().isEmpty().withMessage("speciality should be string"),
+    body("speciality")
+      .not()
+      .isEmpty()
+      .withMessage("speciality should be string"),
   ],
   doctorController.updateDoctor
 );
@@ -182,6 +192,5 @@ router.put(
   ],
   doctorController.removePatientFromDoctor
 );
-
 
 module.exports = router;

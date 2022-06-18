@@ -8,14 +8,18 @@ router.get("", controller.listappointments);
 
 // -------------   Get appointment By Id -----------
 
-router.get("/:_id",[param("_id").isMongoId().withMessage("_id Should be ObjectID")], controller.getappointment);
+router.get(
+  "/:id",
+  [param("id").isMongoId().withMessage("ID should be ObjectId")],
+  controller.getappointment
+);
 
 // -------------  Add Appointment --------------
 router.post(
   "",
   [
     // body("id").isInt().withMessage("Appointment Id should be Intger"),
-    body("time"),//.isDate().withMessage(" ,Please enter valid time  "),
+    body("time"), //.isDate().withMessage(" ,Please enter valid time  "),
     body("bill")
       .isMongoId()
       .withMessage(",Please enter valid bill number  ")
@@ -31,8 +35,9 @@ router.post(
 
 // -------------- Update Appointment ----------
 router.put(
-  "",
+  "/:id",
   [
+    param("id").isMongoId().withMessage("ID should be ObjectId"),
     // body("id").isInt().withMessage("Appointment Id should be Intger"),
     body("time").isInt().withMessage(" ,Please enter valid time  "),
     body("bill")
@@ -50,8 +55,8 @@ router.put(
 
 // ------------- Delete Appointment -----------
 router.delete(
-  "",
-  [body("id").isInt().withMessage(" Id should be Integer")],
+  "/:id",
+  [param("id").isMongoId().withMessage(" Id should be Integer")],
   controller.deleteappointment
 );
 
