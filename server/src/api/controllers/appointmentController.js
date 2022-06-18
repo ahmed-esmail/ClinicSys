@@ -7,7 +7,9 @@ exports.listappointments = function (request, response, next) {
   Appointment.find({})
     .populate("bill")
     .populate("patient")
-    .populate("doctor")
+    .populate({path: "doctor", populate: {
+      path: "_id"
+      }})
     .exec()
     .then((result) => {
       response.status(200).json(result);

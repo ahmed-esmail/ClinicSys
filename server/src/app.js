@@ -5,9 +5,8 @@ const bodyParser = require("body-parser");
 const authentication = require("./api/routes/auth.routes");
 const payment = require("./api/routes/payment.routes");
 require("./api/db/mongoose");
-var cors = require("cors");
 const app = express();
-app.use(cors());
+
 
 const doctorRouter = require("./api/routes/doctorRouter");
 const receptionistRouter = require("./api/routes/ReceptionistRouter");

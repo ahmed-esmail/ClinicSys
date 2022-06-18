@@ -1,0 +1,83 @@
+<mat-toolbar color="primary">
+    <span>Apppointments</span>
+    <span class="example-spacer"></span>
+    <button pButton type="button" class="p-button-rounded" icon="pi pi-plus" (click)="openAddForm()"></button>
+</mat-toolbar>
+
+<mat-spinner *ngIf="loading"></mat-spinner>
+
+
+<mat-toolbar *ngIf="successMsg" color="accent">{{successMsg}}</mat-toolbar>
+<mat-toolbar *ngIf="errorMsg" color="warn">{{errorMsg}}</mat-toolbar>
+
+<div *ngIf="!loading && !loading">
+    <table mat-table [dataSource]="apps" class="mat-elevation-z8">
+        <ng-container matColumnDef="time">
+            <th mat-header-cell *matHeaderCellDef>Time</th>
+            <td mat-cell *matCellDef="let appointment">{{appointment.time}}</td>
+        </ng-container>
+        <ng-container matColumnDef="patient">
+            <th mat-header-cell *matHeaderCellDef>Patient</th>
+            <td mat-cell *matCellDef="let appointment">{{appointment.patient.first_name+'
+                '+appointment.patient.last_name}}</td>
+        </ng-container>
+        <ng-container matColumnDef="doctor">
+            <th mat-header-cell *matHeaderCellDef>Doctor</th>
+            <td mat-cell *matCellDef="let appointment">{{appointment.doctor._id.firstName + " "+
+                appointment.doctor._id.lastName}}</td>
+        </ng-container>
+        <ng-container matColumnDef="condition">
+            <th mat-header-cell *matHeaderCellDef>Condition</th>
+            <td mat-cell *matCellDef="let appointment">{{appointment.condition}}</td>
+        </ng-container>
+        <ng-container matColumnDef="operations">
+            <th mat-header-cell *matHeaderCellDef>Operations</th>
+            <td mat-cell *matCellDef="let appointment">
+                <button pButton type="button" label="Edit" class="p-button-raised p-button-rounded"
+                    (click)="updateAppointment(appointment)"
+                    routerLink="/updateAppointment/{{appointment._id}}"></button>
+                <button pButton type="button" icon="pi pi-trash" class="p-button-raised p-button-rounded"
+                    (click)="delete(appointment)"></button>
+            </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="columns"></tr>
+        <tr mat-row *matRowDef="let apps; columns:columns"></tr>
+    </table>
+</div>
+
+
+
+
+<!-- <div>
+    <p-table class="table" [value]="apps" [paginator]="true" [rows]="5">
+        <thead class="table-dark">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Patient</th>
+                    <th>Time</th>
+                    <th>Doctor</th>
+                    <th>Condition</th>
+                    <th>Operations</th>
+                </tr>
+            </ng-template>
+        </thead>
+        <ng-template pTemplate="body" let-App>
+            <tr>
+                <td>{{App.patient.first_name + " " + App.patient.last_name}}</td>
+                <td>{{App.time}}</td> -->
+<!-- <td>{{getDoctor(App.doctor._id)}}</td> -->
+<!-- <td>{{App.condition}}</td>
+                <td>
+                    <span class="p-buttonset">
+                        <button pButton type="button" label="Edit" (click)="updateAppointment(App)"
+                            class="p-button-raised p-button-rounded"></button>
+                        <button pButton type="button" icon="pi pi-trash" class="p-button-raised p-button-rounded"
+                            (click)="delete(App)"></button>
+
+                    </span>
+
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div> -->

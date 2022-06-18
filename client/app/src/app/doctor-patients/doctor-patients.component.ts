@@ -6,6 +6,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Table} from 'primeng/table';
 import {DoctorService} from '../doctor.service';
 import {Doctor} from '../_models/doctor';
+import {zip} from "rxjs";
 
 @Component({
   selector: 'app-doctor-patients',
@@ -28,19 +29,18 @@ export class DoctorPatientsComponent implements OnInit {
       this.docSer.getDoctorById(a['id']).subscribe({
         next: a => {
           this.doctor = a;
-          console.log(this.doctor)
+          this.doctor.patients.forEach(element => {
+            this.patser.getPatientByID(element).subscribe({
+              next: a => {
+                this.patlist.push(a);
+                this.loading = false;
+                console.log(a)
+              }
+            })
+          });
         }
       })
     })
-
-    this.doctor.patients.forEach(element => {
-      this.patser.getPatientByID(element).subscribe({
-        next: a => {
-          this.patlist.push(a);
-          console.log(a)
-        }
-      })
-    });
 
   }
 

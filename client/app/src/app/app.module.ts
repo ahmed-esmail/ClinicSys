@@ -78,6 +78,16 @@ import {
   WeekService,
   WorkWeekService
 } from "@syncfusion/ej2-angular-schedule";
+import {AppointmentListComponent} from "./Appointment/appointment/appointment-list/appointment-list.component";
+import {AppointmentaddComponent} from "./Appointment/appointment/appointmentadd/appointmentadd.component";
+import {AppointmentEditComponent} from "./Appointment/appointment/appointment-edit/appointment-edit.component";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatDatepickerModule} from "@angular/material/datepicker";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {MatNativeDateModule} from "@angular/material/core";
+import {MatSelectModule} from "@angular/material/select";
+import {MatInputModule} from "@angular/material/input";
+import {MatDialogModule} from "@angular/material/dialog";
 
 @NgModule({
   declarations: [
@@ -106,7 +116,10 @@ import {
     IncomePerMonthComponent,
 
     PatientReportComponent,
-      ReportInvoicesComponent,
+    ReportInvoicesComponent,
+    AppointmentListComponent,
+    AppointmentaddComponent,
+    AppointmentEditComponent,
   ],
   imports: [
     AppRoutingModule,
@@ -156,7 +169,21 @@ import {
     MatSortModule,
     MatSnackBarModule,
     RouterModule,
-    ScheduleModule
+    ScheduleModule,
+    MatToolbarModule,
+    MatIconModule,
+    ToolbarModule,
+    ButtonModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule,
+    DropdownModule,
+    MatSelectModule,
+    MatTableModule,
+    MatDatepickerModule,
+    MatProgressSpinnerModule,
+    MatButtonModule,
+    MatNativeDateModule,
 
   ],
   providers: [DoctorService, ReceptionistService, MessageService, ConfirmationService,

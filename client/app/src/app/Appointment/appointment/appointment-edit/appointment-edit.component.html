@@ -1,0 +1,44 @@
+<div class="text-info bg-Light container-fluid">
+    <h1 class="card-header">Change appointment schedule</h1>
+
+
+    <mat-toolbar *ngIf="successMsg" color="accent">{{successMsg}}</mat-toolbar>
+    <mat-toolbar *ngIf="errorMsg" color="warn">{{errorMsg}}</mat-toolbar>
+
+    <form (submit)="Update()" class="container-md " style="display:contents;height:100% ;">
+        <div [formGroup]="appToUpdate">
+
+            <div class=""><input matInput type="datetime-local" placeholder="Choose suitable time"
+                    formControlName="time" />
+            </div>
+            <label>Patient :</label>
+
+            <mat-select matInput formControlName="patient">
+                <mat-option matInput *ngFor="let pat of Patients" [value]="pat._id">
+                    {{pat.first_name + " " + pat.last_name}}
+                </mat-option>
+            </mat-select>
+
+            <label>Doctor :</label>
+
+            <mat-select matInput formControlName="doctor">
+                <mat-option matInput *ngFor="let doc of Doctors" [value]="doc._id">
+                    {{doc._id.firstName + " " + doc._id.lastName}}
+                 
+                </mat-option>
+            </mat-select>
+
+            <label class="form-label">Case :</label>
+            <textarea class="form-control" matInput formControlName="condition" placeholder="Case"></textarea>
+
+            <!-- <mat-form-field>
+            <mat-select matInput [(ngModel)]="bill" name="bill">
+                <mat-option matInput *ngFor="let b of Bills" [value]="b._id">
+                    {{b._id}
+                </mat-option>
+            </mat-select>
+        </mat-form-field> -->
+            <button matInput mat-raised-button color="primary" appearance="fill">Edit Appointment</button>
+        </div>
+    </form>
+</div>
